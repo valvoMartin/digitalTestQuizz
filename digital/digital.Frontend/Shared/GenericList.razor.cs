@@ -10,9 +10,14 @@ namespace digital.Frontend.Shared
         [Parameter] public RenderFragment? NoRecords { get; set; }
 
 
-        [Parameter] [EditorRequired] public RenderFragment Body { get; set; } = null!;
+        [Parameter, EditorRequired] public RenderFragment Body { get; set; } = null!;
 
 
-        [Parameter] [EditorRequired] public List<Titem> MyList { get; set; } = null!;
+        [Parameter, EditorRequired] public List<Titem> MyList { get; set; } = null!;
+
+
+
+   
+
     }
 }

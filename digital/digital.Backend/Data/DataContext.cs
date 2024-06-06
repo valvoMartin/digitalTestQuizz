@@ -9,7 +9,9 @@ namespace digital.Backend.Data
         {
         }
 
+
         public DbSet<Country> Countries { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

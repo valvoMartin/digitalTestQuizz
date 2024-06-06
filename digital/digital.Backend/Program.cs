@@ -14,18 +14,6 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=Connection"
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.UseCors(x => x
     .AllowAnyMethod()
@@ -34,4 +22,14 @@ app.UseCors(x => x
     .AllowCredentials());
 
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 app.Run();
