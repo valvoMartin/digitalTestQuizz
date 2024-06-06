@@ -1,3 +1,6 @@
+using digital.Frontend.Repositories;
+using digital.Shared.Entities;
+using Microsoft.AspNetCore.Components;
 using Orders.Frontend.Repositories;
 
 namespace digital.Frontend.Pages.Countries
@@ -6,11 +9,20 @@ namespace digital.Frontend.Pages.Countries
     {
         public List<Country>? Countries { get; set; }
 
-        protected async override Task OnInitializedAsync()
+       [Inject] private IRepository repository { get; set; } = null!;
+
+        //protected async override Task OnInitializedAsync()
+        //{
+        //    var responseHppt = await repository.GetAsync<List<Country>>("api/countries");
+        //    Countries = responseHppt.Response!;
+        //}
+
+        protected override async Task OnInitializedAsync()
         {
-            var responseHppt = await repository.GetAsync<List<Country>>("api/countries");
-            Countries = responseHppt.ActionResponse!;
+            var responseHttp = await repository.GetAsync<List<Country>>("api/countries");
+            Countries = responseHttp.Response!;
         }
+
 
     }
 }

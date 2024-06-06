@@ -1,4 +1,4 @@
-﻿using digital.Backend.Entities;
+﻿using digital.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace digital.Backend.Data

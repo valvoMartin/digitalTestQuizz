@@ -11,8 +11,8 @@ using digital.Backend.Data;
 namespace digital.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240606133239_InitialDB")]
-    partial class InitialDB
+    [Migration("20240606141405_InitialDb")]
+    partial class InitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace digital.Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("digital.Backend.Entities.Country", b =>
+            modelBuilder.Entity("digital.Shared.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

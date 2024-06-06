@@ -1,5 +1,5 @@
 ﻿using digital.Backend.Data;
-using digital.Backend.Entities;
+using digital.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

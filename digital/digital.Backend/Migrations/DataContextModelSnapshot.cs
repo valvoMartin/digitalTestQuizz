@@ -21,7 +21,7 @@ namespace digital.Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("digital.Backend.Entities.Country", b =>
+            modelBuilder.Entity("digital.Shared.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
