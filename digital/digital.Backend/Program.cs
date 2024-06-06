@@ -15,6 +15,7 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=Connection"
 var app = builder.Build();
 
 
+
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
