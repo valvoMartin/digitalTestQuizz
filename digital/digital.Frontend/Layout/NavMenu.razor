@@ -1,13 +1,79 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿
+@* <div class="page">
+    <div class="menu__wrapper">
+        <div class="menu__bar">
+
+            <a href="\"
+               title="Logo">
+                <img class="logo"
+                     src="https://c0.klipartz.com/pngpicture/827/941/gratis-png-desarrollo-web-diseno-web-logotipo-sitio-web-flecha-y-globo.png"
+                     title='Logo'
+                     alt='Logo'>
+            </a>
+
+            <img class="menu-icon"
+                 src="assets/burger-menu.svg"
+                 title='Burger Menu'
+                 alt='Burger Menu'
+                 >
+
+            <ul class="navigation">
+
+                <li>Platform</li>
+                <li>Blog</li>
+                <li>About</li>
+                <li>Contact Us</li>
+
+            </ul>
+        </div>
+    </div>
+</div> *@
+
+<header id="header">
+    <div class="d-flex flex-column">
+
+        <div class="profile">
+            <img src="assets/img/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+            <h1 class="text-light"><a href="index.html">Alex Smith</a></h1>
+            <div class="social-links mt-3 text-center">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+        </div>
+
+        <nav id="navbar" class="nav-menu navbar">
+            <ul>
+                <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+                <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
+                <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
+                <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
+                <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
+                <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
+            </ul>
+        </nav><!-- .nav-menu -->
+    </div>
+</header><!-- End Header -->
+
+
+
+
+
+
+
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">digital.Frontend</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-</div>
+</div> 
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+
+ <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -18,22 +84,24 @@
             <NavLink class="nav-link" href="counter">
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
             </NavLink>
-        </div> *@
+        </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="countries">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Paises
             </NavLink>
         </div>
     </nav>
-</div>
+</div> 
+*@
 
-@code {
-    private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+ @*    // private bool collapseNavMenu = true;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+    // private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    // private void ToggleNavMenu()
+    // {
+    //     collapseNavMenu = !collapseNavMenu;
+    
+
+ *@
