@@ -16,4 +16,10 @@
     <ProjectReference Include="..\digital.Shared\digital.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Cities\" />
+    <Folder Include="Pages\States\" />
+    <Folder Include="wwwroot\sample-data\" />
+  </ItemGroup>
+
 </Project>

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\digital.Frontend\digital.Frontend.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-
 </Project>
