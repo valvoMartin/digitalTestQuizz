@@ -1,5 +1,6 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
+using digital.Frontend.Shared;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 
@@ -7,13 +8,14 @@ namespace digital.Frontend.Pages.Countries
 {
     public partial class CountryCreate
     {
-        private CountryForm? countryForm;
+        private Country country = new();
+        private FormWithName<Country>? countryForm;
 
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
 
-        private Country country = new();
+       
 
         private async Task CreateAsync()
         {

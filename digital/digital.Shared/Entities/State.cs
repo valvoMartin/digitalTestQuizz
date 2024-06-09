@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using digital.Shared.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace digital.Shared.Entities
 {
-    public class State
+    public class State : IEntityWithName
     {
         public int Id { get; set; }
 
@@ -14,7 +15,7 @@ namespace digital.Shared.Entities
         public int CountryId { get; set; }
         public Country? Country { get; set; }
 
-        //Ver https://youtu.be/w_mw7qcrsqc
+
         public ICollection<City>? Cities { get; set; }
 
         [Display(Name = "Ciudades")]

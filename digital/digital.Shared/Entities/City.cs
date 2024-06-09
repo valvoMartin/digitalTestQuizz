@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using digital.Shared.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace digital.Shared.Entities
 {
-    public class City
+    public class City : IEntityWithName
     {
         public int Id { get; set; }
 

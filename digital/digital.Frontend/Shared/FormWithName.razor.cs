@@ -1,30 +1,29 @@
 using CurrieTechnologies.Razor.SweetAlert2;
-using digital.Shared.Entities;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components;
+using digital.Shared.Interfaces;
+using Microsoft.AspNetCore.Components.Routing;
 
-namespace digital.Frontend.Pages.Countries
+namespace digital.Frontend.Shared
 {
-    public partial class CountryForm
+    public partial class FormWithName<TModel> where TModel : IEntityWithName
     {
         private EditContext editContext = null!;
 
-        protected override void OnInitialized()
-        {
-            editContext = new(Country);
-        }
-
-        [EditorRequired, Parameter] public Country Country { get; set; } = null!;
+        [EditorRequired, Parameter] public TModel Model { get; set; } = default!;
+        [EditorRequired, Parameter] public string Label { get; set; } = null!;
         [EditorRequired, Parameter] public EventCallback OnValidSubmit { get; set; }
         [EditorRequired, Parameter] public EventCallback ReturnAction { get; set; }
-        [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
-        public bool FormPostedSuccessfully { get; set; } = false;
+        [Inject] public SweetAlertService SweetAlertService { get; set; } = null!;
+        public bool FormPostedSuccessfully { get; set; }
 
+        protected override void OnInitialized()
+        {
+            editContext = new(Model);
+        }
         private async Task OnBeforeInternalNavigation(LocationChangingContext context)
         {
             var formWasEdited = editContext.IsModified();
-
             if (!formWasEdited || FormPostedSuccessfully)
             {
                 return;
@@ -34,10 +33,9 @@ namespace digital.Frontend.Pages.Countries
             {
                 Title = "Confirmación",
                 Text = "¿Deseas abandonar la página y perder los cambios?",
-                Icon = SweetAlertIcon.Warning,
-                ShowCancelButton = true
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
             });
-
             var confirm = !string.IsNullOrEmpty(result.Value);
             if (confirm)
             {
@@ -48,3 +46,4 @@ namespace digital.Frontend.Pages.Countries
         }
     }
 }
+
