@@ -17,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=Connection"));
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConnectionNet"));
 builder.Services.AddTransient<SeedDb>();
 
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
