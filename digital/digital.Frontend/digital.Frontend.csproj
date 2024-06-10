@@ -17,8 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Cities\" />
-    <Folder Include="Pages\States\" />
     <Folder Include="wwwroot\sample-data\" />
   </ItemGroup>
 

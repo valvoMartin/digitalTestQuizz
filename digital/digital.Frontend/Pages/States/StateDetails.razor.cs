@@ -2,19 +2,18 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Components;
-using Orders.Frontend.Repositories;
 using System.Net;
 
-namespace digital.Frontend.Pages.Countries
+namespace digital.Frontend.Pages.States
 {
-    public partial class CountriesIndex
+    public partial class StateDetails
     {
-        public List<Country>? Countries { get; set; }
+        private State? state;
 
-        [Inject] private IRepository repository { get; set; } = null!;
+        [Parameter] public int StateId { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
-
+        [Inject] private IRepository Repository { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -23,47 +22,50 @@ namespace digital.Frontend.Pages.Countries
 
         private async Task LoadAsync()
         {
-            var responseHppt = await repository.GetAsync<List<Country>>("api/countries");
-            if (responseHppt.Error)
+            var responseHttp = await Repository.GetAsync<State>($"/api/states/{StateId}");
+            if (responseHttp.Error)
             {
-                var message = await responseHppt.GetErrorMessageAsync();
+                if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+                {
+                    NavigationManager.NavigateTo("/countries");
+                    return;
+                }
+
+                var message = await responseHttp.GetErrorMessageAsync();
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
-            Countries = responseHppt.Response!;
+
+            state = responseHttp.Response;
         }
 
-
-        private async Task DeleteAsync(Country country)
+        private async Task DeleteAsync(City city)
         {
             var result = await SweetAlertService.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
-                Text = $"¿Esta seguro que quieres borrar el país: {country.Name}?",
+                Text = $"¿Realmente deseas eliminar la ciudad? {city.Name}",
                 Icon = SweetAlertIcon.Question,
-                ShowCancelButton = true
+                ShowCancelButton = true,
+                CancelButtonText = "No",
+                ConfirmButtonText = "Si"
             });
 
             var confirm = string.IsNullOrEmpty(result.Value);
-
             if (confirm)
             {
                 return;
             }
 
-            var responseHTTP = await repository.DeleteAsync<Country>($"api/countries/{country.Id}");
-            if (responseHTTP.Error)
+            var responseHttp = await Repository.DeleteAsync<City>($"/api/cities/{city.Id}");
+            if (responseHttp.Error)
             {
-                if (responseHTTP.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+                if (responseHttp.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)
                 {
-                    NavigationManager.NavigateTo("/");
+                    var message = await responseHttp.GetErrorMessageAsync();
+                    await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                    return;
                 }
-                else
-                {
-                    var mensajeError = await responseHTTP.GetErrorMessageAsync();
-                    await SweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
-                }
-                return;
             }
 
             await LoadAsync();

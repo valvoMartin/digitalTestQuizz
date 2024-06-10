@@ -1,5 +1,7 @@
 ﻿using digital.Backend.Data;
+using digital.Backend.Helpers;
 using digital.Backend.Repositories.Interfaces;
+using digital.Shared.DTOs;
 using digital.Shared.Entities;
 using digital.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,7 @@ namespace digital.Backend.Repositories.Implementations
         {
             var countries = await _context.Countries
                 .Include(c => c.States)
+                .OrderBy(x => x.Name)
                 .ToListAsync();
             return new ActionResponse<IEnumerable<Country>>
             {
@@ -49,5 +52,22 @@ namespace digital.Backend.Repositories.Implementations
                 Result = country
             };
         }
+
+        public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.Countries
+                .Include(c => c.States)
+                .AsQueryable();
+
+            return new ActionResponse<IEnumerable<Country>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .OrderBy(x => x.Name)
+                    .Paginate(pagination)
+                    .ToListAsync()
+            };
+        }
+
     }
 }

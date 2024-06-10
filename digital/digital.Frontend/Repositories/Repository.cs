@@ -11,23 +11,19 @@ namespace Orders.Frontend.Repositories
 
         private JsonSerializerOptions _jsonDefaultOptions => new JsonSerializerOptions
         {
-            PropertyNameCaseInsensitive = true,
+            PropertyNameCaseInsensitive = true
         };
-
 
         public Repository(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-        //https://youtu.be/Jdl3h3gWMBQ?t=668
         public async Task<HttpResponseWrapper<object>> GetAsync(string url)
         {
             var responseHTTP = await _httpClient.GetAsync(url);
             return new HttpResponseWrapper<object>(null, !responseHTTP.IsSuccessStatusCode, responseHTTP);
         }
-
-
 
         public async Task<HttpResponseWrapper<T>> GetAsync<T>(string url)
         {
@@ -37,39 +33,34 @@ namespace Orders.Frontend.Repositories
                 var response = await UnserializeAnswerAsync<T>(responseHttp);
                 return new HttpResponseWrapper<T>(response, false, responseHttp);
             }
-
             return new HttpResponseWrapper<T>(default, true, responseHttp);
-
         }
-
 
         public async Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T model)
         {
-            var messageJSON = JsonSerializer.Serialize(model);
-            var messageContent = new StringContent(messageJSON, Encoding.UTF8, "application/json");
+            var messageJson = JsonSerializer.Serialize(model);
+            var messageContent = new StringContent(messageJson, Encoding.UTF8, "application/json");
             var responseHttp = await _httpClient.PostAsync(url, messageContent);
-            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
+            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp); ;
         }
-
 
         public async Task<HttpResponseWrapper<TActionResponse>> PostAsync<T, TActionResponse>(string url, T model)
         {
-            var messageJSON = JsonSerializer.Serialize(model);
-            var messageContent = new StringContent(messageJSON, Encoding.UTF8, "application/json");
+            var messageJson = JsonSerializer.Serialize(model);
+            var messageContent = new StringContent(messageJson, Encoding.UTF8, "application/json");
             var responseHttp = await _httpClient.PostAsync(url, messageContent);
             if (responseHttp.IsSuccessStatusCode)
             {
                 var response = await UnserializeAnswerAsync<TActionResponse>(responseHttp);
                 return new HttpResponseWrapper<TActionResponse>(response, false, responseHttp);
             }
-
             return new HttpResponseWrapper<TActionResponse>(default, true, responseHttp);
         }
 
-        public async Task<HttpResponseWrapper<object>> DeleteAsync(string url)
+        public async Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url)
         {
             var responseHttp = await _httpClient.DeleteAsync(url);
-            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
+            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp); ;
         }
 
         public async Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T model)
@@ -77,7 +68,7 @@ namespace Orders.Frontend.Repositories
             var messageJson = JsonSerializer.Serialize(model);
             var messageContent = new StringContent(messageJson, Encoding.UTF8, "application/json");
             var responseHttp = await _httpClient.PutAsync(url, messageContent);
-            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
+            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp); ;
         }
 
         public async Task<HttpResponseWrapper<TActionResponse>> PutAsync<T, TActionResponse>(string url, T model)
@@ -98,6 +89,5 @@ namespace Orders.Frontend.Repositories
             var response = await responseHttp.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(response, _jsonDefaultOptions)!;
         }
-
     }
 }

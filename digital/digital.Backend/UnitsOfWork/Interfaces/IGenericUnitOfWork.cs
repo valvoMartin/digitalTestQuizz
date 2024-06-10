@@ -1,4 +1,5 @@
-﻿using digital.Shared.Responses;
+﻿using digital.Shared.DTOs;
+using digital.Shared.Responses;
 
 namespace digital.Backend.UnitsOfWork.Interfaces
 {
@@ -13,6 +14,13 @@ namespace digital.Backend.UnitsOfWork.Interfaces
         Task<ActionResponse<T>> DeleteAsync(int id);
 
         Task<ActionResponse<T>> GetAsync(int id);
+
+
+
+        Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination);
+
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
+
     }
 
 }
