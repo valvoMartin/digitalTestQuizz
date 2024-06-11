@@ -2,6 +2,8 @@
 using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
 using digital.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,7 @@ namespace digital.Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CountriesController : GenericController<Country>
     {
         private readonly ICountriesUnitOfWork _countriesUnitOfWork;

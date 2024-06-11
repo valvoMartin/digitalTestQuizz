@@ -1,12 +1,15 @@
 ﻿using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
 using digital.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace digital.Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CitiesController : GenericController<City>
     {
         private readonly ICitiesUnitOfWork _citiesUnitOfWork;

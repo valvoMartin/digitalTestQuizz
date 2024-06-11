@@ -1,5 +1,6 @@
 ﻿using digital.Backend.Repositories.Interfaces;
 using digital.Backend.UnitsOfWork.Interfaces;
+using digital.Shared.DTOs;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -24,5 +25,11 @@ namespace digital.Backend.UnitsOfWork.Implementations
         public async Task<User> GetUserAsync(string email) => await _usersRepository.GetUserAsync(email);
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName) => await _usersRepository.IsUserInRoleAsync(user, roleName);
+
+
+        public async Task<SignInResult> LoginAsync(LoginDTO model) => await _usersRepository.LoginAsync(model);
+
+        public async Task LogoutAsync() => await _usersRepository.LogoutAsync();
+
     }
 }

@@ -8,6 +8,7 @@ namespace digital.Frontend.AuthenticationProviders
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var anonimous = new ClaimsIdentity();
+
             var admin = new ClaimsIdentity(new List<Claim>
             {
                 new Claim("FirstName", "Rocio"),
@@ -19,7 +20,7 @@ namespace digital.Frontend.AuthenticationProviders
 
 
 
-            return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(admin)));
+            return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(anonimous)));
         }
 
     }

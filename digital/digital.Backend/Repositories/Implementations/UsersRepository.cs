@@ -1,5 +1,6 @@
 ﻿using digital.Backend.Data;
 using digital.Backend.Repositories.Interfaces;
+using digital.Shared.DTOs;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,27 @@ namespace digital.Backend.Repositories.Implementations
         private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UsersRepository(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UsersRepository(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
+
+
+        public async Task<SignInResult> LoginAsync(LoginDTO model)
+        {
+            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
@@ -55,5 +70,8 @@ namespace digital.Backend.Repositories.Implementations
         {
             return await _userManager.IsInRoleAsync(user, roleName);
         }
+
+
+
     }
 }

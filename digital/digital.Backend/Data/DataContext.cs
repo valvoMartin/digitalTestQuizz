@@ -6,9 +6,7 @@ namespace digital.Backend.Data
 {
     public class DataContext : IdentityDbContext<User>
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-        }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
 
         public DbSet<Country> Countries { get; set; }
