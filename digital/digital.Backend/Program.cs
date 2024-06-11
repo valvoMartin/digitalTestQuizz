@@ -3,6 +3,8 @@ using digital.Backend.Repositories.Implementations;
 using digital.Backend.Repositories.Interfaces;
 using digital.Backend.UnitsOfWork.Implementations;
 using digital.Backend.UnitsOfWork.Interfaces;
+using digital.Shared.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -17,8 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConnectionNet"));
-builder.Services.AddTransient<SeedDb>();
+
 
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -27,15 +28,34 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
 builder.Services.AddScoped<IStatesRepository, StatesRepository>();
 builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 
 builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
 builder.Services.AddScoped<IStatesUnitOfWork, StatesUnitOfWork>();
 builder.Services.AddScoped<ICitiesUnitOfWork, CitiesUnitOfWork>();
+builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 
+
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConnectionNet"));
+builder.Services.AddTransient<SeedDb>();
+
+
+builder.Services.AddIdentity<User, IdentityRole>(x =>
+{
+    x.User.RequireUniqueEmail = true;
+    x.Password.RequireDigit = false;
+    x.Password.RequiredUniqueChars = 0;
+    x.Password.RequireLowercase = false;
+    x.Password.RequireNonAlphanumeric = false;
+    x.Password.RequireUppercase = false;
+})
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
 
 
 var app = builder.Build();
+
 SeedData(app);
 
 void SeedData(WebApplication app)
