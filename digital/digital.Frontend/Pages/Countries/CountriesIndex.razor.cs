@@ -1,12 +1,14 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Orders.Frontend.Repositories;
 using System.Net;
 
 namespace digital.Frontend.Pages.Countries
 {
+    [Authorize(Roles = "Admin")]
     public partial class CountriesIndex
     {
         public List<Country>? Countries { get; set; }

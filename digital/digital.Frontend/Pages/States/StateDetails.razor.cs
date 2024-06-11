@@ -1,11 +1,13 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 
 namespace digital.Frontend.Pages.States
 {
+    [Authorize(Roles = "Admin")]
     public partial class StateDetails
     {
         private State? state;

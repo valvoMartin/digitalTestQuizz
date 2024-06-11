@@ -2,11 +2,13 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 
 namespace digital.Frontend.Pages.Countries
 {
+    [Authorize(Roles = "Admin")]
     public partial class CountryDetails
     {
         private Country? country;

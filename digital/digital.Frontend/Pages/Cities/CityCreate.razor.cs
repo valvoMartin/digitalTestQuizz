@@ -2,10 +2,12 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Shared;
 using digital.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
 namespace digital.Frontend.Pages.Cities
 {
+    [Authorize(Roles = "Admin")]
     public partial class CityCreate
     {
         private City city = new();

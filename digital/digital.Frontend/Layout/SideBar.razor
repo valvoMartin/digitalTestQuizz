@@ -20,26 +20,32 @@
             <h2>Menu</h2>
             <ul>
                 <li>
-                   
+
                     <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
                         <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Inicio</span>
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink class="nav-link" href="/countries" Match="NavLinkMatch.All">
-                        <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Paises</span> 
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink class="nav-link" href="/states" Match="NavLinkMatch.All">
-                        <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Provincias</span> 
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink class="nav-link" href="/cities" Match="NavLinkMatch.All">
-                        <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Ciudades</span> 
-                    </NavLink>
-                </li>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <li>
+                            <NavLink class="nav-link" href="/countries" Match="NavLinkMatch.All">
+                                <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Paises</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" href="/states" Match="NavLinkMatch.All">
+                                <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Provincias</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" href="/cities" Match="NavLinkMatch.All">
+                                <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"> Ciudades</span>
+                            </NavLink>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+               
+                
                 
             </ul>
         </div>
