@@ -16,5 +16,7 @@ namespace digital.Backend.UnitsOfWork.Interfaces
 
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
 
+
+        Task<IEnumerable<Country>> GetComboAsync();
     }
 }

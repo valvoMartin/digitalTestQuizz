@@ -24,6 +24,9 @@ namespace digital.Backend.UnitsOfWork.Implementations
         public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination) => await _countriesRepository.GetAsync(pagination);
 
         public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _countriesRepository.GetTotalPagesAsync(pagination);
+
+        public async Task<IEnumerable<Country>> GetComboAsync() => await _countriesRepository.GetComboAsync();
+
     }
 }
 
