@@ -25,6 +25,7 @@ namespace Orders.Frontend.Repositories
             return new HttpResponseWrapper<object>(null, !responseHTTP.IsSuccessStatusCode, responseHTTP);
         }
 
+
         public async Task<HttpResponseWrapper<T>> GetAsync<T>(string url)
         {
             var responseHttp = await _httpClient.GetAsync(url);

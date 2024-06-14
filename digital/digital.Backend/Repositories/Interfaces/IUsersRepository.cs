@@ -32,5 +32,9 @@ namespace digital.Backend.Repositories.Interfaces
 
 
 
+        Task<string> GenerateEmailConfirmationTokenAsync(User user);
+
+        Task<IdentityResult> ConfirmEmailAsync(User user, string token);
+
     }
 }

@@ -12,7 +12,7 @@ namespace digital.Frontend.Pages.Auth
     public partial class Register
     {
 
-
+        private SweetAlertTheme SweetAlert = SweetAlertTheme.Dark;
         private UserDTO userDTO = new();
         private List<Country>? countries;
         private List<State>? states;
@@ -22,6 +22,8 @@ namespace digital.Frontend.Pages.Auth
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
+
+
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
 
@@ -36,7 +38,7 @@ namespace digital.Frontend.Pages.Auth
             userDTO.UserType = UserType.User;
 
             loading = true;
-            var responseHttp = await Repository.PostAsync<UserDTO, TokenDTO>("/api/accounts/CreateUser", userDTO);
+            var responseHttp = await Repository.PostAsync<UserDTO>("/api/accounts/CreateUser", userDTO);
             loading = false;
             if (responseHttp.Error)
             {
@@ -45,7 +47,8 @@ namespace digital.Frontend.Pages.Auth
                 return;
             }
 
-            await LoginService.LoginAsync(responseHttp.Response!.Token);
+            await SweetAlertService.FireAsync("Confirmación", "Su cuenta ha sido creada con éxito. <br>Se te ha <b>enviado un correo electrónico</b> con las instrucciones para activar tu usuario.", SweetAlertIcon.Info);
+
             NavigationManager.NavigateTo("/");
         }
 

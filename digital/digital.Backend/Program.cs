@@ -1,4 +1,5 @@
 using digital.Backend.Data;
+using digital.Backend.Helpers;
 using digital.Backend.Repositories.Implementations;
 using digital.Backend.Repositories.Interfaces;
 using digital.Backend.UnitsOfWork.Implementations;
@@ -56,9 +57,15 @@ builder.Services.AddSwaggerGen(c =>
         });
 });
 
+
+
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConnectionNet"));
+builder.Services.AddTransient<SeedDb>();
+builder.Services.AddScoped<IMailHelper, MailHelper>();
+
+
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
 
 builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
 builder.Services.AddScoped<IStatesRepository, StatesRepository>();
@@ -74,18 +81,25 @@ builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 
 
 
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConnectionNet"));
-builder.Services.AddTransient<SeedDb>();
+
 
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
 {
+    x.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    x.SignIn.RequireConfirmedEmail = true; // Habilito confirmacion por email
+
     x.User.RequireUniqueEmail = true;
     x.Password.RequireDigit = false;
     x.Password.RequiredUniqueChars = 0;
     x.Password.RequireLowercase = false;
     x.Password.RequireNonAlphanumeric = false;
     x.Password.RequireUppercase = false;
+
+    x.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); //TODO: 5 minutos de espera si erro 3 veces la contraseña
+    x.Lockout.MaxFailedAccessAttempts = 3; // TODO: 3 intentos permitido
+    x.Lockout.AllowedForNewUsers = true;
+
 })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();

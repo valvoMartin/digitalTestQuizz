@@ -26,8 +26,8 @@ namespace digital.Frontend.Pages.Auth
         {
             await LoadUserAsyc();
             await LoadCountriesAsync();
-            await LoadStatesAsyn(user!.City!.State!.Country!.Id);
-            await LoadCitiesAsyn(user!.City!.State!.Id);
+            await LoadStatesAsync(user!.City!.State!.Country!.Id);
+            await LoadCitiesAsync(user!.City!.State!.Id);
 
             //if (!string.IsNullOrEmpty(user!.Photo))
             //{
@@ -62,7 +62,7 @@ namespace digital.Frontend.Pages.Auth
             states = null;
             cities = null;
             user!.CityId = 0;
-            await LoadStatesAsyn(selectedCountry);
+            await LoadStatesAsync(selectedCountry);
         }
 
 
@@ -71,7 +71,7 @@ namespace digital.Frontend.Pages.Auth
             var selectedState = Convert.ToInt32(e.Value!);
             cities = null;
             user!.CityId = 0;
-            await LoadCitiesAsyn(selectedState);
+            await LoadCitiesAsync(selectedState);
         }
 
 
@@ -88,7 +88,7 @@ namespace digital.Frontend.Pages.Auth
         }
 
 
-        private async Task LoadStatesAsyn(int countryId)
+        private async Task LoadStatesAsync(int countryId)
         {
             var responseHttp = await Repository.GetAsync<List<State>>($"/api/states/combo/{countryId}");
             if (responseHttp.Error)
@@ -101,7 +101,7 @@ namespace digital.Frontend.Pages.Auth
         }
 
 
-        private async Task LoadCitiesAsyn(int stateId)
+        private async Task LoadCitiesAsync(int stateId)
         {
             var responseHttp = await Repository.GetAsync<List<City>>($"/api/cities/combo/{stateId}");
             if (responseHttp.Error)
