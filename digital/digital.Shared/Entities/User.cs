@@ -6,6 +6,7 @@ namespace digital.Shared.Entities
 {
     public class User : IdentityUser
     {
+        //[Range(1, int.Max)]
         [Display(Name = "Documento")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

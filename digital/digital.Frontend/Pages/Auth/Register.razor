@@ -25,13 +25,13 @@ else
                             <div class="mb-3">
                                 <label>Documento:</label>
                                 <div>
-                                    <InputText class="form-control" @bind-Value="@userDTO.Document" />
+                                    <InputText type="number" class="form-control" @bind-Value="@userDTO.Document"/>
                                     <ValidationMessage For="@(() => userDTO.Document)" />
                                 </div>
                             </div>
                             <label>Nombres:</label>
                             <div>
-                                <InputText class="form-control" @bind-Value="@userDTO.FirstName" />
+                                <InputText type="char" class="form-control" @bind-Value="@userDTO.FirstName" />
                                 <ValidationMessage For="@(() => userDTO.FirstName)" />
                             </div>
                         </div>
@@ -52,7 +52,7 @@ else
                         <div class="mb-3">
                             <label>Teléfono:</label>
                             <div>
-                                <InputText class="form-control" @bind-Value="@userDTO.PhoneNumber" />
+                                <InputText typeof="number" class="form-control" @bind-Value="@userDTO.PhoneNumber" />
                                 <ValidationMessage For="@(() => userDTO.PhoneNumber)" />
                             </div>
                         </div>
@@ -78,7 +78,7 @@ else
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label>Estado/Departamento:</label>
+                            <label>Provincias:</label>
                             <div>
                                 <select class="form-select" @onchange="StateChangedAsync">
                                     <option value="0">-- Seleccione su Provincia --</option>
@@ -89,6 +89,8 @@ else
                                             <option value="@state.Id">@state.Name</option>
                                         }
                                     }
+                                    @* TODO: Que te avise cuando aun no seleccionaste un Pais *@
+
                                 </select>
                             </div>
                         </div>
