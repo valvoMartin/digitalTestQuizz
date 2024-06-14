@@ -1,10 +1,8 @@
 ﻿@page "/Register"
 
-<h3>Registrar Usuario/Empresa</h3>
-
 @if (loading)
 {
-<Loading />
+    <Loading />
 }
 else
 {
@@ -12,7 +10,14 @@ else
         <DataAnnotationsValidator />
 
         <div class="card">
+            <div class="card-header">
+                <span>
+                    <i class="oi oi-person" /> Registrar Nuevo  Usuario
+                    <button class="btn btn-sm btn-primary float-end" type="submit"><i class="bi bi-person-add" /> Registrar</button>
+                </span>
+            </div>
             <div class="card-body">
+
                 <div class="row">
 
                     <div class="col-6">
@@ -55,14 +60,55 @@ else
 
 
                     </div>
+
                     <div class="col-6">
+                        <div class="mb-3">
+                            <label>País:</label>
+                            <div>
+                                <select class="form-select" @onchange="CountryChangedAsync">
+                                    <option value="0">-- Seleccione su país --</option>
+                                    @if (countries is not null)
+                                    {
+                                        @foreach (var country in countries)
+                                        {
+                                            <option value="@country.Id">@country.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Estado/Departamento:</label>
+                            <div>
+                                <select class="form-select" @onchange="StateChangedAsync">
+                                    <option value="0">-- Seleccione su Provincia --</option>
+                                    @if (states is not null)
+                                    {
+                                        @foreach (var state in states)
+                                        {
+                                            <option value="@state.Id">@state.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label>Ciudad:</label>
                             <div>
-                                <InputNumber class="form-control" @bind-Value="@userDTO.CityId" />
+                                <select class="form-select" @bind="userDTO.CityId">
+                                    <option value="0">-- Seleccione su ciudad --</option>
+                                    @if (cities is not null)
+                                    {
+                                        @foreach (var city in cities)
+                                        {
+                                            <option value="@city.Id">@city.Name</option>
+                                        }
+                                    }
+                                </select>
                                 <ValidationMessage For="@(() => userDTO.CityId)" />
                             </div>
                         </div>
+
 
                         <div class="mb-3">
                             <label>Contraseña:</label>
@@ -80,7 +126,7 @@ else
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Registrar</button>
+                @* <button class="btn btn-primary" type="submit">Registrar</button> *@
             </div>
         </div>
 

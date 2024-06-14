@@ -30,9 +30,22 @@ namespace digital.Backend.Repositories.Implementations
                     Result = entity
                 };
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return DbUpdateExceptionActionResponse();
+                if (ex.InnerException!.Message.Contains("duplicate"))
+                {
+                    {
+                        return DbUpdateExceptionActionResponse();
+
+                    }
+
+                } 
+                return new ActionResponse<T>
+                {
+                    WasSuccess = false,
+                    Message = ex.Message
+                };
+
             }
             catch (Exception exception)
             {
@@ -89,6 +102,7 @@ namespace digital.Backend.Repositories.Implementations
             };
         }
 
+
         public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync()
         {
             return new ActionResponse<IEnumerable<T>>
@@ -97,6 +111,7 @@ namespace digital.Backend.Repositories.Implementations
                 Result = await _entity.ToListAsync()
             };
         }
+
 
         public virtual async Task<ActionResponse<T>> UpdateAsync(T entity)
         {
@@ -110,9 +125,22 @@ namespace digital.Backend.Repositories.Implementations
                     Result = entity
                 };
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return DbUpdateExceptionActionResponse();
+                if (ex.InnerException!.Message.Contains("duplicate"))
+                {
+                    {
+                        return DbUpdateExceptionActionResponse();
+
+                    }
+
+                }
+                return new ActionResponse<T>
+                {
+                    WasSuccess = false,
+                    Message = ex.Message
+                };
+
             }
             catch (Exception exception)
             {
