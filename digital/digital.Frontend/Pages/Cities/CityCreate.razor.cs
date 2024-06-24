@@ -1,3 +1,5 @@
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Shared;
@@ -16,6 +18,9 @@ namespace digital.Frontend.Pages.Cities
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
+
+        [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
         [Parameter] public int StateId { get; set; }
 
         private async Task CreateAsync()
@@ -28,7 +33,10 @@ namespace digital.Frontend.Pages.Cities
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
+
+            await BlazoredModal.CloseAsync(ModalResult.Ok());
             Return();
+
             var toast = SweetAlertService.Mixin(new SweetAlertOptions
             {
                 Toast = true,

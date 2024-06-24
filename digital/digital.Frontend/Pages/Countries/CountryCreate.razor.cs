@@ -1,3 +1,5 @@
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Shared;
@@ -16,8 +18,9 @@ namespace digital.Frontend.Pages.Countries
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
+        [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
-       
+
 
         private async Task CreateAsync()
         {
@@ -28,6 +31,8 @@ namespace digital.Frontend.Pages.Countries
                 await SweetAlertService.FireAsync("Error", message);
                 return;
             }
+
+            await BlazoredModal.CloseAsync(ModalResult.Ok());
 
             Return();
             var toast = SweetAlertService.Mixin(new SweetAlertOptions
@@ -43,6 +48,7 @@ namespace digital.Frontend.Pages.Countries
         private void Return()
         {
             countryForm!.FormPostedSuccessfully = true;
+
             NavigationManager.NavigateTo("/countries");
         }
     }

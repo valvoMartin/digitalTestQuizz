@@ -1,3 +1,5 @@
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
@@ -21,8 +23,9 @@ namespace digital.Frontend.Pages.Countries
 
         [Parameter, SupplyParameterFromQuery] public string Page { get; set; } = string.Empty;
         [Parameter, SupplyParameterFromQuery] public string Filter { get; set; } = string.Empty;
-
         [Parameter, SupplyParameterFromQuery] public int RecordsNumber { get; set; } = 10;
+
+        [CascadingParameter] IModalService Modal { get; set; } = default!;
 
 
 
@@ -31,18 +34,26 @@ namespace digital.Frontend.Pages.Countries
             await LoadAsync();
         }
 
-        //private async Task LoadAsync()
-        //{
 
-        //    var responseHppt = await repository.GetAsync<List<Country>>("api/countries");
-        //    if (responseHppt.Error)
-        //    {
-        //        var message = await responseHppt.GetErrorMessageAsync();
-        //        await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
-        //        return;
-        //    }
-        //    Countries = responseHppt.Response!;
-        //}
+        private async Task ShowModalAsync(int id = 0, bool isEdit = false)
+        {
+            IModalReference modalReference;
+
+            if (isEdit)
+            {
+                modalReference = Modal.Show<CountryEdit>(string.Empty, new ModalParameters().Add("Id", id));
+            }
+            else
+            {
+                modalReference = Modal.Show<CountryCreate>();
+            }
+
+            var result = await modalReference.Result;
+            if (result.Confirmed)
+            {
+                await LoadAsync();
+            }
+        }
 
 
         private async Task DeleteAsync(Country country)

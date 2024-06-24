@@ -1,5 +1,8 @@
 
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
+using digital.Frontend.Pages.States;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +27,9 @@ namespace digital.Frontend.Pages.Countries
         [Parameter, SupplyParameterFromQuery] public string Page { get; set; } = string.Empty;
         [Parameter, SupplyParameterFromQuery] public string Filter { get; set; } = string.Empty;
         [Parameter, SupplyParameterFromQuery] public int RecordsNumber { get; set; } = 10;
+
+        [CascadingParameter] IModalService Modal { get; set; } = default!;
+
 
 
         [Parameter] public int CountryId { get; set; }
@@ -192,6 +198,27 @@ namespace digital.Frontend.Pages.Countries
             }
             country = responseHttp.Response;
             return true;
+        }
+
+
+        private async Task ShowModalAsync(int id = 0, bool isEdit = false)
+        {
+            IModalReference modalReference;
+
+            if (isEdit)
+            {
+                modalReference = Modal.Show<StateEdit>(string.Empty, new ModalParameters().Add("StateId", id));
+            }
+            else
+            {
+                modalReference = Modal.Show<StateCreate>(string.Empty, new ModalParameters().Add("CountryId", CountryId));
+            }
+
+            var result = await modalReference.Result;
+            if (result.Confirmed)
+            {
+                await LoadAsync();
+            }
         }
 
 

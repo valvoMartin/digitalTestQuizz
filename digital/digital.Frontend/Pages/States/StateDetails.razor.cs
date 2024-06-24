@@ -1,4 +1,7 @@
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
+using digital.Frontend.Pages.Cities;
 using digital.Frontend.Repositories;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +27,7 @@ namespace digital.Frontend.Pages.States
         [Parameter, SupplyParameterFromQuery] public string Filter { get; set; } = string.Empty;
         [Parameter, SupplyParameterFromQuery] public int RecordsNumber { get; set; } = 10;
 
+        [CascadingParameter] IModalService Modal { get; set; } = default!;
 
 
         protected override async Task OnInitializedAsync()
@@ -31,24 +35,7 @@ namespace digital.Frontend.Pages.States
             await LoadAsync();
         }
 
-        //private async Task LoadAsync()
-        //{
-        //    var responseHttp = await Repository.GetAsync<State>($"/api/states/{StateId}");
-        //    if (responseHttp.Error)
-        //    {
-        //        if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
-        //        {
-        //            NavigationManager.NavigateTo("/countries");
-        //            return;
-        //        }
-
-        //        var message = await responseHttp.GetErrorMessageAsync();
-        //        await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
-        //        return;
-        //    }
-
-        //    state = responseHttp.Response;
-        //}
+       
 
         private async Task DeleteAsync(City city)
         {
@@ -188,6 +175,29 @@ namespace digital.Frontend.Pages.States
             state = responseHttp.Response;
             return true;
         }
+
+
+        private async Task ShowModalAsync(int id = 0, bool isEdit = false)
+        {
+            IModalReference modalReference;
+
+            if (isEdit)
+            {
+                modalReference = Modal.Show<CityEdit>(string.Empty, new ModalParameters().Add("CityId", id));
+            }
+            else
+            {
+                modalReference = Modal.Show<CityCreate>(string.Empty, new ModalParameters().Add("StateId", StateId));
+            }
+
+            var result = await modalReference.Result;
+            if (result.Confirmed)
+            {
+                await LoadAsync();
+            }
+        }
+
+
 
         private void ValidateRecordsNumber(int recordsnumber)
         {

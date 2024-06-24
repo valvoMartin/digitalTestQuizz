@@ -1,3 +1,4 @@
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using Microsoft.AspNetCore.Components;
@@ -17,6 +18,9 @@ namespace digital.Frontend.Pages.Auth
         [Parameter, SupplyParameterFromQuery] public string UserId { get; set; } = string.Empty;
         [Parameter, SupplyParameterFromQuery] public string Token { get; set; } = string.Empty;
 
+        [CascadingParameter] IModalService Modal { get; set; } = default!;
+
+
         protected async Task ConfirmAccountAsync()
         {
             var responseHttp = await Repository.GetAsync($"/api/accounts/ConfirmEmail/?userId={UserId}&token={Token}");
@@ -30,8 +34,9 @@ namespace digital.Frontend.Pages.Auth
 
             await SweetAlertService.FireAsync("<b>Registro Exitoso</b>", "Gracias por confirmar su email, ahora puedes ingresar al sistema.", SweetAlertIcon.Success);
 
-            
-            NavigationManager.NavigateTo("/Login");
+            Modal.Show<Login>();
+
+            //NavigationManager.NavigateTo("/Login");
         }
     }
 }

@@ -1,3 +1,5 @@
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Shared;
@@ -18,11 +20,14 @@ namespace digital.Frontend.Pages.Auth
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
 
+        [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
         private async Task ChangePasswordAsync()
         {
             loading = true;
             var responseHttp = await Repository.PostAsync("/api/accounts/changePassword", changePasswordDTO);
             loading = false;
+            await BlazoredModal.CloseAsync(ModalResult.Ok());
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();

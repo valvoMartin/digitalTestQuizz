@@ -1,4 +1,5 @@
 
+using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Services;
@@ -22,6 +23,9 @@ namespace digital.Frontend.Pages.Auth
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
 
+        [CascadingParameter] IModalService Modal { get; set; } = default!;
+
+        
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,6 +41,10 @@ namespace digital.Frontend.Pages.Auth
             //}
         }
 
+        private void ShowModal()
+        {
+            Modal.Show<ChangePassword>();
+        }
 
         private async Task LoadUserAsyc()
         {
