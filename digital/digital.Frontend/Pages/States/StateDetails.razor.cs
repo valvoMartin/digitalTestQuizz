@@ -186,5 +186,13 @@ namespace digital.Frontend.Pages.States
             await SelectedPageAsync(page);
         }
 
+
+        private async Task FilterCallBack(string filter)
+        {
+            Filter = filter;
+            await ApplyFilterAsync();
+            StateHasChanged();
+        }
+
     }
 }

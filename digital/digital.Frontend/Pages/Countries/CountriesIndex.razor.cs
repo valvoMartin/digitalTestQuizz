@@ -160,6 +160,14 @@ namespace digital.Frontend.Pages.Countries
         }
 
 
+        private async Task FilterCallBack(string filter)
+        {
+            Filter = filter;
+            await ApplyFilterAsync();
+            StateHasChanged();
+        }
+
+
 
     }
 }
