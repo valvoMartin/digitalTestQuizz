@@ -1,4 +1,5 @@
 ﻿using digital.Backend.Helpers;
+using digital.Backend.Repositories.Interfaces;
 using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
 using digital.Shared.Entities;
@@ -22,11 +23,34 @@ namespace digital.Backend.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMailHelper _mailHelper;
 
-        public AccountsController(IUsersUnitOfWork usersUnitOfWork, IConfiguration configuration, IMailHelper mailHelper)
+        public AccountsController(IUsersUnitOfWork usersUnitOfWork, IConfiguration configuration, IMailHelper mailHelper, IUsersRepository userReposytory)
         {
             _usersUnitOfWork = usersUnitOfWork;
             _configuration = configuration;
             _mailHelper = mailHelper;
+        }
+
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
+        {
+            var response = await _usersUnitOfWork.GetAsync(pagination);
+            if (response.WasSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("totalPages")]
+        public async Task<IActionResult> GetPagesAsync([FromQuery] PaginationDTO pagination)
+        {
+            var action = await _usersUnitOfWork.GetTotalPagesAsync(pagination);
+            if (action.WasSuccess)
+            {
+                return Ok(action.Result);
+            }
+            return BadRequest();
         }
 
 

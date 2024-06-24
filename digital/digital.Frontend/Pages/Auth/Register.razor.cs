@@ -25,7 +25,8 @@ namespace digital.Frontend.Pages.Auth
 
 
         [Inject] private IRepository Repository { get; set; } = null!;
-        [Inject] private ILoginService LoginService { get; set; } = null!;
+        //[Inject] private ILoginService LoginService { get; set; } = null!;
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,6 +37,8 @@ namespace digital.Frontend.Pages.Auth
         {
             userDTO.UserName = userDTO.Email;
             userDTO.UserType = UserType.User;
+
+           
 
             loading = true;
             var responseHttp = await Repository.PostAsync<UserDTO>("/api/accounts/CreateUser", userDTO);

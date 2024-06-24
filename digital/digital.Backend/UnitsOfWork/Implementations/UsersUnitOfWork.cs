@@ -2,6 +2,7 @@
 using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
 using digital.Shared.Entities;
+using digital.Shared.Responses;
 using Microsoft.AspNetCore.Identity;
 
 namespace digital.Backend.UnitsOfWork.Implementations
@@ -51,6 +52,14 @@ namespace digital.Backend.UnitsOfWork.Implementations
         public async Task<string> GeneratePasswordResetTokenAsync(User user) => await _usersRepository.GeneratePasswordResetTokenAsync(user);
 
         public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password) => await _usersRepository.ResetPasswordAsync(user, token, password);
+
+
+
+
+
+        public async Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination) => await _usersRepository.GetAsync(pagination);
+
+        public async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _usersRepository.GetTotalPagesAsync(pagination);
 
     }
 }

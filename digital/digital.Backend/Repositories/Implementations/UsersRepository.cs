@@ -1,7 +1,9 @@
 ﻿using digital.Backend.Data;
+using digital.Backend.Helpers;
 using digital.Backend.Repositories.Interfaces;
 using digital.Shared.DTOs;
 using digital.Shared.Entities;
+using digital.Shared.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -118,6 +120,51 @@ namespace digital.Backend.Repositories.Implementations
         {
             return await _userManager.ResetPasswordAsync(user, token, password);
         }
+
+        public async Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.Users
+                .Include(u => u.City)
+                .ThenInclude(c => c!.State)
+                .ThenInclude(s => s!.Country)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.FirstName.ToLower().Contains(pagination.Filter.ToLower()) ||
+                                                    x.LastName.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            return new ActionResponse<IEnumerable<User>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .OrderBy(x => x.FirstName)
+                    .ThenBy(x => x.LastName)
+                    .Paginate(pagination)
+                    .ToListAsync()
+            };
+        }
+
+        public async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.FirstName.ToLower().Contains(pagination.Filter.ToLower()) ||
+                                                    x.LastName.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            double count = await queryable.CountAsync();
+            double totalPages = Math.Ceiling(count / pagination.RecordsNumber);
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = (int)totalPages
+            };
+        }
+
 
     }
 }

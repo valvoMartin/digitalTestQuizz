@@ -1,11 +1,18 @@
 ﻿using digital.Shared.DTOs;
 using digital.Shared.Entities;
+using digital.Shared.Responses;
 using Microsoft.AspNetCore.Identity;
 
 namespace digital.Backend.UnitsOfWork.Interfaces
 {
     public interface IUsersUnitOfWork
     {
+        Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination);
+
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
+
+
+
         Task<User> GetUserAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);
