@@ -2,6 +2,7 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Services;
+using digital.Shared.DTOs;
 using digital.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 using System.Net;
@@ -117,7 +118,7 @@ namespace digital.Frontend.Pages.Auth
 
         private async Task SaveUserAsync()
         {
-            var responseHttp = await Repository.PutAsync<User>("/api/accounts", user!);
+            var responseHttp = await Repository.PutAsync<User, TokenDTO>("/api/accounts", user!);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -125,6 +126,7 @@ namespace digital.Frontend.Pages.Auth
                 return;
             }
 
+            await LoginService.LoginAsync(responseHttp.Response!.Token);
             NavigationManager.NavigateTo("/");
         }
     }

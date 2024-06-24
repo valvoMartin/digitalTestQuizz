@@ -10,7 +10,7 @@ namespace digital.Frontend.Pages.Auth
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!; 
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
-        private SweetAlertTheme SweetAlert = SweetAlertTheme.Dark;
+        // private SweetAlertTheme SweetAlert = SweetAlertTheme.Dark;
 
         [Inject] private IRepository Repository { get; set; } = null!;
 

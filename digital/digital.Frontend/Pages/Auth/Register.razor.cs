@@ -12,7 +12,7 @@ namespace digital.Frontend.Pages.Auth
     public partial class Register
     {
 
-        private SweetAlertTheme SweetAlert = SweetAlertTheme.Dark;
+        // private SweetAlertTheme SweetAlert = SweetAlertTheme.Dark;
         private UserDTO userDTO = new();
         private List<Country>? countries;
         private List<State>? states;
