@@ -59,7 +59,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConnectionNet"));
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=Connection"));
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IMailHelper, MailHelper>();
 
