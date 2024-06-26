@@ -18,15 +18,15 @@ namespace digital.Frontend.Pages.Auth
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ILoginService LoginService { get; set; } = null!;
 
-        [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+        //[CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
         private async Task LoginAsync()
         {
-            if (wasClose)
-            {
-                NavigationManager.NavigateTo("/");
-                return;
-            }
+            //if (wasClose)
+            //{
+            //    NavigationManager.NavigateTo("/");
+            //    return;
+            //}
 
             var responseHttp = await Repository.PostAsync<LoginDTO, TokenDTO>("/api/accounts/Login", loginDTO);
             if (responseHttp.Error)
@@ -37,14 +37,14 @@ namespace digital.Frontend.Pages.Auth
             }
 
             await LoginService.LoginAsync(responseHttp.Response!.Token);
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/page");
         }
 
-        private async Task CloseModalAsync()
-        {
-            wasClose = true;
-            await BlazoredModal.CloseAsync(ModalResult.Ok());
-        }
+        //private async Task CloseModalAsync()
+        //{
+        //    wasClose = true;
+        //    await BlazoredModal.CloseAsync(ModalResult.Ok());
+        //}
 
     }
 }

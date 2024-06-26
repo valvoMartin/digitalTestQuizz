@@ -1,7 +1,7 @@
 ﻿@page "/"
 
 <PageTitle>DigitalBee Test</PageTitle>
-
+@* 
 <AuthorizeView Roles="Admin">
     <Authorized>
         <p>Estas autenticado y autorizado, @context.User.Identity?.Name</p>
@@ -11,3 +11,111 @@
     </NotAuthorized>
 
 </AuthorizeView>
+
+<AuthLinks /> *@
+
+<body class="index-page">
+
+    @* <header id="header" class="header">
+
+        <div class="topbar d-flex align-items-center">
+            <div class="container d-flex justify-content-center justify-content-md-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope d-flex align-items-center"><a href="rocio@yopmail.com">digitalBee@yopmail.com</a></i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+54 3492 607557</span></i>
+                </div>
+                <div class="social-links d-none d-md-flex align-items-center">
+                    <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="branding d-flex align-items-center">
+
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="/" class="logo d-flex align-items-center">
+                    <img src="assets/img/logo-menu_comprimido.jpg" alt="">
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="#hero" class="active">Test</a></li>
+                        <li><a href="#about">Nosotros</a></li>
+                        <li><a href="#services">Servicios</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+                <a class="btn-getstarted" @onclick=@(() => ShowModal())>Comenzar Test</a>
+
+
+            </div>
+
+        </div>
+
+    </header> *@
+
+    <main class="main">
+        <section id="hero" class="hero section">
+
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="zoom-out">
+                        <h1>La mejor solucion para tu negocio</h1>
+                        <p>dasuhudf hfua hfguhadfusdñh fua</p>
+                        <div class="d-flex">
+                             <a href="/Login" class="nav-link btn-get-started">Comenzar Test</a> 
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
+                        <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+
+        <section id="about" class="about section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Nosotros</h2>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua.
+                        </p>
+                        <ul>
+                            <li><i class="bi bi-check2-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
+                            <li><i class="bi bi-check2-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
+                            <li><i class="bi bi-check2-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <p>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                        <a href="#" class="read-more"><span>Leer mas</span><i class="bi bi-arrow-right"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section><!-- /About Section -->
+
+
+    </main>
+</body>
