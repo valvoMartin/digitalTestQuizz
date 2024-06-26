@@ -1,3 +1,7 @@
+# Roles de Usuarios
+  - Admin        => Le permito ver todo
+  - User         => Tiene acceso a la pagina de Sistema
+  - Anonimous    => Un usuario que todavia no se ha registrado 
 
 # PAGINA PRINCIPAL
   - La pagina de bienvenida muestra la pagina principal con un header arriba, con logo de la empresa de un lado y Singing y Login a la derecha
