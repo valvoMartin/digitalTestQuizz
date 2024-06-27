@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\digital.Frontend\digital.Frontend.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Data\CountriesStatesCities.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
