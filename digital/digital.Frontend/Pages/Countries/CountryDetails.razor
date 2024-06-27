@@ -1,0 +1,65 @@
+﻿@page "/countries/details/{CountryId:int}"
+
+@if (country is null)
+{
+    <Loading />
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            <span>
+                <i class="bi bi-globe-americas" /> @country.Name
+                <a class="btn btn-sm btn-primary float-end mx-1" href="/states/create/@country.Id"><i class="bi bi-plus-square" />  Adicionar Provincia </a>
+                <a class="btn btn-sm btn-success float-end" href="/countries"><i class="bi bi-arrow-left" />  Regresar</a>
+            </span>
+        </div>
+        <div class="card-body">
+            <Filter PlaceHolder="Buscar Provincia..." Callback=@FilterCallBack />
+            <GenericList MyList="states!">
+                <Body>
+                    <Pagination CurrentPage="currentPage"
+                                TotalPages="totalPages"
+                                SelectedPage="SelectedPageAsync"
+                                RecordsNumber="SelectedRecordsNumberAsync" />
+
+
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Provincias</th>
+                                <th style="width:90px">Ciudades</th>
+                                @* <th style="width:210px"></th> *@
+                                <th style="width:168px"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var state in states!)
+                            {
+                                <tr>
+                                    
+                                    <td><a href="/states/details/@state.Id">@state.Name</a></td>
+                                    <td>@state.CitiesNumbers</td>
+                                    
+                                    <td>
+@*                                      <a class="btn btn-warning btn-sm" href="/states/edit/@state.Id">Editar</a>
+                                        <a class="btn btn-info btn-sm" href="/states/details/@state.Id">Detalles</a>
+                                        <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state))>Borrar</button>
+
+                                *@
+                                        <a class="btn btn-warning btn-sm" href="/states/edit/@state.Id"><i class="bi bi-pencil" /> Editar</a>
+                                        <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state))><i class="bi bi-trash" /> Borrar</button>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </Body>
+            </GenericList>
+        </div>
+    </div>
+}
+
