@@ -1,3 +1,7 @@
+# Roles de Usuarios
+  - Admin        => Le permito ver todo
+  - User         => Tiene acceso a la pagina de Sistema
+  - Anonimous    => Un usuario que todavia no se ha registrado 
 
 # PAGINA PRINCIPAL
   - La pagina de bienvenida muestra la pagina principal con un header arriba, con logo de la empresa de un lado y Singing y Login a la derecha
@@ -77,3 +81,8 @@
   - Para el componente de preguntas tener en cuenta que hay algunas que tenes q indicar un nivel o una cantidad de que tanto te sentis identificado(Ver comom implementar esto de forma agradable a la vista)  
 
 ## FILTROS
+
+
+# DUDAS
+  - Como es la mejor manera de hacer una carga de datos que conlleva, muchos datos a ingresar. Donde esta carga se deberia hacer por pasos, en la misma ruta.
+  - 
