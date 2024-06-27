@@ -43,6 +43,7 @@ namespace digital.Backend.Data
 
             await _usersUnitOfWork.CheckRoleAsync(UserType.Admin.ToString());
             await _usersUnitOfWork.CheckRoleAsync(UserType.User.ToString());
+            //await _usersUnitOfWork.CheckRoleAsync(UserType.Anonimous.ToString());
         }
 
 

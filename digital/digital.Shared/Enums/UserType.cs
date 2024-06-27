@@ -7,7 +7,12 @@ namespace digital.Shared.Enums
         [Description("Administrador")]
         Admin,
 
+
         [Description("Usuario")]
         User
+
+
+        //[Description("Anonimo")]
+        //Anonimous
     }
 }
