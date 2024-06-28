@@ -1,16 +1,36 @@
 ﻿@inherits LayoutComponentBase
 
+<HeaderTopBar />
+<header id="header" class="header">
+
+    <div class="branding d-flex align-items-center">
+
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+            <a href="/" class="logo d-flex align-items-center">
+                <img src="assets/img/logo-menu_comprimido.jpg" alt="">
+            </a>
+
+            <AuthLinks />
+
+        </div>
+
+    </div>
+
+</header>
 
 <div class="page">
+    
+
+
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
+        @* <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
-
+ *@
         <article class="content px-4">
             @Body
         </article>

@@ -38,7 +38,7 @@ namespace digital.Frontend.Pages.Auth
             }
 
             await LoginService.LoginAsync(responseHttp.Response!.Token);
-            NavigationManager.NavigateTo("/page");
+            NavigationManager.NavigateTo("/");
         }
 
         //private async Task CloseModalAsync()

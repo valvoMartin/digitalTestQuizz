@@ -234,7 +234,7 @@ namespace digital.Backend.Controllers
             return _mailHelper.SendMail(user.FullName, user.Email!,
                 $"DigitalBee - Confirmación de cuenta",
                 $"<h1>DigitalBee Test - Confirmación de cuenta</h1>" +
-                $"<p>Para habilitar el usuario, por favor hacer clic 'Confirmar Email':</p>" +
+                $"<p>Para habilitar el usuario, por favor hacer click 'Confirmar Email':</p>" +
                 $"<b><a href ={tokenLink}>Confirmar Email</a></b>");
         }
 
@@ -277,9 +277,9 @@ namespace digital.Backend.Controllers
             }, HttpContext.Request.Scheme, _configuration["Url Frontend"]);
 
             var response = _mailHelper.SendMail(user.FullName, user.Email!,
-                $"Orders - Recuperación de contraseña",
-                $"<h1>Orders - Recuperación de contraseña</h1>" +
-                $"<p>Para recuperar su contraseña, por favor hacer clic 'Recuperar Contraseña':</p>" +
+                $"DigitalBee - Recuperación de contraseña",
+                $"<h1>DigitalBee - Recuperación de contraseña</h1>" +
+                $"<p>Para recuperar su contraseña, por favor hacer click 'Recuperar Contraseña':</p>" +
                 $"<b><a href ={tokenLink}>Recuperar Contraseña</a></b>");
 
             if (response.WasSuccess)
