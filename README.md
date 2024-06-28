@@ -42,6 +42,8 @@
   - 2 = Competente
   - 3 = Avanzado
   - 4 = Experto
+  # CAMPOS de Company
+  --
 
 ## AREAS
 - Cada area es unica y no es repetible
