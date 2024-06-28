@@ -16,6 +16,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddSweetAlert2();
 builder.Services.AddAuthorizationCore();
+
 //builder.Services.AddBlazoredModal();
 
 builder.Services.AddScoped<AuthenticationProviderJWT>();
