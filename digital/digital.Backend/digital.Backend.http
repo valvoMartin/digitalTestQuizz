@@ -1,4 +1,4 @@
-@digital.Backend_HostAddress = http://localhost:5227
+@digital.Backend_HostAddress = http://localhost:5252
 
 GET {{digital.Backend_HostAddress}}/weatherforecast/
 Accept: application/json
