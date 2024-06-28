@@ -58,7 +58,7 @@ namespace Orders.Frontend.Repositories
             return new HttpResponseWrapper<TActionResponse>(default, true, responseHttp);
         }
 
-        //TODO: Implementar el metodo delete, para que no borre sino que actualice el estado a inactivo
+        //TODO: Implementar el metodo delete, para que no borre sino que actualice el estado a inactivo, s epodria hacer con el mismo update, la le cambio la fechaEliminacion y deja de ser null
         public async Task<HttpResponseWrapper<object>> DeleteAsync<T>(string url)
         {
             var responseHttp = await _httpClient.DeleteAsync(url);
