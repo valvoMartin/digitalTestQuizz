@@ -1,0 +1,44 @@
+﻿
+<nav class="sidebar">
+    
+    <AuthorizeView Roles="Admin"> 
+        <Authorized>
+            <div class="sidebar-links">
+                <h2>Menu Administradores</h2>
+                <ul>
+                    <li>
+                        <a href="/users" title="Users" class="">
+                            <span>Usuarios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/countries" title="Orders" class="">
+
+                            <span>Paises</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/entities" title="Documentation" class="">
+                            <span>Empresas</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </Authorized>
+        
+    </AuthorizeView>
+    
+    <div class="sidebar-links">
+        <h2>Menu</h2>
+        <ul>
+            <li>
+                <a href="/page" title="Communication" class="">
+                    <span>Mi Empresa</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+</nav>

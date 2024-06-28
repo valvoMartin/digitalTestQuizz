@@ -1,0 +1,67 @@
+﻿@page "/countries"
+
+
+
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            <span>
+                <i class="bi bi-globe-americas" /> Países
+                <a class="btn btn-primary btn-sm float-end" href="/countries/create"><i class="bi bi-plus-square" /> Adicionar País </a>
+            </span>
+        </div>
+        <div class="card-body">
+            <Filter PlaceHolder="Buscar país..." Callback=@FilterCallBack />
+
+            <GenericList MyList="Countries">
+                <Body>
+                    <Pagination CurrentPage="currentPage"
+                                TotalPages="totalPages"
+                                SelectedPage="SelectedPageAsync"
+                                RecordsNumber="SelectedRecordsNumberAsync" />
+
+
+
+                    @if (Countries is null)
+                    {
+                        <Loading />
+                    }
+                    else
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>País</th>
+                                    <th style="width:210px">Provincias</th>
+                                    @* <th style="width:210px"></th> *@
+                                    <th style="width:168px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var country in Countries!)
+                                {
+                                    <tr>
+                                        <td><a href="/countries/details/@country.Id"> @country.Name</a></td>
+
+                                        <td>@country.StatesNumber</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning" href="/countries/edit/@country.Id" ><i class="bi bi-pencil" /> Editar</a>
+                                            <button @onclick=@(() => DeleteAsync(country)) class="btn btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
+
+
+                                            @* <a class="btn btn-info btn-sm" href="/countries/details/@country.Id">Detalles</a> *@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </Body>
+            </GenericList>
+        </div>
+    </div>
+
+</body>
+
+
