@@ -12,8 +12,8 @@ using digital.Backend.Data;
 namespace digital.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240628143559_InitialDb")]
-    partial class InitialDb
+    [Migration("20240701135953_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,6 +182,102 @@ namespace digital.Backend.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("digital.Shared.Entities.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodSize")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cuit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateDelete")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("int");
+
+                    b.Property<int>("LegalForm")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("OwnFacilities")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("PorcAdministracion")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcComercializacion")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcExportacion")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcLogistica")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcMantenimiento")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcProduccion")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcProductoDestinadoAMercadoLocal")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PorcRRHH")
+                        .HasColumnType("real");
+
+                    b.Property<int>("QuantityEmployees")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SectorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Terciariza")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("WebPage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("idSector")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("Cuit")
+                        .IsUnique();
+
+                    b.HasIndex("SectorId");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("digital.Shared.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -201,6 +297,27 @@ namespace digital.Backend.Migrations
                         .IsUnique();
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("digital.Shared.Entities.Sector", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Sectors");
                 });
 
             modelBuilder.Entity("digital.Shared.Entities.State", b =>
@@ -377,6 +494,25 @@ namespace digital.Backend.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("digital.Shared.Entities.Company", b =>
+                {
+                    b.HasOne("digital.Shared.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("digital.Shared.Entities.Sector", "Sector")
+                        .WithMany("Companies")
+                        .HasForeignKey("SectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Sector");
+                });
+
             modelBuilder.Entity("digital.Shared.Entities.State", b =>
                 {
                     b.HasOne("digital.Shared.Entities.Country", "Country")
@@ -407,6 +543,11 @@ namespace digital.Backend.Migrations
             modelBuilder.Entity("digital.Shared.Entities.Country", b =>
                 {
                     b.Navigation("States");
+                });
+
+            modelBuilder.Entity("digital.Shared.Entities.Sector", b =>
+                {
+                    b.Navigation("Companies");
                 });
 
             modelBuilder.Entity("digital.Shared.Entities.State", b =>

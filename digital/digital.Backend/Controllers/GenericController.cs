@@ -57,6 +57,7 @@ namespace digital.Backend.Controllers
             return BadRequest(action.Message);
         }
 
+
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> DeleteAsync(int id)
         {
@@ -81,6 +82,7 @@ namespace digital.Backend.Controllers
             }
             return BadRequest();
         }
+
 
         [HttpGet("totalPages")]
         public virtual async Task<IActionResult> GetPagesAsync([FromQuery] PaginationDTO pagination)

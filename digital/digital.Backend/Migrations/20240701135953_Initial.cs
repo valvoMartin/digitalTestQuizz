@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace digital.Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDb : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,19 @@ namespace digital.Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sectors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sectors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,6 +144,54 @@ namespace digital.Backend.Migrations
                         name: "FK_AspNetUsers_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Companies",  
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cuit = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    WebPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LegalForm = table.Column<int>(type: "int", nullable: false),
+                    SectorId = table.Column<int>(type: "int", nullable: false),
+                    idSector = table.Column<int>(type: "int", nullable: false),
+                    CodSize = table.Column<int>(type: "int", nullable: false),
+                    QuantityEmployees = table.Column<int>(type: "int", nullable: false),
+                    OwnFacilities = table.Column<bool>(type: "bit", nullable: false),
+                    PorcAdministracion = table.Column<float>(type: "real", nullable: false),
+                    PorcComercializacion = table.Column<float>(type: "real", nullable: false),
+                    PorcProduccion = table.Column<float>(type: "real", nullable: false),
+                    PorcRRHH = table.Column<float>(type: "real", nullable: false),
+                    PorcLogistica = table.Column<float>(type: "real", nullable: false),
+                    PorcMantenimiento = table.Column<float>(type: "real", nullable: false),
+                    PorcProductoDestinadoAMercadoLocal = table.Column<float>(type: "real", nullable: false),
+                    PorcExportacion = table.Column<float>(type: "real", nullable: false),
+                    Terciariza = table.Column<bool>(type: "bit", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    DateInsert = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateDelete = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Companies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Companies_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Companies_Sectors_SectorId",
+                        column: x => x.SectorId,
+                        principalTable: "Sectors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -271,9 +332,31 @@ namespace digital.Backend.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Companies_CityId",
+                table: "Companies",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_Cuit",
+                table: "Companies",
+                column: "Cuit",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_SectorId",
+                table: "Companies",
+                column: "SectorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Countries_Name",
                 table: "Countries",
                 column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sectors_Id",
+                table: "Sectors",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -302,10 +385,16 @@ namespace digital.Backend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Companies");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Sectors");
 
             migrationBuilder.DropTable(
                 name: "Cities");

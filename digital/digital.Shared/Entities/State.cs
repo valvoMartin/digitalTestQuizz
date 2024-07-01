@@ -22,6 +22,8 @@ namespace digital.Shared.Entities
 
         public ICollection<City>? Cities { get; set; }
 
+
+
         [Display(Name = "Ciudades")]
         public int CitiesNumbers => Cities == null || Cities.Count == 0 ? 0 : Cities.Count;
     }

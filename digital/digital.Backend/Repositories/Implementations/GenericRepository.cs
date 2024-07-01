@@ -68,6 +68,7 @@ namespace digital.Backend.Repositories.Implementations
             try
             {
                 _entity.Remove(row);
+                
                 await _context.SaveChangesAsync();
                 return new ActionResponse<T>
                 {
