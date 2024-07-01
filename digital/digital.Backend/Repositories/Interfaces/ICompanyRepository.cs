@@ -19,9 +19,9 @@ namespace digital.Backend.Repositories.Interfaces
 
         //TODO: Agregar mas metodos a COMPAÑIAS
 
-        Task<ActionResponse<Company>> AddFullAsync(Company companyDTO);
+        Task<ActionResponse<Company>> AddFullAsync(Company company);
 
-        Task<ActionResponse<Company>> UpdateFullAsync(Company productDTO);
+        Task<ActionResponse<Company>> UpdateFullAsync(Company product);
 
     }
 }
