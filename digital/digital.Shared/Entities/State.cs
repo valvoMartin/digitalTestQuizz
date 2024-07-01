@@ -12,8 +12,12 @@ namespace digital.Shared.Entities
         [MaxLength(100, ErrorMessage = "El campo {0} no debe tener mas de {1} caracteres.")]
         public string Name { get; set; } = null!;
 
+
+
+
         public int CountryId { get; set; }
         public Country? Country { get; set; }
+
 
 
         public ICollection<City>? Cities { get; set; }

@@ -12,6 +12,9 @@ namespace digital.Shared.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; } = null!;
 
+
+
+
         public ICollection<State>? States { get; set; }
 
         [Display(Name = "Provincias")]
