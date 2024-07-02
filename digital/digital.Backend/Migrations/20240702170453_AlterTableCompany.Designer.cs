@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using digital.Backend.Data;
 
@@ -11,9 +12,11 @@ using digital.Backend.Data;
 namespace digital.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240702170453_AlterTableCompany")]
+    partial class AlterTableCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,8 +198,8 @@ namespace digital.Backend.Migrations
 
                     b.Property<string>("Cuit")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("DateDelete")
                         .HasColumnType("datetime2");
@@ -261,8 +264,7 @@ namespace digital.Backend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("WebPage")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("idSector")
                         .HasColumnType("int");
@@ -350,6 +352,9 @@ namespace digital.Backend.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -368,13 +373,13 @@ namespace digital.Backend.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -413,6 +418,8 @@ namespace digital.Backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -490,7 +497,7 @@ namespace digital.Backend.Migrations
             modelBuilder.Entity("digital.Shared.Entities.Company", b =>
                 {
                     b.HasOne("digital.Shared.Entities.City", "City")
-                        .WithMany("Companies")
+                        .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -517,9 +524,20 @@ namespace digital.Backend.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("digital.Shared.Entities.User", b =>
+                {
+                    b.HasOne("digital.Shared.Entities.City", "City")
+                        .WithMany("Users")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("digital.Shared.Entities.City", b =>
                 {
-                    b.Navigation("Companies");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("digital.Shared.Entities.Country", b =>

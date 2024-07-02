@@ -5,6 +5,7 @@ using digital.Shared.DTOs;
 using digital.Shared.Entities;
 using digital.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace digital.Backend.Repositories.Implementations
 {
@@ -21,6 +22,7 @@ namespace digital.Backend.Repositories.Implementations
         public override async Task<ActionResponse<IEnumerable<Company>>> GetAsync(PaginationDTO pagination)
         {
             var queryable = _context.Companies
+                .Where(x => x.DateDelete == null)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
@@ -38,9 +40,46 @@ namespace digital.Backend.Repositories.Implementations
             };
         }
 
+        public override async Task<ActionResponse<Company>> DeleteAsync(int id)
+        {
+            var row = await _context.Companies.FirstOrDefaultAsync(x => x.Id == id && x.DateDelete == null);  
+            if (row == null)
+            {
+                return new ActionResponse<Company>
+                {
+                    WasSuccess = false,
+                    Message = "Registro no encontrado"
+                };
+            }
+
+            try
+            {
+                row.DateDelete = DateTime.UtcNow; // Ajusta la fecha de eliminación
+                _context.Update(row);
+
+                await _context.SaveChangesAsync();
+                return new ActionResponse<Company>
+                {
+                    WasSuccess = true,
+                };
+            }
+            catch
+            {
+                return new ActionResponse<Company>
+                {
+                    WasSuccess = false,
+                    Message = "No se puede borrar, porque tiene registros relacionados"
+                };
+            }
+        }
+
+
+        
         public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {
-            var queryable = _context.Companies.AsQueryable();
+            var queryable = _context.Companies
+                .Where(x => x.DateDelete == null)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
@@ -58,12 +97,14 @@ namespace digital.Backend.Repositories.Implementations
 
         public override async Task<ActionResponse<Company>> GetAsync(int id)
         {
-            var product = await _context.Companies
+            var company = await _context.Companies
                 .Include(x => x.Sector)
                 .Include(x => x.City)
+                .ThenInclude(x => x!.State)
+                .ThenInclude(x => x!.Country)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (product == null)
+            if (company == null)
             {
                 return new ActionResponse<Company>
                 {
@@ -75,7 +116,7 @@ namespace digital.Backend.Repositories.Implementations
             return new ActionResponse<Company>
             {
                 WasSuccess = true,
-                Result = product
+                Result = company
             };
         }
 
@@ -85,45 +126,54 @@ namespace digital.Backend.Repositories.Implementations
             {
                 var newCompany = new Company
                 {
-                    Cuit = newCompany.Cuit,
-                    Name = newCompany.Name,
-                    City = newCompany.City
-                     = newCompany.Description,
-                    Price = newCompany.Price,
-                    Stock = newCompany.Stock,
-                    //ProductCategories = new List<ProductCategory>(),
+                    Cuit = company.Cuit,
+                    Name = company.Name,
+                    City = company.City,
+                    CityId = company.CityId,
+                    Email = company.Email,
+                    WebPage = company.WebPage,
+                    LegalForm = company.LegalForm,
+                    Sector = company.Sector,
+                    idSector = company.idSector,
+                    CodSize = company.CodSize,
+                    QuantityEmployees = company.QuantityEmployees,
+                    OwnFacilities = company.OwnFacilities,
+                    PorcAdministracion = company.PorcAdministracion,
+                    PorcComercializacion = company.PorcComercializacion,
+                    PorcProduccion = company.PorcProduccion,
+                    PorcRRHH = company.PorcRRHH,
+                    PorcLogistica = company.PorcLogistica,
+                    PorcMantenimiento = company.PorcMantenimiento,
+                    PorcProductoDestinadoAMercadoLocal = company.PorcProductoDestinadoAMercadoLocal,
+                    PorcExportacion = company.PorcExportacion,
+                    Terciariza = company.Terciariza,
+                    Observaciones = company.Observaciones,
+                    DateInsert = DateTime.UtcNow,
+                    //DateUpdate = 
+                    //DateDelete = 
                 };
 
-               
 
-                foreach (var productCategoryId in productDTO.ProductCategoryIds!)
-                {
-                    var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == productCategoryId);
-                    if (category != null)
-                    {
-                        newProduct.ProductCategories.Add(new ProductCategory { Category = category });
-                    }
-                }
-
-                _context.Add(newProduct);
+                _context.Add(newCompany);
                 await _context.SaveChangesAsync();
-                return new ActionResponse<Product>
+                return new ActionResponse<Company>
                 {
                     WasSuccess = true,
-                    Result = newProduct
+                    Result = newCompany
                 };
             }
             catch (DbUpdateException)
             {
-                return new ActionResponse<Product>
+                return new ActionResponse<Company>
                 {
+                    //TODO: Si la empresa ya existe => le doy habilitación para hacer test con esa empresa pero no lo dejo modificar los campos q ya creo otra persona sobre esa empresa.
                     WasSuccess = false,
-                    Message = "Ya existe un producto con el mismo nombre."
+                    Message = "Ya existe una Empresa con el mismo nombre."
                 };
             }
             catch (Exception exception)
             {
-                return new ActionResponse<Product>
+                return new ActionResponse<Company>
                 {
                     WasSuccess = false,
                     Message = exception.Message
@@ -131,59 +181,83 @@ namespace digital.Backend.Repositories.Implementations
             }
         }
 
-        public async Task<ActionResponse<Company>> UpdateFullAsync(Company productDTO)
+        public async Task<ActionResponse<Company>> UpdateFullAsync(Company company)
         {
             try
             {
-                var product = await _context.Products
-                    .Include(x => x.ProductCategories!)
-                    .ThenInclude(x => x.Category)
-                    .FirstOrDefaultAsync(x => x.Id == productDTO.Id);
-                if (product == null)
+                var MyCompany = await _context.Companies
+                    .Include(x => x.Sector)
+                    .Include(c => c.City)
+                    .ThenInclude(s => s!.State)
+                    .ThenInclude(y => y!.Country)
+                    .FirstOrDefaultAsync(i => i.Id == company.Id);
+
+                if (MyCompany == null)
                 {
-                    return new ActionResponse<Product>
+                    return new ActionResponse<Company>
                     {
                         WasSuccess = false,
-                        Message = "Producto no existe"
+                        Message = "Companñia no existe."
                     };
                 }
 
-                product.Name = productDTO.Name;
-                product.Description = productDTO.Description;
-                product.Price = productDTO.Price;
-                product.Stock = productDTO.Stock;
+                MyCompany.Cuit = company.Cuit;
+                MyCompany.Name = company.Name;
+                MyCompany.City = company.City;
+                MyCompany.CityId = company.CityId;
+                MyCompany.Email = company.Email;
+                MyCompany.WebPage = company.WebPage;
+                MyCompany.LegalForm = company.LegalForm;
+                MyCompany.Sector = company.Sector;
+                MyCompany.idSector = company.idSector;
+                MyCompany.CodSize = company.CodSize;
+                MyCompany.QuantityEmployees = company.QuantityEmployees;
+                MyCompany.OwnFacilities = company.OwnFacilities;
+                MyCompany.PorcAdministracion = company.PorcAdministracion;
+                MyCompany.PorcComercializacion = company.PorcComercializacion;
+                MyCompany.PorcProduccion = company.PorcProduccion;
+                MyCompany.PorcRRHH = company.PorcRRHH;
+                MyCompany.PorcLogistica = company.PorcLogistica;
+                MyCompany.PorcMantenimiento = company.PorcMantenimiento;
+                MyCompany.PorcProductoDestinadoAMercadoLocal = company.PorcProductoDestinadoAMercadoLocal;
+                MyCompany.PorcExportacion = company.PorcExportacion;
+                MyCompany.Terciariza = company.Terciariza;
+                MyCompany.Observaciones = company.Observaciones;
+                //DateInsert = company.DateInsert,
+                MyCompany.DateUpdate = DateTime.UtcNow;
+                    //DateDelete = 
 
-                _context.ProductCategories.RemoveRange(product.ProductCategories!);
-                product.ProductCategories = new List<ProductCategory>();
+                //_context.ProductCategories.RemoveRange(product.ProductCategories!);
+                //product.ProductCategories = new List<ProductCategory>();
 
-                foreach (var productCategoryId in productDTO.ProductCategoryIds!)
-                {
-                    var category = await _context.Categories.FindAsync(productCategoryId);
-                    if (category != null)
-                    {
-                        _context.ProductCategories.Add(new ProductCategory { CategoryId = category.Id, ProductId = product.Id });
-                    }
-                }
+                //foreach (var productCategoryId in productDTO.ProductCategoryIds!)
+                //{
+                //    var category = await _context.Categories.FindAsync(productCategoryId);
+                //    if (category != null)
+                //    {
+                //        _context.ProductCategories.Add(new ProductCategory { CategoryId = category.Id, ProductId = product.Id });
+                //    }
+                //}
 
-                _context.Update(product);
+                _context.Update(MyCompany);
                 await _context.SaveChangesAsync();
-                return new ActionResponse<Product>
+                return new ActionResponse<Company>
                 {
                     WasSuccess = true,
-                    Result = product
+                    Result = MyCompany
                 };
             }
             catch (DbUpdateException)
             {
-                return new ActionResponse<Product>
+                return new ActionResponse<Company>
                 {
                     WasSuccess = false,
-                    Message = "Ya existe un producto con el mismo nombre."
+                    Message = "Ya existe una Empresa con el mismo nombre."
                 };
             }
             catch (Exception exception)
             {
-                return new ActionResponse<Product>
+                return new ActionResponse<Company>
                 {
                     WasSuccess = false,
                     Message = exception.Message

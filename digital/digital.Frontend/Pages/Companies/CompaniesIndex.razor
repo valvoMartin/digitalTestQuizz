@@ -1,0 +1,65 @@
+﻿@page "/companies"
+
+<div class="card">
+    <div class="card-header">
+        <span>
+            <i class="bi bi-box2" /> Empresas
+            <a class="btn btn-sm btn-primary float-end" href="/products/create"><i class="bi bi-plus-square" /> Nueva</a>
+        </span>
+    </div>
+    <div class="card-body">
+        <Filter PlaceHolder="Buscar Empresa..." Callback=@FilterCallBack />
+        <GenericList MyList="Companies">
+            <Body>
+                <Pagination CurrentPage="currentPage"
+                            TotalPages="totalPages"
+                            SelectedPage="SelectedPageAsync"
+                            RecordsNumber="SelectedRecordsNumberAsync" />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>CUIT</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>FormaJuridica</th>
+                            <th>Cant. Empleados</th>
+                            <th>IntalacionesPropias</th>
+                            
+                            <th style="width:168px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var company in Companies!)
+                        {
+                            <tr>
+                                <td>
+                                    @company.Cuit
+                                </td>
+                                <td>
+                                    @company.Name
+                                </td>
+                                <td>
+                                    @company.Email
+                                </td>
+                                <td>
+                                    @company.LegalForm
+                                </td>
+                                <td>
+                                    @company.QuantityEmployees
+                                </td>
+                                <td>
+                                    @company.OwnFacilities
+                                </td>
+                                
+                                <td>
+                                    <a href="/products/edit/@company.Id" class="btn btn-warning btn-sm"><i class="bi bi-pencil" /> Editar</a>
+                                    <button class="btn btn-danger btn-sm" @onclick=@(() => Delete(company.Id))><i class="bi bi-trash" /> Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </Body>
+        </GenericList>
+    </div>
+</div>

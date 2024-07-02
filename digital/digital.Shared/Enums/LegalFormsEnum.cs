@@ -10,7 +10,7 @@ namespace digital.Shared.Enums
     public enum LegalFormsEnum
     {
         [Description("Autonomo")]
-        A,
+        A = 1,
 
         [Description("Sociedad Civil 'S.C.'")]
         SC,

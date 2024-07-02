@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "digital.Shared", "digital.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "digital.Frontend", "digital.Frontend\digital.Frontend.csproj", "{07F95381-FFA4-46D7-A627-3C16CE0FA3C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "digital.Backend", "digital.Backend\digital.Backend.csproj", "{D7E042BA-B51E-44FF-B274-5DBC1EC91E20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "digital.Backend", "digital.Backend\digital.Backend.csproj", "{D7E042BA-B51E-44FF-B274-5DBC1EC91E20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

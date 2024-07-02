@@ -23,8 +23,75 @@ namespace digital.Backend.Data
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Martin", "Valvo", "martin@yopmail.com", "3492 607557", "Calle los Jazmines", UserType.Admin);
+            await CheckUserAsync("1011", "Rocio", "Armando", "rocio@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.Admin);
+            await CheckUserAsync("1012", "user", "user", "a@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.User);
+            await CheckSectorsAsync();
+            await CheckCompaniesAsync();
 
+        }
 
+        private async Task CheckSectorsAsync()
+        {
+            if (!_context.Sectors.Any())
+            {
+
+                var sectors = new List<SectorCompany>
+                {
+                    new SectorCompany { Description = "Technology" },
+                    new SectorCompany { Description = "Healthcare" },
+                    new SectorCompany { Description = "Finance" },
+                    // Agrega más sectores según sea necesario
+                };
+
+                _context.Sectors.AddRange(sectors);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckCompaniesAsync()
+        {
+            if (!_context.Companies.Any())
+            {
+                var sector = await _context.Sectors.FirstOrDefaultAsync(s => s.Description == "Technology");
+                sector ??= await _context.Sectors.FirstOrDefaultAsync(); // En caso de que no se encuentre el sector, toma el primero disponible
+
+                var city = await _context.Cities.FirstOrDefaultAsync(x => x.Name == "Rafaela");
+                city ??= await _context.Cities.FirstOrDefaultAsync();
+
+                var companies = new List<Company>
+                {
+                    new Company
+                    {
+                        Cuit = "123456789",
+                        Name = "Tech Innovators",
+                        City = city,
+                        Email = "info@techinnovators.com",
+                        WebPage = "www.techinnovators.com",
+                        LegalForm = LegalFormsEnum.SRL,
+                        Sector = sector!,
+                        idSector = sector?.Id ?? 0,
+                        CodSize = SizeCompanyEnum.CuearentaOchentayNueve,
+                        QuantityEmployees = 50,
+                        OwnFacilities = true,
+                        PorcAdministracion = 10,
+                        PorcComercializacion = 15,
+                        PorcProduccion = 60,
+                        PorcRRHH = 5,
+                        PorcLogistica = 5,
+                        PorcMantenimiento = 5,
+                        PorcProductoDestinadoAMercadoLocal = 80,
+                        PorcExportacion = 20,
+                        Terciariza = false,
+                        Observaciones = "Ninguna",
+                        DateInsert = DateTime.UtcNow,
+                        //DateDelete se quedan en null
+                    },
+                    // Agrega más compañías según sea necesario
+                };
+
+                _context.Companies.AddRange(companies);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task CheckCountriesFullAsync()
@@ -64,7 +131,7 @@ namespace digital.Backend.Data
                     UserName = email,
                     PhoneNumber = phone,
                     Document = document,
-                    City = city,
+                    //City = city,
                     UserType = userType,
                 };
 

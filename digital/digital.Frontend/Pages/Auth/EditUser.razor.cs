@@ -30,9 +30,9 @@ namespace digital.Frontend.Pages.Auth
         protected override async Task OnInitializedAsync()
         {
             await LoadUserAsyc();
-            await LoadCountriesAsync();
-            await LoadStatesAsync(user!.City!.State!.Country!.Id);
-            await LoadCitiesAsync(user!.City!.State!.Id);
+            // await LoadCountriesAsync();
+            //await LoadStatesAsync(user!.City!.State!.Country!.Id);
+            //await LoadCitiesAsync(user!.City!.State!.Id);
 
             //if (!string.IsNullOrEmpty(user!.Photo))
             //{
@@ -65,23 +65,23 @@ namespace digital.Frontend.Pages.Auth
 
         
 
-        private async Task CountryChangedAsync(ChangeEventArgs e)
-        {
-            var selectedCountry = Convert.ToInt32(e.Value!);
-            states = null;
-            cities = null;
-            user!.CityId = 0;
-            await LoadStatesAsync(selectedCountry);
-        }
+        //private async Task CountryChangedAsync(ChangeEventArgs e)
+        //{
+        //    var selectedCountry = Convert.ToInt32(e.Value!);
+        //    states = null;
+        //    cities = null;
+        //    user!.CityId = 0;
+        //    await LoadStatesAsync(selectedCountry);
+        //}
 
 
-        private async Task StateChangedAsync(ChangeEventArgs e)
-        {
-            var selectedState = Convert.ToInt32(e.Value!);
-            cities = null;
-            user!.CityId = 0;
-            await LoadCitiesAsync(selectedState);
-        }
+        //private async Task StateChangedAsync(ChangeEventArgs e)
+        //{
+        //    var selectedState = Convert.ToInt32(e.Value!);
+        //    cities = null;
+        //    user!.CityId = 0;
+        //    await LoadCitiesAsync(selectedState);
+        //}
 
 
         private async Task LoadCountriesAsync()

@@ -131,7 +131,7 @@ namespace digital.Backend.Controllers
                 new("Document", user.Document),
                 new("FirstName", user.FirstName),
                 new("LastName", user.LastName),
-                new("CityId", user.CityId.ToString())
+                //new("CityId", user.CityId.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwtKey"]!));
@@ -170,7 +170,7 @@ namespace digital.Backend.Controllers
                 currentUser.FirstName = user.FirstName;
                 currentUser.LastName = user.LastName;
                 currentUser.PhoneNumber = user.PhoneNumber;
-                currentUser.CityId = user.CityId;
+                //currentUser.CityId = user.CityId;
 
                 var result = await _usersUnitOfWork.UpdateUserAsync(currentUser);
                 if (result.Succeeded)

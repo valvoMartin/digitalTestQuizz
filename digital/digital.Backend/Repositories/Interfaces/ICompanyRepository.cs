@@ -23,5 +23,7 @@ namespace digital.Backend.Repositories.Interfaces
 
         Task<ActionResponse<Company>> UpdateFullAsync(Company product);
 
+        Task<ActionResponse<Company>> DeleteAsync(int id);
+
     }
 }

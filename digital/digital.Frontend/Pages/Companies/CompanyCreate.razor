@@ -1,0 +1,205 @@
+﻿@page "/createCompany"
+@using digital.Shared.Entities
+@using digital.Shared.Enums
+
+@layout MainHomeLayout
+
+@if (loading)
+{
+    <Loading />
+}
+else
+{
+    <EditForm Model="company" OnValidSubmit="CreteCompanyAsync">
+        <DataAnnotationsValidator />
+        <div class="card m-4">
+            <div class="card-header">
+                <span>
+                    <i class="bi bi-person-circle" /> Registrar Nueva Empresa
+
+                </span>
+            </div>
+            <div class="card-body">
+                @if (step == 1)
+                {
+                    <div class="card-header">
+                        <span>
+                            <i class="bi bi-person-circle" /> Datos Generales
+
+                        </span>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <div class="mb-3">
+                                <label>CUIT:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Cuit" />
+                                    <ValidationMessage For="@(() => company.Cuit)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Razon Social:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Name" />
+                                    <ValidationMessage For="@(() => company.Name)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Email de Empresa:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Email" />
+                                    <ValidationMessage For="@(() => company.Email)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Pagina Web:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.WebPage" />
+                                    <ValidationMessage For="@(() => company.WebPage)" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label>Forma Juridica:</label>
+                                <div>
+                                    <InputSelect class="form-control" @bind-Value="@company.LegalForm">
+                                        <option value="0">-- Seleccione una opción --</option>
+                                        @foreach (LegalFormsEnum item in Enum.GetValues(typeof(LegalFormsEnum)))
+
+                                        {
+                                            <option value="@item">@EnumHelper.GetEnumDescription(item)</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => company.LegalForm)" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>País:</label>
+                                <div>
+                                    <select class="form-select" @onchange="CountryChangedAsync">
+                                        <option value="0">-- Seleccione un país --</option>
+                                        @if (countries is not null)
+                                        {
+                                            @foreach (var country in countries)
+                                            {
+                                                <option value="@country.Id">@country.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Provincia:</label>
+                                <div>
+                                    <select class="form-select" @onchange="StateChangedAsync">
+                                        <option value="0">-- Seleccione una provincia --</option>
+                                        @if (states is not null)
+                                        {
+                                            @foreach (var state in states)
+                                            {
+                                                <option value="@state.Id">@state.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Ciudad:</label>
+                                <div>
+                                    <select class="form-select" @bind="company.CityId">
+                                        <option value="0">-- Seleccione una ciudad --</option>
+                                        @if (cities is not null)
+                                        {
+                                            @foreach (var city in cities)
+                                            {
+                                                <option value="@city.Id">@city.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => company.CityId)" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+                else if (step == 2)
+                {
+                    <div class="row">
+                        <div class="col-6">
+
+                            <div class="mb-3">
+                                <label>CUIT:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Cuit" />
+                                    <ValidationMessage For="@(() => company.Cuit)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Razon Social:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Name" />
+                                    <ValidationMessage For="@(() => company.Name)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Email de Empresa:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Email" />
+                                    <ValidationMessage For="@(() => company.Email)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Email:</label>
+                                <div>
+                                    <InputText class="form-control" @bind-Value="@company.Name" />
+                                    <ValidationMessage For="@(() => company.Name)" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="mb-3">
+                            </div>
+
+
+                        </div>
+                    </div>
+                }
+
+
+                <div class="d-flex justify-content-between">
+                    @if (step > 1)
+                    {
+                        <button class="btn btn-secondary" @onclick="PrevStep"><i class="bi bi-arrow-left"></i> Anterior</button>
+                    }
+                    <button class="btn btn-primary" @onclick="HandleValidSubmit" type="submit">@(step == 2 ? "Registrar" : "Siguiente") <i class="bi bi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+}
