@@ -36,7 +36,7 @@
   - La pagina del Login ingresa el mail y contraseña, Debajo opciones para ir a registrarse o reestablecer contraseña. Esta vista podria ser una vista mmodal
   - La pagina de Register, vos sas de alta el usuario y tambien tu empresa. Esta vista podria ser una vista mmodal
 
-## EMPRESAS
+# EMPRESAS
 - Una misma empresa puede estar dos vecen en la tabla empresa, son de distintos usuarios dentro del sistema (Que hago con la PK del CUIT en este caso??)
 - Podriamos hacer una comparacion entre usuarios de misma empresa, si es que los hay
 - Un usuario con su empresa cuando termina de contestar tiene un nivel asignado en base al puntaje que obtuvo. Nivel relacionado a cada usuario
@@ -45,9 +45,14 @@
   - 2 = Competente
   - 3 = Avanzado
   - 4 = Experto
-  # CAMPOS de Company
+  ## CAMPOS de Company
   --
-### 
+
+  ## Categorizacion de Empresas
+  - Cada empresa puede categorizarse, segun el pais de trabajo que indique le van a salir los datos de las distintas categorias segun ese pais
+  - Indicar las categorias de un pais va a tener un CRUD ABM, Se indica: a que pais pertenece(esa categoria), y los limites de ganancia y empleados que permite esa categoria.  
+    
+
 ## AREAS
 - Cada area es unica y no es repetible
 - Ej.
