@@ -14,8 +14,8 @@ namespace digital.Backend.Data
         public DbSet<City> Cities { get; set; }
 
 
-        public DbSet<SectorCompany> Sectors { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,9 +23,10 @@ namespace digital.Backend.Data
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex(s => new { s.CountryId, s.Name }).IsUnique();
             modelBuilder.Entity<City>().HasIndex(c => new { c.StateId, c.Name }).IsUnique();
-            //modelBuilder.Entity<SectorCompany>().HasIndex(c => new { c.Id }).IsUnique();
             modelBuilder.Entity<Company>().HasIndex(c => new { c.Cuit, c.Name}).IsUnique();
-            
+            modelBuilder.Entity<Category>().HasIndex(c => new { c.Name}).IsUnique();
+
+
 
             DisableCascadingDelete(modelBuilder);
 

@@ -30,5 +30,8 @@ namespace digital.Shared.Entities
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
+
+
+
     }
 }

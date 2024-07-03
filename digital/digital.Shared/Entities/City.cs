@@ -13,9 +13,11 @@ namespace digital.Shared.Entities
         public string Name { get; set; } = null!;
 
 
-        public int StateId { get; set; }
+
+        // Fks
 
         public State? State { get; set; }
+        public int StateId { get; set; }
 
         public ICollection<Company>? Companies { get; set; }
     }

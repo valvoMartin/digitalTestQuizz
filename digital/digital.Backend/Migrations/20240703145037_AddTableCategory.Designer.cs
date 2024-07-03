@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using digital.Backend.Data;
 
@@ -11,9 +12,11 @@ using digital.Backend.Data;
 namespace digital.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240703145037_AddTableCategory")]
+    partial class AddTableCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,8 +179,7 @@ namespace digital.Backend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("RevenueLimit")
-                        .IsRequired()
+                    b.Property<decimal>("RevenueLimit")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -285,6 +287,9 @@ namespace digital.Backend.Migrations
 
                     b.Property<float>("PorcRRHH")
                         .HasColumnType("real");
+
+                    b.Property<int>("QuantityEmployees")
+                        .HasColumnType("int");
 
                     b.Property<int>("Sector")
                         .HasColumnType("int");

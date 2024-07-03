@@ -1,6 +1,5 @@
 ﻿@page "/createCompany"
-@using digital.Shared.Entities
-@using digital.Shared.Enums
+
 
 @layout MainHomeLayout
 
@@ -76,7 +75,7 @@ else
                                 <label>Forma Juridica:</label>
                                 <div>
                                     <InputSelect class="form-control" @bind-Value="@company.LegalForm">
-                                        <option value="0">-- Seleccione una opción --</option>
+                                        <option value="0">-- Seleccione una Forma Juridica --</option>
                                         @foreach (LegalFormsEnum item in Enum.GetValues(typeof(LegalFormsEnum)))
 
                                         {
@@ -91,7 +90,7 @@ else
                                 <label>País:</label>
                                 <div>
                                     <select class="form-select" @onchange="CountryChangedAsync">
-                                        <option value="0">-- Seleccione un país --</option>
+                                        <option value="0">-- Seleccione un País --</option>
                                         @if (countries is not null)
                                         {
                                             @foreach (var country in countries)
@@ -106,7 +105,7 @@ else
                                 <label>Provincia:</label>
                                 <div>
                                     <select class="form-select" @onchange="StateChangedAsync">
-                                        <option value="0">-- Seleccione una provincia --</option>
+                                        <option value="0">-- Seleccione una Provincia --</option>
                                         @if (states is not null)
                                         {
                                             @foreach (var state in states)
@@ -121,7 +120,7 @@ else
                                 <label>Ciudad:</label>
                                 <div>
                                     <select class="form-select" @bind="company.CityId">
-                                        <option value="0">-- Seleccione una ciudad --</option>
+                                        <option value="0">-- Seleccione una Ciudad --</option>
                                         @if (cities is not null)
                                         {
                                             @foreach (var city in cities)
@@ -143,46 +142,57 @@ else
                     <div class="row">
                         <div class="col-6">
 
+                           
                             <div class="mb-3">
-                                <label>CUIT:</label>
+                                <label>Idicar cantidad de Empleados:</label>
                                 <div>
-                                    <InputText class="form-control" @bind-Value="@company.Cuit" />
-                                    <ValidationMessage For="@(() => company.Cuit)" />
+                                    <InputSelect class="form-control" @bind-Value="@company.Size">
+                                        <option value="0">-- Seleccione una Cantidad --</option>
+                                        @foreach (SizeCompanyEnum item in Enum.GetValues(typeof(SizeCompanyEnum)))
+
+                                        {
+                                            <option value="@item">@EnumHelper.GetEnumDescription(item)</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => company.Size)" />
                                 </div>
 
                             </div>
 
-                            <div class="mb-3">
-                                <label>Razon Social:</label>
+                            @* <div class="mb-3">
+                                <label>¿Tiene instalaciones Propias?</label>
                                 <div>
-                                    <InputText class="form-control" @bind-Value="@company.Name" />
-                                    <ValidationMessage For="@(() => company.Name)" />
+                                    <InputCheckbox class="form-control" @bind-Value="@company.OwnFacilities" />
+                                    <ValidationMessage For="@(() => company.OwnFacilities)" />
                                 </div>
 
-                            </div>
-
+                            </div> *@
                             <div class="mb-3">
-                                <label>Email de Empresa:</label>
-                                <div>
-                                    <InputText class="form-control" @bind-Value="@company.Email" />
-                                    <ValidationMessage For="@(() => company.Email)" />
-                                </div>
-
-                            </div>
-
-                            <div class="mb-3">
-                                <label>Email:</label>
-                                <div>
-                                    <InputText class="form-control" @bind-Value="@company.Name" />
-                                    <ValidationMessage For="@(() => company.Name)" />
-                                </div>
-
+                                <label for="ownFacilities">¿Tiene instalaciones propias?</label>
+                                <InputCheckbox class="ms-2" id="ownFacilities" @bind-Value="@company.OwnFacilities" />
+                                <ValidationMessage For="@(() => company.OwnFacilities)" />
+                                
                             </div>
 
                         </div>
 
                         <div class="col-6">
+
+                           
                             <div class="mb-3">
+                                <label>Rubro de la Empresa:</label>
+                                <div>
+                                    <InputSelect class="form-control" @bind-Value="@company.Sector">
+                                        <option value="0">-- Seleccione un Rubro --</option>
+                                        @foreach (SectorCompanyEnum item in Enum.GetValues(typeof(SectorCompanyEnum)))
+
+                                        {
+                                            <option value="@item">@EnumHelper.GetEnumDescription(item)</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => company.Sector)" />
+                                </div>
+
                             </div>
 
 

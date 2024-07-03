@@ -31,7 +31,7 @@ namespace digital.Frontend.Pages.Companies
         }
 
 
-        private void HandleValidSubmit()
+        private async void HandleValidSubmit()
         {
             if (step < 2)
             {
@@ -39,7 +39,7 @@ namespace digital.Frontend.Pages.Companies
             }
             else
             {
-                CreteCompanyAsync();
+                await CreteCompanyAsync();
             }
         }
 
@@ -61,6 +61,10 @@ namespace digital.Frontend.Pages.Companies
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
+                if (message.Contains("Debes") || message.Contains("El campo"))
+                {
+                    message = "Aun quedan campos obligatorios por completar";
+                }
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
@@ -87,6 +91,7 @@ namespace digital.Frontend.Pages.Companies
             {
                 var message = await responseHttp.GetErrorMessageAsync();
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                // TODO: Manejar error cuando los campos aun estan Vacio. 
                 return;
             }
 

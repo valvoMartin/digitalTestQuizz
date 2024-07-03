@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using digital.Backend.Data;
 
@@ -11,9 +12,11 @@ using digital.Backend.Data;
 namespace digital.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240703121543_AlterTables2")]
+    partial class AlterTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,41 +158,6 @@ namespace digital.Backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("digital.Shared.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployesLimit")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal?>("RevenueLimit")
-                        .IsRequired()
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("digital.Shared.Entities.City", b =>
                 {
                     b.Property<int>("Id")
@@ -222,10 +190,10 @@ namespace digital.Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityId")
+                    b.Property<int>("CodSize")
                         .HasColumnType("int");
 
                     b.Property<string>("Cuit")
@@ -286,10 +254,10 @@ namespace digital.Backend.Migrations
                     b.Property<float>("PorcRRHH")
                         .HasColumnType("real");
 
-                    b.Property<int>("Sector")
+                    b.Property<int>("QuantityEmployees")
                         .HasColumnType("int");
 
-                    b.Property<int>("Size")
+                    b.Property<int>("Sector")
                         .HasColumnType("int");
 
                     b.Property<bool>("Terciariza")
@@ -300,8 +268,6 @@ namespace digital.Backend.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CityId");
 
@@ -490,17 +456,6 @@ namespace digital.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("digital.Shared.Entities.Category", b =>
-                {
-                    b.HasOne("digital.Shared.Entities.Country", "Country")
-                        .WithMany("Categories")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("digital.Shared.Entities.City", b =>
                 {
                     b.HasOne("digital.Shared.Entities.State", "State")
@@ -514,18 +469,11 @@ namespace digital.Backend.Migrations
 
             modelBuilder.Entity("digital.Shared.Entities.Company", b =>
                 {
-                    b.HasOne("digital.Shared.Entities.Category", "Category")
-                        .WithMany("Companies")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("digital.Shared.Entities.City", "City")
                         .WithMany("Companies")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("City");
                 });
@@ -541,11 +489,6 @@ namespace digital.Backend.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("digital.Shared.Entities.Category", b =>
-                {
-                    b.Navigation("Companies");
-                });
-
             modelBuilder.Entity("digital.Shared.Entities.City", b =>
                 {
                     b.Navigation("Companies");
@@ -553,8 +496,6 @@ namespace digital.Backend.Migrations
 
             modelBuilder.Entity("digital.Shared.Entities.Country", b =>
                 {
-                    b.Navigation("Categories");
-
                     b.Navigation("States");
                 });
 

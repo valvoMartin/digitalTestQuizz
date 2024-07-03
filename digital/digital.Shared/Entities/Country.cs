@@ -15,9 +15,18 @@ namespace digital.Shared.Entities
 
 
 
-        public ICollection<State>? States { get; set; }
 
         [Display(Name = "Provincias")]
         public int StatesNumber => States == null || States.Count == 0 ? 0 : States.Count;
+        
+        
+        
+        
+        // FKs
+
+        public ICollection<State>? States { get; set; }
+
+        public ICollection<Category>? Categories  { get; set; }
+
     }
 }

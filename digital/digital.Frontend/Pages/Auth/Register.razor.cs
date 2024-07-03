@@ -14,24 +14,24 @@ namespace digital.Frontend.Pages.Auth
 
         // private SweetAlertTheme SweetAlert = SweetAlertTheme.Dark;
         private UserDTO userDTO = new();
-        private List<Country>? countries;
-        private List<State>? states;
-        private List<City>? cities;
+        //private List<Country>? countries;
+        //private List<State>? states;
+        //private List<City>? cities;
         private bool loading;
 
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
-
-
         [Inject] private IRepository Repository { get; set; } = null!;
+
+
         //[Inject] private ILoginService LoginService { get; set; } = null!;
 
 
-        protected override async Task OnInitializedAsync()
-        {
-            //await LoadCountriesAsync();
-        }
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    //await LoadCountriesAsync();
+        //}
 
         private async Task CreteUserAsync()
         {

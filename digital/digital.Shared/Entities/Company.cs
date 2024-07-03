@@ -30,13 +30,6 @@ namespace digital.Shared.Entities
 
 
 
-        public City? City { get; set; }
-
-        [Display(Name = "Ciudad")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
-        public int CityId { get; set; }
-
-
 
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "El campo {0} debe ser un email válido.")]
@@ -70,14 +63,10 @@ namespace digital.Shared.Entities
 
 
 
-        //[Display(Name = "Rubro")]
-        //[Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
-        //public SectorCompany Sector { get; set; } = null!;
-        //public int idSector { get; set; }
-        public SectorCompany Sector { get; set; } = null!;
-        
-
-
+        [Display(Name = "Rubro")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
+        [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
+        public SectorCompanyEnum Sector { get; set; }
         
 
 
@@ -89,18 +78,15 @@ namespace digital.Shared.Entities
 
         [Display(Name = "Tamaño de la Empresa")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
-        public SizeCompanyEnum CodSize { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un {1}.")]
+        public SizeCompanyEnum Size { get; set; }
 
-
-
-        [Display(Name = "Cantidad Empleados")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
-        public int QuantityEmployees { get; set; }
 
 
 
         [Display(Name = "Instalaciones Propias")]
         public bool OwnFacilities { get; set; }
+
 
 
 
@@ -110,9 +96,11 @@ namespace digital.Shared.Entities
 
 
 
+
         [Display(Name = "Porcentaje de Comercialización")]
         [Range(0, 100, ErrorMessage = "El campo {0} debe ser un porcentaje válido.")]
         public float PorcComercializacion { get; set; }
+
 
 
 
@@ -122,9 +110,11 @@ namespace digital.Shared.Entities
 
 
 
+
         [Display(Name = "Porcentaje de RRHH")]
         [Range(0, 100, ErrorMessage = "El campo {0} debe ser un porcentaje válido.")]
         public float PorcRRHH { get; set; }
+
 
 
 
@@ -134,9 +124,11 @@ namespace digital.Shared.Entities
 
 
 
+
         [Display(Name = "Porcentaje de Mantenimiento")]
         [Range(0, 100, ErrorMessage = "El campo {0} debe ser un porcentaje válido.")]
         public float PorcMantenimiento { get; set; }
+
 
 
 
@@ -146,14 +138,17 @@ namespace digital.Shared.Entities
 
 
 
+
         [Display(Name = "Porcentaje de Producto Destinado a Exportación")]
         [Range(0, 100, ErrorMessage = "El campo {0} debe ser un porcentaje válido.")]
         public float PorcExportacion { get; set; }
 
 
 
+
         [Display(Name = "Terciariza")]
         public bool Terciariza { get; set; }
+
 
 
 
@@ -163,10 +158,29 @@ namespace digital.Shared.Entities
 
 
 
+
         public DateTime DateInsert { get; set; }
         public DateTime DateUpdate { get; set; } = DateTime.UtcNow;
         public DateTime? DateDelete { get; set; }
 
+
+
+
+
+        // FKs
+
+        public Category? Category { get; set; }
+
+
+        public City? City { get; set; }
+
+
+        [Display(Name = "Ciudad")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
+        public int CityId { get; set; }
+
+
+        // public ICollection<User> Users { get; set; }
 
 
     }

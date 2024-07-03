@@ -25,35 +25,19 @@ namespace digital.Backend.Data
             await CheckUserAsync("1010", "Martin", "Valvo", "martin@yopmail.com", "3492 607557", "Calle los Jazmines", UserType.Admin);
             await CheckUserAsync("1011", "Rocio", "Armando", "rocio@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.Admin);
             await CheckUserAsync("1012", "user", "user", "a@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.User);
-            await CheckSectorsAsync();
+            //await CheckSectorsAsync();
             await CheckCompaniesAsync();
 
         }
 
-        private async Task CheckSectorsAsync()
-        {
-            if (!_context.Sectors.Any())
-            {
-
-                var sectors = new List<SectorCompany>
-                {
-                    new SectorCompany { Description = "Technology" },
-                    new SectorCompany { Description = "Healthcare" },
-                    new SectorCompany { Description = "Finance" },
-                    // Agrega más sectores según sea necesario
-                };
-
-                _context.Sectors.AddRange(sectors);
-                await _context.SaveChangesAsync();
-            }
-        }
+        
 
         private async Task CheckCompaniesAsync()
         {
             if (!_context.Companies.Any())
             {
-                var sector = await _context.Sectors.FirstOrDefaultAsync(s => s.Description == "Technology");
-                sector ??= await _context.Sectors.FirstOrDefaultAsync(); // En caso de que no se encuentre el sector, toma el primero disponible
+                //var sector = await _context.Sectors.FirstOrDefaultAsync(s => s.Description == "Technology");
+                //sector ??= await _context.Sectors.FirstOrDefaultAsync(); // En caso de que no se encuentre el sector, toma el primero disponible
 
                 var city = await _context.Cities.FirstOrDefaultAsync(x => x.Name == "Rafaela");
                 city ??= await _context.Cities.FirstOrDefaultAsync();
@@ -68,10 +52,8 @@ namespace digital.Backend.Data
                         Email = "info@techinnovators.com",
                         WebPage = "www.techinnovators.com",
                         LegalForm = LegalFormsEnum.SRL,
-                        Sector = sector!,
-                        idSector = sector?.Id ?? 0,
-                        CodSize = SizeCompanyEnum.CuearentaOchentayNueve,
-                        QuantityEmployees = 50,
+                        Sector = SectorCompanyEnum.Tecnologica,
+                        Size = SizeCompanyEnum.CuearentaOchentayNueve,
                         OwnFacilities = true,
                         PorcAdministracion = 10,
                         PorcComercializacion = 15,

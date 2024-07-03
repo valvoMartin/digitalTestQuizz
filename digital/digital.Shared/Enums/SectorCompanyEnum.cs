@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace digital.Shared.Enums
 {
-    public enum SectorCompany
+    public enum SectorCompanyEnum
     {
         [Description("Actividades Artisticas, entrenimiento y recreativas")]
-        Artisticas = 1,
+        Artistica = 1,
 
         [Description("Actividades de Alojamiento y servicio de Comidas")]
         Alojamiento,
@@ -25,7 +25,7 @@ namespace digital.Shared.Enums
         Administrativo,
 
         [Description("Actividades Financieras y de Seguros")]
-        Financieras,
+        Financiera,
 
         [Description("Actividades Profesionales, Cientificas y Tecnicas")]
         Profesionales,
@@ -40,7 +40,10 @@ namespace digital.Shared.Enums
         Enseñanza,
 
         [Description("Industrias Manufacturera")]
-        Industrias,
+        Industria,
+
+        [Description("Industria Tecnologica")]
+        Tecnologica,
 
         [Description("Informacion y Comunicacion")]
         Comunicacion,

@@ -98,7 +98,6 @@ namespace digital.Backend.Repositories.Implementations
         public override async Task<ActionResponse<Company>> GetAsync(int id)
         {
             var company = await _context.Companies
-                .Include(x => x.Sector)
                 .Include(x => x.City)
                 .ThenInclude(x => x!.State)
                 .ThenInclude(x => x!.Country)
@@ -134,9 +133,7 @@ namespace digital.Backend.Repositories.Implementations
                     WebPage = company.WebPage,
                     LegalForm = company.LegalForm,
                     Sector = company.Sector,
-                    idSector = company.idSector,
-                    CodSize = company.CodSize,
-                    QuantityEmployees = company.QuantityEmployees,
+                    Size = company.Size,
                     OwnFacilities = company.OwnFacilities,
                     PorcAdministracion = company.PorcAdministracion,
                     PorcComercializacion = company.PorcComercializacion,
@@ -186,7 +183,6 @@ namespace digital.Backend.Repositories.Implementations
             try
             {
                 var MyCompany = await _context.Companies
-                    .Include(x => x.Sector)
                     .Include(c => c.City)
                     .ThenInclude(s => s!.State)
                     .ThenInclude(y => y!.Country)
@@ -209,9 +205,7 @@ namespace digital.Backend.Repositories.Implementations
                 MyCompany.WebPage = company.WebPage;
                 MyCompany.LegalForm = company.LegalForm;
                 MyCompany.Sector = company.Sector;
-                MyCompany.idSector = company.idSector;
-                MyCompany.CodSize = company.CodSize;
-                MyCompany.QuantityEmployees = company.QuantityEmployees;
+                MyCompany.Size = company.Size;
                 MyCompany.OwnFacilities = company.OwnFacilities;
                 MyCompany.PorcAdministracion = company.PorcAdministracion;
                 MyCompany.PorcComercializacion = company.PorcComercializacion;

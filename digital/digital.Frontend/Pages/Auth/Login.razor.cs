@@ -11,7 +11,6 @@ namespace digital.Frontend.Pages.Auth
     public partial class Login
     {
         private LoginDTO loginDTO = new();
-        private bool wasClose;
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
