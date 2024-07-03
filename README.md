@@ -1,7 +1,10 @@
 # Roles de Usuarios
   - Admin        => Le permito ver todo
   - User         => Tiene acceso a la pagina de Sistema
-  - Anonimous    => Un usuario que todavia no se ha registrado 
+  - Intermedio    => Yo ADMIN le doy acceso a este rol a un USER, y le indico a que proyecto va formar parte, para que pueda ver las empresas que estan asociadas a este proyecto
+# Proyectos por empresa
+  - El ADMIN va a ver el listado de todas las empresas
+  - El ADMIN va a poder crear un nuevo proyecto, donde muchas empresas pueden formar parte de cada proyecto  
 
 # PAGINA PRINCIPAL
   - La pagina de bienvenida muestra la pagina principal con un header arriba, con logo de la empresa de un lado y Singing y Login a la derecha
@@ -44,7 +47,7 @@
   - 4 = Experto
   # CAMPOS de Company
   --
-
+### 
 ## AREAS
 - Cada area es unica y no es repetible
 - Ej.
