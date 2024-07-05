@@ -28,6 +28,7 @@
   - No solo pone sus datos de Usuario, tambien pone los de su empresa
   - Cuando un nuevo usuario quiere crear una empresa, ingresa el CUIT, esa es la PK, si  ya existe significa q otro compañero de el ya la registro. en este caso solo selecciona el cuit ese y me precarga los datos sin poder editar los campos. Solo le permito cambiar los campos de su empresa una vez logeado el usuario.
   - Campo SECTOR debe ser tipiado por el usuario ej director, jefe, etc
+  - Cuando registra tambien indica a que proyecto quiere pertenecer, una vez que ya esta cargado a ese proyecto no ve nada hasta que yo le doy permiso con el rol Intermedio
 
 ### Modificacion
   - Puede modificar los datos de su usuario, y de la empresa que creo
