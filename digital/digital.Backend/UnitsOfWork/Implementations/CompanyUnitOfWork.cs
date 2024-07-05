@@ -17,6 +17,8 @@ namespace digital.Backend.UnitsOfWork.Implementations
             _companyRepository = companyRepository;
         }
 
+
+
         public override async Task<ActionResponse<IEnumerable<Company>>> GetAsync(PaginationDTO pagination) => await _companyRepository.GetAsync(pagination);
 
         public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination) => await _companyRepository.GetTotalPagesAsync(pagination);

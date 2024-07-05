@@ -33,6 +33,7 @@ namespace digital.Shared.Entities
         public int CountryId { get; set; } 
 
 
+        // Agrego la Relacion de Muchos
         public ICollection<Company>? Companies { get; set; }
 
     }

@@ -110,7 +110,6 @@ namespace digital.Backend.Repositories.Implementations
         }
 
 
-
         public async Task<string> GeneratePasswordResetTokenAsync(User user)
         {
             return await _userManager.GeneratePasswordResetTokenAsync(user);

@@ -66,6 +66,12 @@ namespace digital.Shared.Entities
         [Display(Name = "Rubro")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
         [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
+        public RubroCompanyEnum Rubro { get; set; }
+
+
+        [Display(Name = "Sector")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
+        [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
         public SectorCompanyEnum Sector { get; set; }
         
 
@@ -170,11 +176,14 @@ namespace digital.Shared.Entities
         // FKs
 
         public Category? Category { get; set; }
+        [Display(Name = "Categoria")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
+        public int CategoryId { get; set; }
+
+
 
 
         public City? City { get; set; }
-
-
         [Display(Name = "Ciudad")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
         public int CityId { get; set; }

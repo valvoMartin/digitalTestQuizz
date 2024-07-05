@@ -26,11 +26,65 @@ namespace digital.Backend.Data
             await CheckUserAsync("1011", "Rocio", "Armando", "rocio@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.Admin);
             await CheckUserAsync("1012", "user", "user", "a@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.User);
             //await CheckSectorsAsync();
+            await CheckCategoriesOfCompanyAsync();
             await CheckCompaniesAsync();
 
         }
 
-        
+        private async Task CheckCategoriesOfCompanyAsync()
+        {
+            if (!_context.Categories.Any())
+            {
+
+                var country = await _context.Countries.FirstOrDefaultAsync(x => x.Name == "Argentina");
+                country ??= await _context.Countries.FirstOrDefaultAsync();
+
+                var categoriesOfCompany = new List<Category> 
+                { 
+                    new Category 
+                    {
+                        Name = "Micro",
+                        Country = country!,
+                        CountryId = country!.Id,
+                        EmployesLimit = 50,
+                        RevenueLimit = 1000000,
+                        
+                    },
+                    new Category
+                    {
+                        Name = "Pequeña",
+                        Country = country!,
+                        CountryId = country!.Id,
+                        EmployesLimit = 50,
+                        RevenueLimit = 1000000,
+                        
+                    },
+                    new Category
+                    {
+                        Name = "Mediana Tramo 1",
+                        Country = country!,
+                        CountryId = country!.Id,
+                        EmployesLimit = 50,
+                        RevenueLimit = 1000000,
+
+                    },
+                    new Category
+                    {
+                        Name = "Mediana Tramo 2",
+                        Country = country!,
+                        CountryId = country!.Id,
+                        EmployesLimit = 50,
+                        RevenueLimit = 1000000,
+
+                    }
+                };
+                
+
+                _context.Categories.AddRange(categoriesOfCompany);
+                await _context.SaveChangesAsync();
+            }
+            
+        }
 
         private async Task CheckCompaniesAsync()
         {
@@ -42,6 +96,9 @@ namespace digital.Backend.Data
                 var city = await _context.Cities.FirstOrDefaultAsync(x => x.Name == "Rafaela");
                 city ??= await _context.Cities.FirstOrDefaultAsync();
 
+                int CityId = city!.Id;
+
+
                 var companies = new List<Company>
                 {
                     new Company
@@ -49,13 +106,16 @@ namespace digital.Backend.Data
                         Cuit = "123456789",
                         Name = "Tech Innovators",
                         City = city,
+                        CityId = CityId,
                         Email = "info@techinnovators.com",
                         WebPage = "www.techinnovators.com",
                         LegalForm = LegalFormsEnum.SRL,
-                        Sector = SectorCompanyEnum.Tecnologica,
-                        Size = SizeCompanyEnum.CuearentaOchentayNueve,
+                        Rubro = RubroCompanyEnum.Servicios,
+                        Sector = SectorCompanyEnum.ServiciosL,
+                        Size = SizeCompanyEnum.DiezADiecinueve,
                         OwnFacilities = true,
                         PorcAdministracion = 10,
+                        Category = await _context.Categories.FirstOrDefaultAsync(x => x.Name == "Micro"),
                         PorcComercializacion = 15,
                         PorcProduccion = 60,
                         PorcRRHH = 5,
@@ -68,7 +128,34 @@ namespace digital.Backend.Data
                         DateInsert = DateTime.UtcNow,
                         //DateDelete se quedan en null
                     },
-                    // Agrega más compañías según sea necesario
+                    new Company
+                    {
+                        Cuit = "987654321",
+                        Name = "Tech Innovators 2",
+                        City = city,
+                        CityId = CityId,
+                        Email = "info@techinnovators2.com",
+                        WebPage = "www.techinnovators2.com",
+                        LegalForm = LegalFormsEnum.SA,
+                        Rubro = RubroCompanyEnum.Servicios,
+                        Sector = SectorCompanyEnum.ServiciosA,
+                        Size = SizeCompanyEnum.DiezADiecinueve,
+                        Category = await _context.Categories.FirstOrDefaultAsync(x => x.Name == "Micro"),
+                        OwnFacilities = true,
+                        PorcAdministracion = 10,
+                        PorcComercializacion = 15,
+                        PorcProduccion = 60,
+                        PorcRRHH = 5,
+                        PorcLogistica = 5,
+                        PorcMantenimiento = 5,
+                        PorcProductoDestinadoAMercadoLocal = 80,
+                        PorcExportacion = 20,
+                        Terciariza = false,
+                        Observaciones = "Ninguna",
+                        DateInsert = DateTime.UtcNow,
+
+
+                    }
                 };
 
                 _context.Companies.AddRange(companies);

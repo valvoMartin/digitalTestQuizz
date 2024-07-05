@@ -24,7 +24,7 @@ namespace digital.Backend.Data
             modelBuilder.Entity<State>().HasIndex(s => new { s.CountryId, s.Name }).IsUnique();
             modelBuilder.Entity<City>().HasIndex(c => new { c.StateId, c.Name }).IsUnique();
             modelBuilder.Entity<Company>().HasIndex(c => new { c.Cuit, c.Name}).IsUnique();
-            modelBuilder.Entity<Category>().HasIndex(c => new { c.Name}).IsUnique();
+            modelBuilder.Entity<Category>().HasIndex(c => new { c.Name, c.Id}).IsUnique();
 
 
 

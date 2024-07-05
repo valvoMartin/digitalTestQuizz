@@ -1,0 +1,126 @@
+﻿@typeparam TItem
+
+<div class="slider-container">
+    
+   @for (int i = 0; i < ItemNames.Count; i++)
+    {
+        <div class="slider-item">
+            <span>@ItemNames[i]:</span>
+            <input type="range" min="0" max="100" step="0.1" value="@ItemValues[i]" @oninput="@(e => OnSliderChange(i, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+            <span>@ItemValues[i]%</span>
+        </div>
+    } 
+
+
+    
+</div>
+
+
+@code {
+
+    [Parameter] public List<string> ItemNames { get; set; } = new List<string>();
+
+    private List<string> ItemValues { get; set; } = new List<string>();
+
+    private float Total => ItemValues.Select(v => float.Parse(v)).Sum();
+
+
+
+
+    protected override void OnInitialized()
+    {
+        ItemValues = Enumerable.Repeat("25", ItemNames.Count).ToList();
+    }
+
+    private void OnSliderChange(int index, string value)
+    {
+        if (float.TryParse(value, out float newValue))
+        {
+            AdjustValues(index, newValue);
+        }
+    }
+
+    private void AdjustValues(int index, float newValue)
+    {
+        float[] values = ItemValues.Select(v => float.Parse(v)).ToArray();
+        float oldValue = values[index];
+        values[index] = newValue;
+
+        float diff = newValue - oldValue;
+        float totalOthers = values.Where((v, i) => i != index).Sum();
+
+        if (totalOthers == 0)
+        {
+            ResetValues();
+            return;
+        }
+
+        for (int i = 0; i < values.Length; i++)
+        {
+            if (i != index)
+            {
+                values[i] -= (values[i] / totalOthers) * diff;
+                if (values[i] < 0) values[i] = 0;
+            }
+        }
+
+        float correction = 100 - values.Sum();
+        values[index] += correction;
+
+        if (values.Any(v => float.IsNaN(v)))
+        {
+            ResetValues();
+            return;
+        }
+
+        ItemValues = values.Select(v => v.ToString("0.0")).ToList();
+    }
+
+    private void EnsureTotalIs100()
+    {
+        float[] values = ItemValues.Select(v => float.Parse(v)).ToArray();
+        float total = values.Sum();
+
+        if (total != 100f)
+        {
+            float difference = 100f - total;
+
+            // Adjust the last value to make the total 100%
+            values[ItemValues.Count - 1] += difference;
+            if (values[ItemValues.Count - 1] < 0) values[ItemValues.Count - 1] = 0;
+
+            ItemValues = values.Select(v => v.ToString("0.0")).ToList();
+        }
+    }
+
+    private void ResetValues()
+    {
+        ItemValues = Enumerable.Repeat("25", ItemNames.Count).ToList();
+    }   
+}
+
+
+<style>
+    .slider-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .slider-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        width: 50%;
+    }
+
+        .slider-item input[type=range] {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .slider-item span {
+            width: 50px;
+            text-align: left;
+        }
+</style>

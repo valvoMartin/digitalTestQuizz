@@ -7,11 +7,14 @@ namespace digital.Backend.UnitsOfWork.Interfaces
 {
     public interface ICompanyUnitOfWork
     {
-        Task<ActionResponse<Company>> GetAsync(int id);
-
         Task<ActionResponse<IEnumerable<Company>>> GetAsync(PaginationDTO pagination);
 
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
+
+
+
+
+        Task<ActionResponse<Company>> GetAsync(int id);
 
         Task<ActionResponse<Company>> AddFullAsync(Company company);
 

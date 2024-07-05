@@ -2,10 +2,11 @@
 using digital.Shared.Entities;
 using digital.Shared.Responses;
 
-namespace digital.Backend.UnitsOfWork.Interfaces
+namespace digital.Backend.Repositories.Interfaces
 {
-    public interface ICategoriesUnitOfWork
+    public interface ICategoryRepository
     {
+
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
 
         Task<ActionResponse<IEnumerable<Category>>> GetAsync(PaginationDTO pagination);
@@ -14,15 +15,15 @@ namespace digital.Backend.UnitsOfWork.Interfaces
 
 
 
+        //TODO: Agregar mas metodos a Categoria
         Task<ActionResponse<Category>> GetAsync(int id);
 
         //Task<ActionResponse<IEnumerable<Category>>> GetAsync();
 
-        Task<ActionResponse<Category>> AddFullAsync(Category company);
+        Task<ActionResponse<Category>> AddFullAsync(Category category);
 
-        Task<ActionResponse<Category>> UpdateFullAsync(Category company);
+        Task<ActionResponse<Category>> UpdateFullAsync(Category category);
 
         Task<ActionResponse<Category>> DeleteAsync(int id);
-
     }
 }

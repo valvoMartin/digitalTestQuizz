@@ -7,17 +7,17 @@ namespace digital.Backend.Repositories.Interfaces
 {
     public interface ICompanyRepository
     {
-        Task<ActionResponse<Company>> GetAsync(int id);
-
+        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
         Task<ActionResponse<IEnumerable<Company>>> GetAsync(PaginationDTO pagination);
 
 
 
-        Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);
-
 
 
         //TODO: Agregar mas metodos a COMPAÑIAS
+        Task<ActionResponse<Company>> GetAsync(int id);
+
+        Task<ActionResponse<IEnumerable<Company>>> GetAsync();
 
         Task<ActionResponse<Company>> AddFullAsync(Company company);
 

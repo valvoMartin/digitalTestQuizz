@@ -14,7 +14,7 @@ else
         <div class="card m-4">
             <div class="card-header">
                 <span>
-                    <i class="bi bi-person-circle" /> Registrar Nueva Empresa
+                    <i class="bi bi-buildings" /> Registrar Nueva Empresa
 
                 </span>
             </div>
@@ -23,13 +23,13 @@ else
                 {
                     <div class="card-header">
                         <span>
-                            <i class="bi bi-person-circle" /> Datos Generales
+                            <i class="bi bi-building-exclamation" /> Datos Generales
 
                         </span>
                     </div>
 
 
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-6">
 
                             <div class="mb-3">
@@ -134,15 +134,22 @@ else
                             </div>
                         </div>
 
-
                     </div>
+
                 }
                 else if (step == 2)
                 {
-                    <div class="row">
+                    <div class="card-header">
+                        <span>
+                            <i class="bi bi-clipboard-check" /> Su Empresa
+
+                        </span>
+                    </div>
+                    <div class="row mt-3">
+
                         <div class="col-6">
 
-                           
+
                             <div class="mb-3">
                                 <label>Idicar cantidad de Empleados:</label>
                                 <div>
@@ -159,26 +166,61 @@ else
 
                             </div>
 
-                            @* <div class="mb-3">
-                                <label>¿Tiene instalaciones Propias?</label>
-                                <div>
-                                    <InputCheckbox class="form-control" @bind-Value="@company.OwnFacilities" />
-                                    <ValidationMessage For="@(() => company.OwnFacilities)" />
-                                </div>
+                          
 
-                            </div> *@
+                            @* <PercentageSlidersGeneric TItem="string" ItemNames="@ItemNames" /> *@
+
                             <div class="mb-3">
-                                <label for="ownFacilities">¿Tiene instalaciones propias?</label>
-                                <InputCheckbox class="ms-2" id="ownFacilities" @bind-Value="@company.OwnFacilities" />
-                                <ValidationMessage For="@(() => company.OwnFacilities)" />
-                                
+
+
+                                <label class="mb-2" for="ownFacilities">Cuanto se asigna a cada sector de la empresa</label>
+                                <div class="slider-container">
+
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Administracion:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Administracion" @oninput="@(e => OnSliderChange(0, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Administracion%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Comercializacion:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Comercializacion" @oninput="@(e => OnSliderChange(1, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Comercializacion%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Produccion:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Produccion" @oninput="@(e => OnSliderChange(2, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Produccion%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% RRHH:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@RRHH" @oninput="@(e => OnSliderChange(3, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@RRHH%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Logistica:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Logistica" @oninput="@(e => OnSliderChange(4, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Logistica%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Mantenimiento:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Mantenimiento" @oninput="@(e => OnSliderChange(5, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Mantenimiento%</span>
+                                    </div>
+
+
+                                </div>
                             </div>
+
+
+
+
+
 
                         </div>
 
                         <div class="col-6">
 
-                           
+
                             <div class="mb-3">
                                 <label>Rubro de la Empresa:</label>
                                 <div>
@@ -195,21 +237,237 @@ else
 
                             </div>
 
+                            <div class="mb-5 mt-5">
+                                <label for="ownFacilities">¿Tiene instalaciones propias?</label>
+                                <InputCheckbox class="ms-2" id="ownFacilities" @bind-Value="@company.OwnFacilities" />
+                                <ValidationMessage For="@(() => company.OwnFacilities)" />
+
+                            </div>
+
+                            <div class="mb-3">
+
+
+                                <label class="mb-2" for="ownFacilities">Cuanto se asigna al mercado Local y al Exterior</label>
+                                <div class="slider-container">
+
+
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Mercado Local:</span>
+                                        <input type="range" min="0" max="100" step="2" value="@MercadoLocal" @oninput="@(e => OnMercadoLocalChange(e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@MercadoLocal%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Mercado Exterior:</span>
+                                        <input type="range" min="0" max="100" step="2" value="@MercadoExterior" @oninput="@(e => OnMercadoExteriorChange(e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@MercadoExterior%</span>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 }
+                else if (step == 3)
+                {
+                    <div class="card-header">
+                        <span>
+                            <i class="bi bi-clipboard-check" /> Aqui pongo si terciariza y que tipo de PyME es
+
+                        </span>
+                    </div>
+                    <div class="row mt-3">
+
+                        <div class="col-6">
 
 
-                <div class="d-flex justify-content-between">
-                    @if (step > 1)
-                    {
-                        <button class="btn btn-secondary" @onclick="PrevStep"><i class="bi bi-arrow-left"></i> Anterior</button>
-                    }
-                    <button class="btn btn-primary" @onclick="HandleValidSubmit" type="submit">@(step == 2 ? "Registrar" : "Siguiente") <i class="bi bi-arrow-right"></i></button>
+                            <div class="mb-5 mt-5">
+                                <label for="ownFacilities">¿Tercairiza?</label>
+                                <InputCheckbox class="ms-2" id="Terciariza" @bind-Value="@company.Terciariza" />
+                                <ValidationMessage For="@(() => company.Terciariza)" />
+
+                            </div>
+
+
+
+                            @* <PercentageSlidersGeneric TItem="string" ItemNames="@ItemNames" /> *@
+
+                           @*  <div class="mb-3">
+
+
+                                <label class="mb-2" for="ownFacilities">Cuanto se asigna a cada sector de la empresa</label>
+                                <div class="slider-container">
+
+
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Administracion:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Administracion" @oninput="@(e => OnSliderChange(0, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Administracion%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Comercializacion:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Comercializacion" @oninput="@(e => OnSliderChange(1, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Comercializacion%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Produccion:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Produccion" @oninput="@(e => OnSliderChange(2, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Produccion%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% RRHH:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@RRHH" @oninput="@(e => OnSliderChange(3, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@RRHH%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Logistica:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Logistica" @oninput="@(e => OnSliderChange(4, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Logistica%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Mantenimiento:</span>
+                                        <input type="range" min="0" max="70" step="1" value="@Mantenimiento" @oninput="@(e => OnSliderChange(5, e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@Mantenimiento%</span>
+                                    </div>
+
+                                </div>
+                            </div>
+ *@
+
+
+
+
+
+                        </div>
+
+                        <div class="col-6">
+
+
+                            <div class="mb-3">
+                                <label>Rubro de la Empresa:</label>
+                                <div>
+                                    <InputSelect class="form-control" @bind-Value="company.Rubro" @onchange="OnRubroChanged">
+                                        <option value="0">-- Seleccione un Rubro --</option>
+                                        @foreach (RubroCompanyEnum item in Enum.GetValues(typeof(RubroCompanyEnum)))
+                                        {
+                                            <option value="@item">@EnumHelper.GetEnumDescription(item)</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => company.Rubro)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Sector de Rubros seleccionado:</label>
+                                <div>
+                                    <InputSelect class="form-control" @bind-Value="company.Sector">
+                                        <option value="0">-- Seleccione un Sector --</option>
+                                        @if (filteredSectors.Any())
+                                        {
+                                            @foreach (SectorCompanyEnum item in filteredSectors)
+                                            {
+                                                <option value="@item">@EnumHelper.GetEnumDescription(item)</option>
+                                            }
+                                        }
+                                        
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => company.Sector)" />
+                                </div>
+
+                            </div>
+
+                            <div class="mb-5 mt-5">
+                                <label for="ownFacilities">¿Tiene instalaciones propias?</label>
+                                <InputCheckbox class="ms-2" id="ownFacilities" @bind-Value="@company.OwnFacilities" />
+                                <ValidationMessage For="@(() => company.OwnFacilities)" />
+
+                            </div>
+
+                            <div class="mb-3">
+
+
+                                <label class="mb-2" for="ownFacilities">Cuanto se asigna al mercado Local y al Exterior</label>
+                                <div class="slider-container">
+
+
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Mercado Local:</span>
+                                        <input type="range" min="0" max="100" step="2" value="@MercadoLocal" @oninput="@(e => OnMercadoLocalChange(e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@MercadoLocal%</span>
+                                    </div>
+                                    <div class="slider-item">
+                                        <span class="slider-label">% Mercado Exterior:</span>
+                                        <input type="range" min="0" max="100" step="2" value="@MercadoExterior" @oninput="@(e => OnMercadoExteriorChange(e.Value.ToString()))" @onchange="EnsureTotalIs100" />
+                                        <span>@MercadoExterior%</span>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                <div class="row fixed-bottom m-3 justify-content-end">
+                    <div class="col-lg-6 text-lg-end">
+                        @if (step > 1)
+                        {
+                            <button class="btn btn-secondary me-2" @onclick="PrevStep"><i class="bi bi-arrow-left"></i> Anterior</button>
+                        }
+                        <button class="btn btn-primary" @onclick="HandleValidSubmit" type="submit">
+                            @(step == 3 ? "Registrar" : "Siguiente") <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </EditForm>
 
 }
+
+
+<style>
+
+    .vh-100 {
+        height: 100vh; /* Establece la altura del contenedor al 100% de la altura de la ventana */
+    }
+
+    .overflow-auto {
+        overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
+    }
+
+    .slider-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .slider-item span {
+        width: 150px;
+        text-align: left;
+    }
+
+    .slider-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Ajusta el margen inferior según necesites */
+    }
+
+    .slider-label {
+        width: 160px; /* Ajusta el ancho según necesites para todos los labels */
+        display: inline-block;
+        text-align: right;
+        margin-right: 10px; /* Espacio entre el label y el input */
+    }
+
+    input[type="range"] {
+        width: 180px; /* Ajusta el ancho del input range según necesites */
+        margin-right: 10px; /* Espacio entre el input range y el span con el valor */
+    }
+</style>
+
+

@@ -23,6 +23,10 @@ namespace digital.Backend.Repositories.Implementations
         {
             var queryable = _context.Companies
                 .Where(x => x.DateDelete == null)
+                .Include(Category => Category.Category!)
+                .Include(u => u.City!)
+                .ThenInclude(c => c.State!)
+                .ThenInclude(s => s.Country)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
@@ -79,6 +83,10 @@ namespace digital.Backend.Repositories.Implementations
         {
             var queryable = _context.Companies
                 .Where(x => x.DateDelete == null)
+                .Include(Category => Category.Category!)
+                .Include(u => u.City!)
+                .ThenInclude(c => c.State!)
+                .ThenInclude(s => s.Country)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
@@ -98,6 +106,7 @@ namespace digital.Backend.Repositories.Implementations
         public override async Task<ActionResponse<Company>> GetAsync(int id)
         {
             var company = await _context.Companies
+                .Include(x => x.Category)
                 .Include(x => x.City)
                 .ThenInclude(x => x!.State)
                 .ThenInclude(x => x!.Country)
@@ -183,6 +192,7 @@ namespace digital.Backend.Repositories.Implementations
             try
             {
                 var MyCompany = await _context.Companies
+                    .Include(c => c.Category)
                     .Include(c => c.City)
                     .ThenInclude(s => s!.State)
                     .ThenInclude(y => y!.Country)
@@ -205,6 +215,7 @@ namespace digital.Backend.Repositories.Implementations
                 MyCompany.WebPage = company.WebPage;
                 MyCompany.LegalForm = company.LegalForm;
                 MyCompany.Sector = company.Sector;
+                MyCompany.Category = company.Category;
                 MyCompany.Size = company.Size;
                 MyCompany.OwnFacilities = company.OwnFacilities;
                 MyCompany.PorcAdministracion = company.PorcAdministracion;
