@@ -1,5 +1,5 @@
 ﻿using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Responses;
 
 namespace digital.Backend.UnitsOfWork.Interfaces

@@ -1,4 +1,6 @@
 ﻿using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
+using digital.Shared.Entities.Countries;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,10 @@ namespace digital.Backend.Data
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Rubro> Rubros { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

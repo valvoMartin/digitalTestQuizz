@@ -1,4 +1,5 @@
-﻿using digital.Shared.Enums;
+﻿using digital.Shared.Entities.Countries;
+using digital.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace digital.Shared.Entities
+namespace digital.Shared.Entities.Companies
 {
     public class Company
     {
-       
+
         public int Id { get; set; }
 
 
@@ -35,13 +36,10 @@ namespace digital.Shared.Entities
         [EmailAddress(ErrorMessage = "El campo {0} debe ser un email válido.")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string? Email { get; set; } 
+        public string? Email { get; set; }
 
 
-        //[Display(Name = "Código Postal")]
-        //[MaxLength(10, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        //public int PostalCode { get; set; }
+
 
 
         [Display(Name = "Página Web")]
@@ -51,10 +49,7 @@ namespace digital.Shared.Entities
 
 
 
-        //[Display(Name = "Forma Jurídica")]
-        //[Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
-        //public LegalForms LegalForm { get; set; } = null!;
-        //public int idLegalForm { get; set; }
+
 
         [Display(Name = "Forma Jurídica")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
@@ -63,23 +58,8 @@ namespace digital.Shared.Entities
 
 
 
-        [Display(Name = "Rubro")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
-        [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
-        public RubroCompanyEnum Rubro { get; set; }
-
-
-        [Display(Name = "Sector")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
-        [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
-        public SectorCompanyEnum Sector { get; set; }
         
 
-
-
-        //[Display(Name = "Sector")]
-        //[Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
-        //public int CodSector { get; set; }
 
 
         [Display(Name = "Tamaño de la Empresa")]
@@ -160,7 +140,7 @@ namespace digital.Shared.Entities
 
         [Display(Name = "Observaciones")]
         [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-        public string? Observaciones { get; set; } 
+        public string? Observaciones { get; set; }
 
 
 
@@ -175,7 +155,8 @@ namespace digital.Shared.Entities
 
         // FKs
 
-        public Category? Category { get; set; }
+        public Category Category { get; set; } = null!;
+
         [Display(Name = "Categoria")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
         public int CategoryId { get; set; }
@@ -183,10 +164,20 @@ namespace digital.Shared.Entities
 
 
 
-        public City? City { get; set; }
+        public City City { get; set; } = null!;
         [Display(Name = "Ciudad")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
         public int CityId { get; set; }
+
+
+
+        public Sector Sector { get; set; } = null!;
+
+        [Display(Name = "Sector")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
+        [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
+        public int SectorId { get; set; }
+
 
 
         // public ICollection<User> Users { get; set; }

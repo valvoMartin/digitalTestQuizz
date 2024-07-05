@@ -1,6 +1,6 @@
 ﻿using digital.Backend.Repositories.Implementations;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Responses;
 
 namespace digital.Backend.Repositories.Interfaces

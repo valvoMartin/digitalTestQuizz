@@ -1,6 +1,6 @@
 ﻿using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Countries;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

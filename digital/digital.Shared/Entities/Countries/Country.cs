@@ -1,7 +1,8 @@
-﻿using digital.Shared.Interfaces;
+﻿using digital.Shared.Entities.Companies;
+using digital.Shared.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
-namespace digital.Shared.Entities
+namespace digital.Shared.Entities.Countries
 {
     public class Country : IEntityWithName
     {
@@ -18,15 +19,15 @@ namespace digital.Shared.Entities
 
         [Display(Name = "Provincias")]
         public int StatesNumber => States == null || States.Count == 0 ? 0 : States.Count;
-        
-        
-        
-        
+
+
+
+
         // FKs
 
         public ICollection<State>? States { get; set; }
 
-        public ICollection<Category>? Categories  { get; set; }
+        public ICollection<Category>? Categories { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/createCompany"
+﻿@page "/companies/create"
 
 
 @layout MainHomeLayout
@@ -221,7 +221,7 @@ else
                         <div class="col-6">
 
 
-                            <div class="mb-3">
+                           @*  <div class="mb-3">
                                 <label>Rubro de la Empresa:</label>
                                 <div>
                                     <InputSelect class="form-control" @bind-Value="@company.Sector">
@@ -235,7 +235,7 @@ else
                                     <ValidationMessage For="@(() => company.Sector)" />
                                 </div>
 
-                            </div>
+                            </div> *@
 
                             <div class="mb-5 mt-5">
                                 <label for="ownFacilities">¿Tiene instalaciones propias?</label>
@@ -344,7 +344,7 @@ else
                         <div class="col-6">
 
 
-                            <div class="mb-3">
+                            @* <div class="mb-3">
                                 <label>Rubro de la Empresa:</label>
                                 <div>
                                     <InputSelect class="form-control" @bind-Value="company.Rubro" @onchange="OnRubroChanged">
@@ -376,7 +376,7 @@ else
                                     <ValidationMessage For="@(() => company.Sector)" />
                                 </div>
 
-                            </div>
+                            </div> *@
 
                             <div class="mb-5 mt-5">
                                 <label for="ownFacilities">¿Tiene instalaciones propias?</label>

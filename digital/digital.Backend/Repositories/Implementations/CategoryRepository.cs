@@ -2,7 +2,7 @@
 using digital.Backend.Helpers;
 using digital.Backend.Repositories.Interfaces;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,7 +36,7 @@ namespace digital.Backend.Repositories.Implementations
             {
                 WasSuccess = true,
                 Result = await queryable
-                    .OrderBy(x => x.Name)
+                    .OrderBy(x => x.Id)
                     .Paginate(pagination)
                     .ToListAsync()
             };
@@ -44,7 +44,9 @@ namespace digital.Backend.Repositories.Implementations
 
         public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {
-            var queryable = _context.Categories.AsQueryable();
+            var queryable = _context.Categories
+                .Include(x => x.Country)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
@@ -93,10 +95,10 @@ namespace digital.Backend.Repositories.Implementations
                     Name = category.Name,
                     Country = category.Country,
                     CountryId = category.CountryId,
-                    EmployesLimit = category.EmployesLimit,
+                    //EmployesLimit = category.EmployesLimit,
                     RevenueLimit = category.RevenueLimit,
-
-                    //TODO: Estara bien agregar la coleccion de companias?
+                    SectorId = category.SectorId,
+                    //TODO: Agregar 
                     //Companies = category.Companies
                 };
 
@@ -149,9 +151,8 @@ namespace digital.Backend.Repositories.Implementations
                 objet.Name = category.Name;
                 objet.Country = category.Country;
                 objet.CountryId = category.CountryId;
-                objet.EmployesLimit = category.EmployesLimit;
                 objet.RevenueLimit = category.RevenueLimit;
-
+                objet.SectorId = category.SectorId;
                 
 
                 _context.Update(objet);
@@ -179,6 +180,54 @@ namespace digital.Backend.Repositories.Implementations
                 };
             }
         }
+
+
+
+
+
+
+
+
+
+       
+
+        //public override async Task<ActionResponse<Company>> DeleteAsync(int id)
+        //{
+        //    var row = await _context.Companies.FirstOrDefaultAsync(x => x.Id == id && x.DateDelete == null);
+        //    if (row == null)
+        //    {
+        //        return new ActionResponse<Company>
+        //        {
+        //            WasSuccess = false,
+        //            Message = "Registro no encontrado"
+        //        };
+        //    }
+
+        //    try
+        //    {
+        //        row.DateDelete = DateTime.UtcNow; // Ajusta la fecha de eliminación
+        //        _context.Update(row);
+
+        //        await _context.SaveChangesAsync();
+        //        return new ActionResponse<Company>
+        //        {
+        //            WasSuccess = true,
+        //        };
+        //    }
+        //    catch
+        //    {
+        //        return new ActionResponse<Company>
+        //        {
+        //            WasSuccess = false,
+        //            Message = "No se puede borrar, porque tiene registros relacionados"
+        //        };
+        //    }
+        //}
+
+
+
+        
+        
 
     }
 }

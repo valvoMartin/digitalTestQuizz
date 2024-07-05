@@ -1,7 +1,7 @@
 ﻿using digital.Shared.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
-namespace digital.Shared.Entities
+namespace digital.Shared.Entities.Countries
 {
     public class State : IEntityWithName
     {

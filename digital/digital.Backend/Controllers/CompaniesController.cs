@@ -1,6 +1,6 @@
 ﻿using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +59,7 @@ namespace digital.Backend.Controllers
             }
             return NotFound(action.Message);
         }
+
 
 
 

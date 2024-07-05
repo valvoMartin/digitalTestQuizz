@@ -3,12 +3,12 @@ using digital.Frontend.Repositories;
 using digital.Shared.Entities.Companies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using System.Net;
 
-namespace digital.Frontend.Pages.Companies
+namespace digital.Frontend.Pages.Categories
 {
-
     [Authorize(Roles = "Admin")]
-    public partial class CompaniesIndex
+    public partial class CategoriesIndex
     {
         private int currentPage = 1;
         private int totalPages;
@@ -17,7 +17,7 @@ namespace digital.Frontend.Pages.Companies
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
 
-        public List<Company>? Companies{ get; set; }
+        public List<Category>? Categories { get; set; }
 
         [Parameter, SupplyParameterFromQuery] public string Page { get; set; } = string.Empty;
         [Parameter, SupplyParameterFromQuery] public string Filter { get; set; } = string.Empty;
@@ -78,27 +78,27 @@ namespace digital.Frontend.Pages.Companies
         private async Task<bool> LoadListAsync(int page)
         {
             ValidateRecordsNumber(RecordsNumber);
-            var url = $"api/companies?page={page}&recordsnumber={RecordsNumber}";
+            var url = $"api/categories?page={page}&recordsnumber={RecordsNumber}";
             if (!string.IsNullOrEmpty(Filter))
             {
                 url += $"&filter={Filter}";
             }
 
-            var response = await Repository.GetAsync<List<Company>>(url);
+            var response = await Repository.GetAsync<List<Category>>(url);
             if (response.Error)
             {
                 var message = await response.GetErrorMessageAsync();
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return false;
             }
-            Companies = response.Response;
+            Categories = response.Response;
             return true;
         }
 
         private async Task LoadPagesAsync()
         {
             ValidateRecordsNumber(RecordsNumber);
-            var url = $"api/companies/totalPages?recordsnumber={RecordsNumber}";
+            var url = $"api/categories/totalPages?recordsnumber={RecordsNumber}";
             if (!string.IsNullOrEmpty(Filter))
             {
                 url += $"&filter={Filter}";
@@ -115,7 +115,7 @@ namespace digital.Frontend.Pages.Companies
         }
 
 
-        private async Task Delete(int companyId)
+        private async Task Delete(int categoryId)
         {
             var result = await SweetAlertService.FireAsync(new SweetAlertOptions
             {
@@ -131,11 +131,11 @@ namespace digital.Frontend.Pages.Companies
                 return;
             }
 
-            var responseHttp = await Repository.DeleteAsync<Company>($"api/companies/{companyId}");
+            var responseHttp = await Repository.DeleteAsync<Category>($"api/categories/{categoryId}");
 
             if (responseHttp.Error)
             {
-                if (responseHttp.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
                 {
                     NavigationManager.NavigateTo("/");
                     return;
@@ -155,5 +155,6 @@ namespace digital.Frontend.Pages.Companies
             await LoadAsync(page);
             await SelectedPageAsync(page);
         }
+
     }
 }

@@ -1,7 +1,8 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
+using digital.Shared.Entities.Countries;
 using digital.Shared.Enums;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel;

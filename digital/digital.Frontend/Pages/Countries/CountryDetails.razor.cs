@@ -4,7 +4,7 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Pages.States;
 using digital.Frontend.Repositories;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Countries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Net;

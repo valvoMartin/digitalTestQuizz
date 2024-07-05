@@ -1,5 +1,7 @@
 ﻿using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
+using digital.Shared.Entities.Countries;
 using digital.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,10 +28,53 @@ namespace digital.Backend.Data
             await CheckUserAsync("1011", "Rocio", "Armando", "rocio@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.Admin);
             await CheckUserAsync("1012", "user", "user", "a@yopmail.com", "3492 607558", "Calle los Jazmines", UserType.User);
             //await CheckSectorsAsync();
+            await CheckRubrosAndSectorsOfCompanyAsync();
             await CheckCategoriesOfCompanyAsync();
             await CheckCompaniesAsync();
 
         }
+
+        private async Task CheckRubrosAndSectorsOfCompanyAsync()
+        {
+            if (!_context.Rubros.Any())
+            {
+                var rubros = new List<Rubro>
+                {
+                    new Rubro{ Name = "Agropecuario"},
+                    new Rubro{ Name = "Industria y Mineria"},
+                    new Rubro{ Name = "Servicios"},
+                    new Rubro{ Name = "Construccion"},
+                    new Rubro{ Name = "Comercio"}
+                };
+            }
+            if (!_context.Sectors.Any())
+            {
+                var sectors = new List<Sector>
+                {
+                    new Sector {Name = "Agricultura, Ganaderia, Silvicultura y Pesca", RubroId = 0 },
+                    new Sector {Name = "Explotacion de minas y Canteras", RubroId = 1 },
+                    new Sector {Name = "Transporte y Almacenamiento", RubroId = 1 },
+                    new Sector {Name = "Informacion y Comunicacion", RubroId = 1 },
+                    new Sector {Name = "Electricidad, Gas, Vapor y Aire acondicionado", RubroId = 2 },
+                    new Sector {Name = "Suministros de Agua, Cloacas, Gestio de residuos y Recuperacion de Materiales", RubroId = 2 },
+                    new Sector {Name = "Servicio de Transporte y Almacenamiento(No industria y Mineria)", RubroId = 2 },
+                    new Sector {Name = "Servicio de Alojamiento y Servicio de Comidas", RubroId = 2 },
+                    new Sector {Name = "Intermediacion Financiera y servicios de Seguros", RubroId = 2 },
+                    new Sector {Name = "Servicios Inmobiliarios", RubroId = 2 },
+                    new Sector {Name = "Actividades Profesionales, Cientificas y Tecnicas", RubroId = 2 },
+                    new Sector {Name = "Actividades adminsitrativas y de Servicios de apoyo", RubroId = 2 },
+                    new Sector {Name = "Enseñanza", RubroId = 2 },
+                    new Sector {Name = "Salud humana y servicios Sociales", RubroId = 2 },
+                    new Sector {Name = "Servicios Artisticos, Culturales, Deportivos y de Esparcimiento", RubroId = 2 },
+                    new Sector {Name = "Servicios de Asociaciones y de Servicios Personales", RubroId = 2 },
+                    new Sector {Name = "Construccion", RubroId = 3 },
+                    new Sector {Name = "Comercio al por mayor y al por menor, Reparacion de Vehiculos automotores y Motocicletas", RubroId = 4 },
+
+                };
+            }
+
+        }
+
 
         private async Task CheckCategoriesOfCompanyAsync()
         {
@@ -46,8 +91,7 @@ namespace digital.Backend.Data
                         Name = "Micro",
                         Country = country!,
                         CountryId = country!.Id,
-                        EmployesLimit = 50,
-                        RevenueLimit = 1000000,
+                        RevenueLimit = 500000,
                         
                     },
                     new Category
@@ -55,8 +99,7 @@ namespace digital.Backend.Data
                         Name = "Pequeña",
                         Country = country!,
                         CountryId = country!.Id,
-                        EmployesLimit = 50,
-                        RevenueLimit = 1000000,
+                        RevenueLimit = 10000000,
                         
                     },
                     new Category
@@ -64,8 +107,7 @@ namespace digital.Backend.Data
                         Name = "Mediana Tramo 1",
                         Country = country!,
                         CountryId = country!.Id,
-                        EmployesLimit = 50,
-                        RevenueLimit = 1000000,
+                        RevenueLimit = 10000000,
 
                     },
                     new Category
@@ -73,8 +115,7 @@ namespace digital.Backend.Data
                         Name = "Mediana Tramo 2",
                         Country = country!,
                         CountryId = country!.Id,
-                        EmployesLimit = 50,
-                        RevenueLimit = 1000000,
+                        RevenueLimit = 10000000,
 
                     }
                 };
@@ -96,8 +137,8 @@ namespace digital.Backend.Data
                 var city = await _context.Cities.FirstOrDefaultAsync(x => x.Name == "Rafaela");
                 city ??= await _context.Cities.FirstOrDefaultAsync();
 
-                int CityId = city!.Id;
-
+                var sector = await _context.Sectors.FirstOrDefaultAsync(x => x.Name == "Enseñanza");
+                sector ??= await _context.Sectors.FirstOrDefaultAsync();
 
                 var companies = new List<Company>
                 {
@@ -105,13 +146,11 @@ namespace digital.Backend.Data
                     {
                         Cuit = "123456789",
                         Name = "Tech Innovators",
-                        City = city,
-                        CityId = CityId,
+                        CityId = city!.Id,
                         Email = "info@techinnovators.com",
                         WebPage = "www.techinnovators.com",
+                        SectorId = sector!.Id,
                         LegalForm = LegalFormsEnum.SRL,
-                        Rubro = RubroCompanyEnum.Servicios,
-                        Sector = SectorCompanyEnum.ServiciosL,
                         Size = SizeCompanyEnum.DiezADiecinueve,
                         OwnFacilities = true,
                         PorcAdministracion = 10,
@@ -132,13 +171,11 @@ namespace digital.Backend.Data
                     {
                         Cuit = "987654321",
                         Name = "Tech Innovators 2",
-                        City = city,
-                        CityId = CityId,
+                        CityId = city.Id,
                         Email = "info@techinnovators2.com",
                         WebPage = "www.techinnovators2.com",
                         LegalForm = LegalFormsEnum.SA,
-                        Rubro = RubroCompanyEnum.Servicios,
-                        Sector = SectorCompanyEnum.ServiciosA,
+                        SectorId = sector!.Id + 1,
                         Size = SizeCompanyEnum.DiezADiecinueve,
                         Category = await _context.Categories.FirstOrDefaultAsync(x => x.Name == "Micro"),
                         OwnFacilities = true,
@@ -178,8 +215,8 @@ namespace digital.Backend.Data
             // TODO: Aca agregas los roles de usuarios que quieras
 
             await _usersUnitOfWork.CheckRoleAsync(UserType.Admin.ToString());
+            await _usersUnitOfWork.CheckRoleAsync(UserType.Intermediate.ToString());
             await _usersUnitOfWork.CheckRoleAsync(UserType.User.ToString());
-            //await _usersUnitOfWork.CheckRoleAsync(UserType.Anonimous.ToString());
         }
 
 

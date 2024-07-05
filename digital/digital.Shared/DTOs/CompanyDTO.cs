@@ -9,5 +9,9 @@ namespace digital.Shared.DTOs
     public class CompanyDTO
     {
         //TODO: Que campso deberian estar si o si ????
+
+
+
+
     }
 }

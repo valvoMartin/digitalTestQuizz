@@ -2,7 +2,7 @@
 using digital.Backend.Helpers;
 using digital.Backend.Repositories.Interfaces;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Countries;
 using digital.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 

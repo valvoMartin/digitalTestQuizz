@@ -2,7 +2,7 @@
 using digital.Backend.Repositories.Interfaces;
 using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Responses;
 using Microsoft.AspNetCore.Identity;
 

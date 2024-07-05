@@ -2,7 +2,7 @@
 //using Blazored.Modal.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Countries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Orders.Frontend.Repositories;

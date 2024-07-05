@@ -1,5 +1,5 @@
 ﻿using digital.Shared.DTOs;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Responses;
 
 namespace digital.Backend.Repositories.Interfaces
@@ -18,7 +18,7 @@ namespace digital.Backend.Repositories.Interfaces
         //TODO: Agregar mas metodos a Categoria
         Task<ActionResponse<Category>> GetAsync(int id);
 
-        //Task<ActionResponse<IEnumerable<Category>>> GetAsync();
+        Task<ActionResponse<IEnumerable<Category>>> GetAsync();
 
         Task<ActionResponse<Category>> AddFullAsync(Category category);
 

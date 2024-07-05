@@ -1,7 +1,8 @@
-﻿using digital.Shared.Interfaces;
+﻿using digital.Shared.Entities.Companies;
+using digital.Shared.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
-namespace digital.Shared.Entities
+namespace digital.Shared.Entities.Countries
 {
     public class City : IEntityWithName
     {
