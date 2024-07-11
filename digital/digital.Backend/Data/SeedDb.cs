@@ -46,31 +46,35 @@ namespace digital.Backend.Data
                     new Rubro{ Name = "Construccion"},
                     new Rubro{ Name = "Comercio"}
                 };
+                _context.Rubros.AddRange(rubros);
+                await _context.SaveChangesAsync();
             }
             if (!_context.Sectors.Any())
             {
                 var sectors = new List<Sector>
                 {
-                    new Sector {Name = "Agricultura, Ganaderia, Silvicultura y Pesca", RubroId = 0 },
-                    new Sector {Name = "Explotacion de minas y Canteras", RubroId = 1 },
-                    new Sector {Name = "Transporte y Almacenamiento", RubroId = 1 },
-                    new Sector {Name = "Informacion y Comunicacion", RubroId = 1 },
-                    new Sector {Name = "Electricidad, Gas, Vapor y Aire acondicionado", RubroId = 2 },
-                    new Sector {Name = "Suministros de Agua, Cloacas, Gestio de residuos y Recuperacion de Materiales", RubroId = 2 },
-                    new Sector {Name = "Servicio de Transporte y Almacenamiento(No industria y Mineria)", RubroId = 2 },
-                    new Sector {Name = "Servicio de Alojamiento y Servicio de Comidas", RubroId = 2 },
-                    new Sector {Name = "Intermediacion Financiera y servicios de Seguros", RubroId = 2 },
-                    new Sector {Name = "Servicios Inmobiliarios", RubroId = 2 },
-                    new Sector {Name = "Actividades Profesionales, Cientificas y Tecnicas", RubroId = 2 },
-                    new Sector {Name = "Actividades adminsitrativas y de Servicios de apoyo", RubroId = 2 },
-                    new Sector {Name = "Enseñanza", RubroId = 2 },
-                    new Sector {Name = "Salud humana y servicios Sociales", RubroId = 2 },
-                    new Sector {Name = "Servicios Artisticos, Culturales, Deportivos y de Esparcimiento", RubroId = 2 },
-                    new Sector {Name = "Servicios de Asociaciones y de Servicios Personales", RubroId = 2 },
-                    new Sector {Name = "Construccion", RubroId = 3 },
-                    new Sector {Name = "Comercio al por mayor y al por menor, Reparacion de Vehiculos automotores y Motocicletas", RubroId = 4 },
+                    new Sector {Name = "Agricultura, Ganaderia, Silvicultura y Pesca", RubroId = 1 },
+                    new Sector {Name = "Explotacion de minas y Canteras", RubroId = 2 },
+                    new Sector {Name = "Transporte y Almacenamiento", RubroId = 2 },
+                    new Sector {Name = "Informacion y Comunicacion", RubroId = 2 },
+                    new Sector {Name = "Electricidad, Gas, Vapor y Aire acondicionado", RubroId = 3 },
+                    new Sector {Name = "Suministros de Agua, Cloacas, Gestio de residuos y Recuperacion de Materiales", RubroId = 3 },
+                    new Sector {Name = "Servicio de Transporte y Almacenamiento(No industria y Mineria)", RubroId = 3 },
+                    new Sector {Name = "Servicio de Alojamiento y Servicio de Comidas", RubroId = 3 },
+                    new Sector {Name = "Intermediacion Financiera y servicios de Seguros", RubroId = 3 },
+                    new Sector {Name = "Servicios Inmobiliarios", RubroId = 3 },
+                    new Sector {Name = "Actividades Profesionales, Cientificas y Tecnicas", RubroId = 3 },
+                    new Sector {Name = "Actividades adminsitrativas y de Servicios de apoyo", RubroId = 3 },
+                    new Sector {Name = "Enseñanza", RubroId = 3 },
+                    new Sector {Name = "Salud humana y servicios Sociales", RubroId = 3 },
+                    new Sector {Name = "Servicios Artisticos, Culturales, Deportivos y de Esparcimiento", RubroId = 3 },
+                    new Sector {Name = "Servicios de Asociaciones y de Servicios Personales", RubroId = 3 },
+                    new Sector {Name = "Construccion", RubroId = 4 },
+                    new Sector {Name = "Comercio al por mayor y al por menor, Reparacion de Vehiculos automotores y Motocicletas", RubroId = 5 },
 
                 };
+                _context.Sectors.AddRange(sectors);
+                await _context.SaveChangesAsync();
             }
 
         }
@@ -84,38 +88,45 @@ namespace digital.Backend.Data
                 var country = await _context.Countries.FirstOrDefaultAsync(x => x.Name == "Argentina");
                 country ??= await _context.Countries.FirstOrDefaultAsync();
 
+                var sector = await _context.Sectors.FirstOrDefaultAsync(x => x.Name == "Enseñanza");
+                sector ??= await _context.Sectors.FirstOrDefaultAsync();
+
                 var categoriesOfCompany = new List<Category> 
                 { 
                     new Category 
                     {
                         Name = "Micro",
-                        Country = country!,
+                        //Country = country!,
                         CountryId = country!.Id,
                         RevenueLimit = 500000,
+                        SectorId = sector!.Id,
                         
                     },
                     new Category
                     {
                         Name = "Pequeña",
-                        Country = country!,
+                        //Country = country!,
                         CountryId = country!.Id,
+                        SectorId = sector!.Id,
                         RevenueLimit = 10000000,
-                        
+
                     },
                     new Category
                     {
                         Name = "Mediana Tramo 1",
-                        Country = country!,
+                        //Country = country!,
                         CountryId = country!.Id,
+                        SectorId = sector!.Id,
                         RevenueLimit = 10000000,
 
                     },
                     new Category
                     {
                         Name = "Mediana Tramo 2",
-                        Country = country!,
+                        //Country = country!,
                         CountryId = country!.Id,
                         RevenueLimit = 10000000,
+                        SectorId = sector!.Id,
 
                     }
                 };
@@ -140,6 +151,9 @@ namespace digital.Backend.Data
                 var sector = await _context.Sectors.FirstOrDefaultAsync(x => x.Name == "Enseñanza");
                 sector ??= await _context.Sectors.FirstOrDefaultAsync();
 
+                var category = await _context.Categories.FirstOrDefaultAsync(x => x.Name == "Micro");
+                category ??= await _context.Categories.FirstOrDefaultAsync();
+
                 var companies = new List<Company>
                 {
                     new Company
@@ -149,19 +163,21 @@ namespace digital.Backend.Data
                         CityId = city!.Id,
                         Email = "info@techinnovators.com",
                         WebPage = "www.techinnovators.com",
+                        //Sector = sector,
                         SectorId = sector!.Id,
                         LegalForm = LegalFormsEnum.SRL,
                         Size = SizeCompanyEnum.DiezADiecinueve,
                         OwnFacilities = true,
                         PorcAdministracion = 10,
-                        Category = await _context.Categories.FirstOrDefaultAsync(x => x.Name == "Micro"),
+                        //Category = category,
+                        CategoryId = category!.Id,
                         PorcComercializacion = 15,
                         PorcProduccion = 60,
                         PorcRRHH = 5,
                         PorcLogistica = 5,
                         PorcMantenimiento = 5,
                         PorcProductoDestinadoAMercadoLocal = 80,
-                        PorcExportacion = 20,
+                        PorcProductoDestinadoAMercadoExterior = 20,
                         Terciariza = false,
                         Observaciones = "Ninguna",
                         DateInsert = DateTime.UtcNow,
@@ -175,9 +191,11 @@ namespace digital.Backend.Data
                         Email = "info@techinnovators2.com",
                         WebPage = "www.techinnovators2.com",
                         LegalForm = LegalFormsEnum.SA,
-                        SectorId = sector!.Id + 1,
+                        //Sector = sector,
+                        SectorId = sector!.Id,
                         Size = SizeCompanyEnum.DiezADiecinueve,
-                        Category = await _context.Categories.FirstOrDefaultAsync(x => x.Name == "Micro"),
+                        //Category = category,
+                        CategoryId = category.Id,
                         OwnFacilities = true,
                         PorcAdministracion = 10,
                         PorcComercializacion = 15,
@@ -186,7 +204,7 @@ namespace digital.Backend.Data
                         PorcLogistica = 5,
                         PorcMantenimiento = 5,
                         PorcProductoDestinadoAMercadoLocal = 80,
-                        PorcExportacion = 20,
+                        PorcProductoDestinadoAMercadoExterior = 20,
                         Terciariza = false,
                         Observaciones = "Ninguna",
                         DateInsert = DateTime.UtcNow,

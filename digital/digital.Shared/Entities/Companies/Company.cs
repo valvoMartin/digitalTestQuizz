@@ -67,12 +67,7 @@ namespace digital.Shared.Entities.Companies
         [Required(ErrorMessage = "Debe seleccionar un {1}.")]
         public SizeCompanyEnum Size { get; set; }
 
-
-
-
-        [Display(Name = "Instalaciones Propias")]
-        public bool OwnFacilities { get; set; }
-
+       
 
 
 
@@ -127,7 +122,7 @@ namespace digital.Shared.Entities.Companies
 
         [Display(Name = "Porcentaje de Producto Destinado a Exportación")]
         [Range(0, 100, ErrorMessage = "El campo {0} debe ser un porcentaje válido.")]
-        public float PorcExportacion { get; set; }
+        public float PorcProductoDestinadoAMercadoExterior { get; set; }
 
 
 
@@ -137,9 +132,13 @@ namespace digital.Shared.Entities.Companies
 
 
 
+        [Display(Name = "Instalaciones Propias")]
+        public bool OwnFacilities { get; set; }
+
+
 
         [Display(Name = "Observaciones")]
-        [MaxLength(500, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
+        [MaxLength(250, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public string? Observaciones { get; set; }
 
 
@@ -165,6 +164,7 @@ namespace digital.Shared.Entities.Companies
 
 
         public City City { get; set; } = null!;
+
         [Display(Name = "Ciudad")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
         public int CityId { get; set; }

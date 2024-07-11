@@ -9,11 +9,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace digital.Backend.Repositories.Implementations
 {
-    public class CompanyRepository : GenericRepository<Company>, ICompanyRepository
+    public class CompaniesRepository : GenericRepository<Company>, ICompaniesRepository
     {
+
+
         private readonly DataContext _context;
 
-        public CompanyRepository(DataContext context) : base(context)
+        public CompaniesRepository(DataContext context) : base(context)
         {
             _context = context;
         }
@@ -24,6 +26,7 @@ namespace digital.Backend.Repositories.Implementations
             var queryable = _context.Companies
                 .Where(x => x.DateDelete == null)
                 .Include(Category => Category.Category!)
+                .Include(s => s.Sector)
                 .Include(u => u.City!)
                 .ThenInclude(c => c.State!)
                 .ThenInclude(s => s.Country)
@@ -84,6 +87,7 @@ namespace digital.Backend.Repositories.Implementations
             var queryable = _context.Companies
                 .Where(x => x.DateDelete == null)
                 .Include(Category => Category.Category!)
+                .Include(s => s.Sector)
                 .Include(u => u.City!)
                 .ThenInclude(c => c.State!)
                 .ThenInclude(s => s.Country)
@@ -107,6 +111,7 @@ namespace digital.Backend.Repositories.Implementations
         {
             var company = await _context.Companies
                 .Include(x => x.Category)
+                .Include(s => s.Sector)
                 .Include(x => x.City)
                 .ThenInclude(x => x!.State)
                 .ThenInclude(x => x!.Country)
@@ -134,14 +139,20 @@ namespace digital.Backend.Repositories.Implementations
             {
                 var newCompany = new Company
                 {
+                    //City = company.City,
+                    CityId = company.CityId,
+
+                    SectorId = company.SectorId,
+                    //Sector = company.Sector,
+
+                    CategoryId = company.CategoryId,
+                    //Category = company.Category,
+
                     Cuit = company.Cuit,
                     Name = company.Name,
-                    City = company.City,
-                    CityId = company.CityId,
                     Email = company.Email,
                     WebPage = company.WebPage,
                     LegalForm = company.LegalForm,
-                    Sector = company.Sector,
                     Size = company.Size,
                     OwnFacilities = company.OwnFacilities,
                     PorcAdministracion = company.PorcAdministracion,
@@ -151,7 +162,7 @@ namespace digital.Backend.Repositories.Implementations
                     PorcLogistica = company.PorcLogistica,
                     PorcMantenimiento = company.PorcMantenimiento,
                     PorcProductoDestinadoAMercadoLocal = company.PorcProductoDestinadoAMercadoLocal,
-                    PorcExportacion = company.PorcExportacion,
+                    PorcProductoDestinadoAMercadoExterior = company.PorcProductoDestinadoAMercadoExterior,
                     Terciariza = company.Terciariza,
                     Observaciones = company.Observaciones,
                     DateInsert = DateTime.UtcNow,
@@ -193,6 +204,7 @@ namespace digital.Backend.Repositories.Implementations
             {
                 var MyCompany = await _context.Companies
                     .Include(c => c.Category)
+                    .Include(s => s.Sector)
                     .Include(c => c.City)
                     .ThenInclude(s => s!.State)
                     .ThenInclude(y => y!.Country)
@@ -215,6 +227,7 @@ namespace digital.Backend.Repositories.Implementations
                 MyCompany.WebPage = company.WebPage;
                 MyCompany.LegalForm = company.LegalForm;
                 MyCompany.Sector = company.Sector;
+
                 MyCompany.Category = company.Category;
                 MyCompany.Size = company.Size;
                 MyCompany.OwnFacilities = company.OwnFacilities;
@@ -225,7 +238,7 @@ namespace digital.Backend.Repositories.Implementations
                 MyCompany.PorcLogistica = company.PorcLogistica;
                 MyCompany.PorcMantenimiento = company.PorcMantenimiento;
                 MyCompany.PorcProductoDestinadoAMercadoLocal = company.PorcProductoDestinadoAMercadoLocal;
-                MyCompany.PorcExportacion = company.PorcExportacion;
+                MyCompany.PorcProductoDestinadoAMercadoExterior = company.PorcProductoDestinadoAMercadoExterior;
                 MyCompany.Terciariza = company.Terciariza;
                 MyCompany.Observaciones = company.Observaciones;
                 //DateInsert = company.DateInsert,

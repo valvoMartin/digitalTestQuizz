@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace digital.Backend.UnitsOfWork.Implementations
 {
-    public class CompanyUnitOfWork : GenericUnitOfWork<Company>, ICompanyUnitOfWork
+    public class CompaniesUnitOfWork : GenericUnitOfWork<Company>, ICompaniesUnitOfWork
     {
-        private readonly ICompanyRepository _companyRepository;
+        private readonly ICompaniesRepository _companyRepository;
 
-        public CompanyUnitOfWork(IGenericRepository<Company> repository, ICompanyRepository companyRepository) : base(repository)
+        public CompaniesUnitOfWork(IGenericRepository<Company> repository, ICompaniesRepository companyRepository) : base(repository)
         {
             _companyRepository = companyRepository;
         }

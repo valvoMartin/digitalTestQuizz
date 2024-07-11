@@ -2,6 +2,7 @@
 using digital.Backend.Helpers;
 using digital.Backend.Repositories.Interfaces;
 using digital.Shared.DTOs;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Countries;
 using digital.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,8 @@ namespace digital.Backend.Repositories.Implementations
                 .ToListAsync();
         }
 
+
+       
 
         public override async Task<ActionResponse<Country>> GetAsync(int id)
         {
@@ -102,6 +105,12 @@ namespace digital.Backend.Repositories.Implementations
 
         }
 
-
+        public async Task<IEnumerable<Category>>GetCategoriesByCountryAsync(int idCountry)
+        {
+            return await _context.Categories
+               .Where(c => c.CountryId == idCountry)
+               .OrderBy(c => c.RevenueLimit)
+               .ToListAsync();
+        }
     }
 }

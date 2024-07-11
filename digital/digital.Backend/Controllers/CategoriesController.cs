@@ -26,7 +26,6 @@ namespace digital.Backend.Controllers
 
 
 
-
         [HttpGet]
         public override async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
         {

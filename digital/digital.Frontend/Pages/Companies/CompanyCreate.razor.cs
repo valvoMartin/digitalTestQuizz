@@ -7,6 +7,7 @@ using digital.Shared.Enums;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel;
 using System.Reflection;
+using static System.Net.WebRequestMethods;
 
 namespace digital.Frontend.Pages.Companies
 {
@@ -17,9 +18,15 @@ namespace digital.Frontend.Pages.Companies
 
 
         private Company company = new();
-        private List<Country>? countries;
-        private List<State>? states;
-        private List<City>? cities;
+        private List<Country>? countries = new();
+        private List<State>? states = new();
+        private List<City>? cities = new();
+
+        private List<Category>? categories = new();
+
+        private List<Rubro>? rubros = new();
+        private List<Sector>? sectors = new();
+
         private bool loading;
 
         private int step = 1;
@@ -35,6 +42,7 @@ namespace digital.Frontend.Pages.Companies
             //TODO: Traer los sectores de la empresa
 
             await LoadCountriesAsync();
+            await LoadRubrosAsync();
         }
 
 
@@ -46,7 +54,7 @@ namespace digital.Frontend.Pages.Companies
             }
             else
             {
-                await CreteCompanyAsync();
+                await CreateCompanyAsync();
             }
         }
 
@@ -59,11 +67,21 @@ namespace digital.Frontend.Pages.Companies
         }
 
 
-        private async Task CreteCompanyAsync()
+        private async Task CreateCompanyAsync()
         {
-            
+            //TODO: Ver pq no carga la empresa => error de campos vacios
 
-            var responseHttp = await Repository.PostAsync<Company>("/api/companies/full", company);
+            company.PorcAdministracion = float.Parse(Administracion);
+            company.PorcComercializacion = float.Parse(Comercializacion);
+            company.PorcProduccion = float.Parse(Produccion);
+            company.PorcRRHH = float.Parse(RRHH);
+            company.PorcLogistica = float.Parse(Logistica);
+            company.PorcMantenimiento = float.Parse(Mantenimiento);
+
+            company.PorcProductoDestinadoAMercadoLocal = float.Parse(MercadoLocal);
+            company.PorcProductoDestinadoAMercadoExterior = float.Parse(MercadoExterior);
+
+            var responseHttp = await Repository.PostAsync("api/companies/full", company);
             
             if (responseHttp.Error)
             {
@@ -88,8 +106,22 @@ namespace digital.Frontend.Pages.Companies
 
 
 
+        
+        private async Task LoadRubrosAsync()
+        {
+            //rubros = await Http.GetFromJsonAsync<List<Rubro>>("api/rubros");
 
+            var responseHttp = await Repository.GetAsync<List<Rubro>>("api/rubros");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                // TODO: Manejar error cuando los campos aun estan Vacio. 
+                return;
+            }
 
+            rubros = responseHttp.Response;
+        }
 
         private async Task LoadCountriesAsync()
         {
@@ -104,6 +136,66 @@ namespace digital.Frontend.Pages.Companies
 
             countries = responseHttp.Response;
         }
+
+        
+
+        private async Task CountryChangedAsync(ChangeEventArgs e)
+        {
+            var selectedCountry = Convert.ToInt32(e.Value!);
+            states = null;
+            cities = null;
+            categories = null;
+            company.CityId = 0;
+
+            await LoadStatesAsync(selectedCountry);
+            await LoadCategoriesAsync(selectedCountry);
+        }
+
+        private async Task StateChangedAsync(ChangeEventArgs e)
+        {
+            var selectedState = Convert.ToInt32(e.Value!);
+            cities = null;
+            company.CityId = 0;
+            await LoadCitiesAsync(selectedState);
+        }
+
+
+        private async Task RubroChangedAsync(ChangeEventArgs e)
+        {
+            var selectedRubro = Convert.ToInt32(e.Value!);
+            sectors = null;
+            company.SectorId = 0;
+            await LoadSectorsAsync(selectedRubro);
+
+        }
+
+        private async Task LoadSectorsAsync(int selectedRubro)
+        {
+            var responseHttp = await Repository.GetAsync<List<Sector>>($"api/rubros/{selectedRubro}/sectors");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return;
+            }
+
+            sectors = responseHttp.Response;
+
+        }
+
+        private async Task LoadCategoriesAsync(int countryId)
+        {
+            var responseHttp = await Repository.GetAsync<List<Category>>($"/api/countries/categories/{countryId}");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return;
+            }
+
+            categories = responseHttp.Response;
+        }
+
 
         private async Task LoadStatesAsync(int countryId)
         {
@@ -131,88 +223,6 @@ namespace digital.Frontend.Pages.Companies
             cities = responseHttp.Response;
         }
 
-        private async Task CountryChangedAsync(ChangeEventArgs e)
-        {
-            var selectedCountry = Convert.ToInt32(e.Value!);
-            states = null;
-            cities = null;
-            company.CityId = 0;
-            await LoadStatesAsync(selectedCountry);
-        }
-
-        private async Task StateChangedAsync(ChangeEventArgs e)
-        {
-            var selectedState = Convert.ToInt32(e.Value!);
-            cities = null;
-            company.CityId = 0;
-            await LoadCitiesAsync(selectedState);
-        }
-
-
-
-
-
-
-
-
-
-        private RubroCompanyEnum selectedRubro;
-        private List<SectorCompanyEnum> filteredSectors = new List<SectorCompanyEnum>();
-
-        private void OnRubroChanged(ChangeEventArgs e)
-        {
-            selectedRubro = (RubroCompanyEnum)Enum.Parse(typeof(RubroCompanyEnum), e.Value.ToString());
-            FilterSectorsByRubro(selectedRubro);
-        }
-
-        private void FilterSectorsByRubro(RubroCompanyEnum rubro)
-        {
-            string rubroKey = GetRubroKey(rubro);
-            filteredSectors = Enum.GetValues(typeof(SectorCompanyEnum))
-                                  .Cast<SectorCompanyEnum>()
-                                  .Where(s => GetEnumDescription(s).StartsWith(rubroKey, StringComparison.OrdinalIgnoreCase))
-                                  .ToList();
-        }
-
-        private string GetRubroKey(RubroCompanyEnum rubro)
-        {
-            switch (rubro)
-            {
-                case RubroCompanyEnum.Agro:
-                    return "Agropecuario";
-                case RubroCompanyEnum.IndsutriaMineria:
-                    return "Industria y Mineria";
-                case RubroCompanyEnum.Servicios:
-                    return "Servicios";
-                case RubroCompanyEnum.Construccion:
-                    return "Construccion";
-                case RubroCompanyEnum.Comercio:
-                    return "Comercio";
-                default:
-                    return string.Empty;
-            }
-        }
-        private string GetEnumDescription(Enum value)
-        {
-            var field = value.GetType().GetField(value.ToString());
-            var attribute = (DescriptionAttribute)field.GetCustomAttribute(typeof(DescriptionAttribute));
-            return attribute != null ? attribute.Description : value.ToString();
-        }
-
-        //private string sectorValidationMessage = "Seleccione un Rubro primero";
-
-        //private void ValidateSector()
-        //{
-        //    if (company.Rubro == 0)
-        //    {
-        //        sectorValidationMessage = "Seleccione un Rubro primero";
-        //    }
-        //    else
-        //    {
-        //        sectorValidationMessage = "Seleccione un Sector";
-        //    }
-        //}
-
 
 
 
@@ -225,13 +235,14 @@ namespace digital.Frontend.Pages.Companies
 
 
         //Indica que el porcentaje de los cuanto asigna a cada sector de la empresa
+        const string individual = "16.6";
 
-        private string Administracion = "16.6";
-        private string Comercializacion = "16.6";
-        private string Produccion = "16.6";
-        private string RRHH = "16.6";
-        private string Logistica = "16.6";
-        private string Mantenimiento = "16.6";
+        private string Administracion = individual;
+        private string Comercializacion = individual;
+        private string Produccion = individual;
+        private string RRHH = individual;
+        private string Logistica = individual;
+        private string Mantenimiento = individual;
 
         private string MercadoLocal = "50";
         private string MercadoExterior = "50";
@@ -277,12 +288,12 @@ namespace digital.Frontend.Pages.Companies
 
             if (totalOthers == 0)
             {
-                ResetValues(Administracion, "16.6");
-                ResetValues(Comercializacion, "16.6");
-                ResetValues(Produccion, "16.6");
-                ResetValues(RRHH, "16.6");
-                ResetValues(Logistica, "16.6");
-                ResetValues(Mantenimiento, "16.6");
+                ResetValues(Administracion, individual);
+                ResetValues(Comercializacion, individual);
+                ResetValues(Produccion, individual);
+                ResetValues(RRHH, individual);
+                ResetValues(Logistica, individual);
+                ResetValues(Mantenimiento, individual);
                 return;
             }
 
@@ -300,12 +311,12 @@ namespace digital.Frontend.Pages.Companies
 
             if (values.Any(v => float.IsNaN(v)))
             {
-                ResetValues(Administracion, "16.6");
-                ResetValues(Comercializacion, "16.6");
-                ResetValues(Produccion, "16.6");
-                ResetValues(RRHH, "16.6");
-                ResetValues(Logistica, "16.6");
-                ResetValues(Mantenimiento, "16.6");
+                ResetValues(Administracion, individual);
+                ResetValues(Comercializacion, individual);
+                ResetValues(Produccion, individual);
+                ResetValues(RRHH, individual);
+                ResetValues(Logistica, individual);
+                ResetValues(Mantenimiento, individual);
                 return;
             }
 

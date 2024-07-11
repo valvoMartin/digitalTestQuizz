@@ -25,6 +25,7 @@ namespace digital.Backend.Repositories.Implementations
         {
             var queryable = _context.Categories
                 .Include(x => x.Country)
+                .Include(s => s.Sector)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
@@ -46,6 +47,7 @@ namespace digital.Backend.Repositories.Implementations
         {
             var queryable = _context.Categories
                 .Include(x => x.Country)
+                .Include(s => s.Sector)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
@@ -66,6 +68,7 @@ namespace digital.Backend.Repositories.Implementations
         {
             var product = await _context.Categories
                 .Include(x => x.Country)
+                .Include(s => s.Sector)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (product == null)
@@ -93,7 +96,7 @@ namespace digital.Backend.Repositories.Implementations
                 var newObjet = new Category
                 {
                     Name = category.Name,
-                    Country = category.Country,
+                    //Country = category.Country,
                     CountryId = category.CountryId,
                     //EmployesLimit = category.EmployesLimit,
                     RevenueLimit = category.RevenueLimit,
@@ -137,6 +140,7 @@ namespace digital.Backend.Repositories.Implementations
             {
                 var objet = await _context.Categories
                     .Include(x => x.Country)
+                    .Include(s => s.Sector)
                     .FirstOrDefaultAsync(x => x.Id == category.Id);
 
                 if (objet == null)
@@ -149,7 +153,7 @@ namespace digital.Backend.Repositories.Implementations
                 }
 
                 objet.Name = category.Name;
-                objet.Country = category.Country;
+                //objet.Country = category.Country;
                 objet.CountryId = category.CountryId;
                 objet.RevenueLimit = category.RevenueLimit;
                 objet.SectorId = category.SectorId;
@@ -181,6 +185,30 @@ namespace digital.Backend.Repositories.Implementations
             }
         }
 
+        //Task<ActionResponse<IEnumerable<Category>>> GetAsync(PaginationDTO pagination)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Task<ActionResponse<Category>> ICategoryRepository.GetAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<ActionResponse<Category>> AddFullAsync(Category category)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<ActionResponse<Category>> UpdateFullAsync(Category category)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //Task<ActionResponse<Category>> ICategoryRepository.DeleteAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
 
@@ -189,7 +217,8 @@ namespace digital.Backend.Repositories.Implementations
 
 
 
-       
+
+
 
         //public override async Task<ActionResponse<Company>> DeleteAsync(int id)
         //{
@@ -226,8 +255,8 @@ namespace digital.Backend.Repositories.Implementations
 
 
 
-        
-        
+
+
 
     }
 }

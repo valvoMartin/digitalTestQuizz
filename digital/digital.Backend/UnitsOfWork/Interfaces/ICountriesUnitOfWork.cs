@@ -1,4 +1,5 @@
 ﻿using digital.Shared.DTOs;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Countries;
 using digital.Shared.Responses;
 
@@ -18,5 +19,9 @@ namespace digital.Backend.UnitsOfWork.Interfaces
 
 
         Task<IEnumerable<Country>> GetComboAsync();
+
+
+
+        Task<IEnumerable<Category>> GetCategoriesByCountryAsync(int idCountry);
     }
 }

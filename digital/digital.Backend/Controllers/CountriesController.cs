@@ -1,6 +1,7 @@
 ﻿using digital.Backend.Data;
 using digital.Backend.UnitsOfWork.Interfaces;
 using digital.Shared.DTOs;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Countries;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +35,7 @@ namespace digital.Backend.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public override async Task<IActionResult> GetAsync(int id)
         {
             var response = await _countriesUnitOfWork.GetAsync(id);
@@ -57,6 +58,8 @@ namespace digital.Backend.Controllers
             return BadRequest();
         }
 
+
+
         [HttpGet("totalPages")]
         public override async Task<IActionResult> GetPagesAsync([FromQuery] PaginationDTO pagination)
         {
@@ -76,6 +79,13 @@ namespace digital.Backend.Controllers
             return Ok(await _countriesUnitOfWork.GetComboAsync());
         }
 
+
+        [HttpGet("categories/{countryId:int}")]
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategoriesByCountry(int countryId)
+        {
+            var categories = await _countriesUnitOfWork.GetCategoriesByCountryAsync(countryId);
+            return Ok(categories);
+        }
 
 
     }

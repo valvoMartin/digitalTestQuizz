@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace digital.Backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("api/[controller]")]
     public class CompaniesController : GenericController<Company>
     {
-        private readonly ICompanyUnitOfWork _companyUnitOfWork;
+        private readonly ICompaniesUnitOfWork _companyUnitOfWork;
 
-        public CompaniesController(IGenericUnitOfWork<Company> unit, ICompanyUnitOfWork companyUnitOfWork) : base(unit)
+        public CompaniesController(IGenericUnitOfWork<Company> unit, ICompaniesUnitOfWork companyUnitOfWork) : base(unit)
         {
             _companyUnitOfWork = companyUnitOfWork;
         }

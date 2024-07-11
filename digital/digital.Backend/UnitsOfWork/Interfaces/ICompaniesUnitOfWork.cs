@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace digital.Backend.UnitsOfWork.Interfaces
 {
-    public interface ICompanyUnitOfWork
+    public interface ICompaniesUnitOfWork
     {
         Task<ActionResponse<IEnumerable<Company>>> GetAsync(PaginationDTO pagination);
 
