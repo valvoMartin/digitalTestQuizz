@@ -2,6 +2,7 @@
 using digital.Shared.Entities;
 using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Countries;
+using digital.Shared.Entities.Test;
 using digital.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +33,92 @@ namespace digital.Backend.Data
             await CheckCategoriesOfCompanyAsync();
             await CheckCompaniesAsync();
 
+            await CheckQuestionsAndAnswersAsync();
+
+
         }
+        private async Task CheckQuestionsAndAnswersAsync()
+        {
+            if (!_context.Questions.Any())
+            {
+                var test = new List<Question>
+                {
+                    new Question
+                    {
+                        Text = "¿Quién determina las estrategias de la empresa?",
+                        Answers = new List<Answer>
+                        {
+                            new Answer { Text = "CEO", Score= 9 },
+                            new Answer { Text = "Gerente General", Score= 7 },
+                            new Answer { Text = "Directores", Score= 5 },
+                            new Answer { Text = "Jefes de Departamento", Score= 3 },
+                            new Answer { Text = "Empleados", Score= 0 },
+                        }
+                    },
+
+                    new Question
+                    {
+                        Text = "¿Quién decide las inversiones en nuevos proyectos?",
+                        Answers = new List<Answer>
+                        {
+                            new Answer { Text = "CEO", Score= 9 },
+                            new Answer { Text = "Gerente Financiero", Score= 7 },
+                            new Answer { Text = "Directores", Score= 5 },
+                            new Answer { Text = "Jefes de Proyecto", Score= 3 },
+                            new Answer { Text = "Empleados", Score= 0 },
+                        }
+                    },
+
+                    new Question
+                    {
+                        Text = "¿Quién se encarga de la contratación de personal?",
+                        Answers = new List<Answer>
+                        {
+                            new Answer { Text = "Gerente de Recursos Humanos", Score= 9 },
+                            new Answer { Text = "CEO", Score= 7 },
+                            new Answer { Text = "Directores", Score= 5 },
+                            new Answer { Text = "Jefes de Departamento", Score= 3 },
+                            new Answer { Text = "Empleados", Score= 0 },
+                        }
+                    },
+
+                    new Question
+                    {
+                        Text = "¿Quién se encarga de la contratación de personal?",
+                        Answers = new List<Answer>
+                        {
+                            new Answer { Text = "Gerente de Recursos Humanos", Score= 9 },
+                            new Answer { Text = "CEO", Score= 7 },
+                            new Answer { Text = "Directores", Score= 5 },
+                            new Answer { Text = "Jefes de Departamento", Score= 3 },
+                            new Answer { Text = "Empleados", Score= 0 },
+                        }
+                    },
+
+                    new Question
+                    {
+                        Text = "¿Quién decide sobre la adopción de nuevas tecnologías?",
+                        Answers = new List<Answer>
+                        {
+                            new Answer { Text = "Gerente de Tecnología", Score= 9 },
+                            new Answer { Text = "CEO", Score= 7 },
+                            new Answer { Text = "Directores", Score= 5 },
+                            new Answer { Text = "Jefes de TI", Score= 3 },
+                            new Answer { Text = "Empleados", Score= 0 },
+                        }
+                    },
+                };
+
+                _context.Questions.AddRange(test);
+                await _context.SaveChangesAsync();
+            }
+
+        }
+
+
+
+
+
 
         private async Task CheckRubrosAndSectorsOfCompanyAsync()
         {
@@ -91,16 +177,16 @@ namespace digital.Backend.Data
                 var sector = await _context.Sectors.FirstOrDefaultAsync(x => x.Name == "Enseñanza");
                 sector ??= await _context.Sectors.FirstOrDefaultAsync();
 
-                var categoriesOfCompany = new List<Category> 
-                { 
-                    new Category 
+                var categoriesOfCompany = new List<Category>
+                {
+                    new Category
                     {
                         Name = "Micro",
                         //Country = country!,
                         CountryId = country!.Id,
                         RevenueLimit = 500000,
                         SectorId = sector!.Id,
-                        
+
                     },
                     new Category
                     {
@@ -130,12 +216,12 @@ namespace digital.Backend.Data
 
                     }
                 };
-                
+
 
                 _context.Categories.AddRange(categoriesOfCompany);
                 await _context.SaveChangesAsync();
             }
-            
+
         }
 
         private async Task CheckCompaniesAsync()

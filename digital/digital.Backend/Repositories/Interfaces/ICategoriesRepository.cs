@@ -4,7 +4,7 @@ using digital.Shared.Responses;
 
 namespace digital.Backend.Repositories.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoriesRepository
     {
 
         Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination);

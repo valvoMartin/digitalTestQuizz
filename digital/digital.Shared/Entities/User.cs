@@ -1,4 +1,5 @@
-﻿using digital.Shared.Enums;
+﻿using digital.Shared.Entities.Test;
+using digital.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
@@ -30,6 +31,12 @@ namespace digital.Shared.Entities
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
+
+
+        // FKs 
+
+        public int? LastQuestionId { get; set; } // ID de la última pregunta respondida
+        public Question? LastQuestion { get; set; } // Navegación opcional
 
 
 

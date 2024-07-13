@@ -1,6 +1,7 @@
 ﻿using digital.Shared.Entities;
 using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Countries;
+using digital.Shared.Entities.Test;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,14 +24,25 @@ namespace digital.Backend.Data
 
 
 
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        // public DbSet<AnswerUser> AnswersUsers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex(s => new { s.CountryId, s.Name }).IsUnique();
             modelBuilder.Entity<City>().HasIndex(c => new { c.StateId, c.Name }).IsUnique();
+
             modelBuilder.Entity<Company>().HasIndex(c => new { c.Cuit, c.Name}).IsUnique();
             modelBuilder.Entity<Category>().HasIndex(c => new { c.Name, c.Id}).IsUnique();
+
+            modelBuilder.Entity<Question>().HasIndex(c => new { c.Text, c.Id }).IsUnique();
+            modelBuilder.Entity<Answer>().HasIndex(c => new { c.Text, c.Id }).IsUnique();
+
+
 
 
 

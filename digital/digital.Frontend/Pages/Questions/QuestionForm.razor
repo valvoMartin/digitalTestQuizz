@@ -1,0 +1,56 @@
+﻿<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+
+<EditForm EditContext="editContext" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-header">
+            <span>
+                <i class="bi bi-box2" /> Crear Nuevo Pregunta
+                <a class="btn btn-sm btn-success float-end" href="/questions"><i class="bi bi-arrow-left" /> Regresar</a>
+                <button class="btn btn-sm btn-primary float-end mx-2" type="submit"><i class="bi bi-floppy" />  Guardar Cambios</button>
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label>Texto de pregunta:</label>
+                        <div>
+                            <InputText class="form-control" @bind-Value="@Question.Text" />
+                            <ValidationMessage For="@(() => Question.Text)" />
+                        </div>
+                    </div>
+                    @* <div class="mb-3">
+                        <label>Descripción:</label>
+                        <div>
+                        <InputText class="form-control" @bind-Value="@Question." />
+                            <ValidationMessage For="@(() => ProductDTO.Description)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Precio:</label>
+                        <div>
+                            <InputNumber class="form-control" @bind-Value="@ProductDTO.Price" />
+                            <ValidationMessage For="@(() => ProductDTO.Price)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Inventario:</label>
+                        <div>
+                            <InputNumber class="form-control" @bind-Value="@ProductDTO.Stock" />
+                            <ValidationMessage For="@(() => ProductDTO.Stock)" />
+                        </div>
+                    </div>
+                </div> *@
+                </div>
+                <div class="col-6">
+                    
+                    @* AQUI VA LA SELECCION DE A QUE AREA VA A IR ASIGNADA ESTA PREGUNTA *@
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>

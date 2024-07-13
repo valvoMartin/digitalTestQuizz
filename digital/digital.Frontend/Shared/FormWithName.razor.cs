@@ -17,6 +17,8 @@ namespace digital.Frontend.Shared
         [Inject] public SweetAlertService SweetAlertService { get; set; } = null!;
         public bool FormPostedSuccessfully { get; set; }
 
+
+
         protected override void OnInitialized()
         {
             editContext = new(Model);

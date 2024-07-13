@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace digital.Backend.Repositories.Implementations
 {
-    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
+    public class CategoriesRepository : GenericRepository<Category>, ICategoriesRepository
     {
         private readonly DataContext _context;
 
-        public CategoryRepository(DataContext context) : base(context)
+        public CategoriesRepository(DataContext context) : base(context)
         {
             _context = context;
         }

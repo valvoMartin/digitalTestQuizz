@@ -1,0 +1,14 @@
+﻿@page "/question/edit/{QuestionId:int}"
+
+
+@if (question is null)
+{
+    <Loading />
+}
+else
+{
+    <QuestionForm @ref="questionForm" Question="question" OnValidSubmit="SaveAsync" ReturnAction="Return" IsEdit=true />
+   
+}
+
+

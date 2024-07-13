@@ -71,8 +71,12 @@ builder.Services.AddScoped<IStatesRepository, StatesRepository>();
 builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<ICompaniesRepository, CompaniesRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<IRubrosRepository, RubrosRepository>();
+builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+builder.Services.AddScoped<IAnswersRepository, AnswersRepository>();
+
+
 
 
 builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
@@ -82,6 +86,9 @@ builder.Services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
 builder.Services.AddScoped<ICompaniesUnitOfWork, CompaniesUnitOfWork>();
 builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
 builder.Services.AddScoped<IRubrosUnitOfWork, RubrosUnitOfWork>();
+builder.Services.AddScoped<IQuestionsUnitOfWork, QuestionsUnitOfWork>();
+builder.Services.AddScoped<IAnswersUnitOfWork, AnswersUnitOfWork>();
+
 
 
 

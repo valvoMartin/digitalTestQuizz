@@ -1,0 +1,117 @@
+﻿@page "/questions"
+
+
+
+<body>
+    <div class="card">
+        <div class="card-header">
+            <span>
+                <i class="bi bi-question-circle" /> Preguntas
+                @* <button class="btn btn-primary btn-sm float-end" @onclick="AddQuestion"><i class="bi bi-plus-square" /> Adicionar Pregunta</button> *@
+            </span>
+        </div>
+        <div class="card-body">
+            <Filter PlaceHolder="Buscar Pregunta..." Callback=@FilterCallBack />
+
+            <GenericList MyList="Questions">
+                <Body>
+                    <Pagination CurrentPage="currentPage"
+                                TotalPages="totalPages"
+                                SelectedPage="SelectedPageAsync"
+                                RecordsNumber="SelectedRecordsNumberAsync" />
+
+
+
+                    @if (Questions is null)
+                    {
+                        <Loading />
+                    }
+                    else
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Preguntas</th>
+                                   
+
+                                    @*< th style="width:210px">Pregunta</th>
+                                     <th style="width:210px"></th> 
+                                    <th style="width:168px"></th> *@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Questions)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="/questions/details/@item.Id"> @item.Text</a>
+                                            @* <button class="btn btn-info btn-sm float-end" @onclick="() => ToggleAnswers(item.Id)"> Ver Respuestas</button>  *@
+                                            <button class="btn btn-info btn-sm float-end" @onclick="() => ToggleAnswers(item.Id)">
+                                            <i class="@(expandedQuestionId == item.Id ? "bi bi-chevron-up" : "bi bi-chevron-down")"></i>
+                            </button>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning" href="/question/edit/@item.Id"><i class="bi bi-pencil" /> Editar</a>
+                                            <button @onclick=@(() => DeleteQuestionAsync(item)) class="btn btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
+                                        </td>
+                                    </tr>
+                                    @if (expandedQuestionId == @item.Id)
+                                    {
+                                        <tr class="m-5">
+                                            <td colspan="2">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Respuesta</th>
+                                                            <th>Puntaje</th>
+                                                            <th style="width:180px"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if(item.Answers is null)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="2">Cargando respuestas...</td>
+                                                            </tr>
+                                                        }
+                                                        else if (item.Answers.Count == 0)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="2">No hay respuestas</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                               
+                                                            @foreach (var answer in item.Answers)
+                                                            {
+                                                                <tr>
+                                                                    <td>@answer.Text</td>
+                                                                    <td>@answer.Score</td>
+                                                                    <td style=""></td>
+                                                                    <td>
+                                                                        <a class="btn btn-sm btn-warning" href="/answer/edit/@answer.Id"><i class="bi bi-pencil" /> Editar</a>
+                                                                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteAnswerAsync(answer)"><i class="bi bi-trash" /> Borrar</button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                                
+                                                        } 
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    }
+                                    
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </Body>
+            </GenericList>
+        </div>
+    </div>
+
+</body>
+
+

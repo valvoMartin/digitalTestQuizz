@@ -85,6 +85,8 @@ namespace digital.Backend.Repositories.Implementations
             }
         }
 
+
+
         public virtual async Task<ActionResponse<T>> GetAsync(int id)
         {
             var row = await _entity.FindAsync(id);
@@ -112,6 +114,7 @@ namespace digital.Backend.Repositories.Implementations
                 Result = await _entity.ToListAsync()
             };
         }
+
 
 
         public virtual async Task<ActionResponse<T>> UpdateAsync(T entity)
@@ -149,6 +152,7 @@ namespace digital.Backend.Repositories.Implementations
             }
         }
 
+
         public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination)
         {
             var queryable = _entity.AsQueryable();
@@ -161,6 +165,7 @@ namespace digital.Backend.Repositories.Implementations
                     .ToListAsync()
             };
         }
+
 
         public virtual async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {
@@ -183,6 +188,7 @@ namespace digital.Backend.Repositories.Implementations
                 Message = exception.Message
             };
         }
+
 
         private ActionResponse<T> DbUpdateExceptionActionResponse()
         {

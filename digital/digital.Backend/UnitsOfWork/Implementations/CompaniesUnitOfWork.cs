@@ -29,7 +29,7 @@ namespace digital.Backend.UnitsOfWork.Implementations
 
         public async Task<ActionResponse<Company>> UpdateFullAsync(Company company) => await _companyRepository.UpdateFullAsync(company);
 
-        public async Task<ActionResponse<Company>> DeleteAsync(int id) => await _companyRepository.DeleteAsync(id);
+        public override async Task<ActionResponse<Company>> DeleteAsync(int id) => await _companyRepository.DeleteAsync(id);
     }
 
 

@@ -1,0 +1,11 @@
+﻿@page "/question/create"
+
+
+@if (loading)
+{
+    <Loading />
+}
+else
+{
+    <QuestionForm @ref="questionForm" Question="question" ReturnAction="Return" OnValidSubmit="CreateAsync" IsEdit="false"/>
+}
