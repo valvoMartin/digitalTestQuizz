@@ -15,7 +15,7 @@ namespace digital.Frontend.Pages.Questions
         private List<Question>? FilteredQuestions { get; set; }
         private string? QuestionFilter { get; set; }
 
-
+        
         private int? expandedQuestionId;
 
         private int currentPage = 1;
