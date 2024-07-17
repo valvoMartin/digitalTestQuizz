@@ -1,0 +1,86 @@
+﻿<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+
+<EditForm EditContext="editContext" OnValidSubmit="OnDataAnnotationsValidatedAsync">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-header">
+            <span>
+                <i class="bi bi-box2" /> Crear Categoria
+                <a class="btn btn-sm btn-success float-end" href="/categories"><i class="bi bi-arrow-left" /> Regresar</a>
+                <button class="btn btn-sm btn-primary float-end mx-2" type="submit"><i class="bi bi-floppy" />  Guardar Cambios</button>
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+
+                    <div class="mb-3">
+                        <label>Nombre:</label>
+                        <div>
+                            <InputText class="form-control" @bind-Value="@Category.Name" />
+                            <ValidationMessage For="@(() => Category.Name)" />
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label>País:</label>
+                        <div>
+                            <InputSelect class="form-select" @bind-Value="@Category.CountryId">
+                                <option value="0">-- Seleccione un País --</option>
+                                @if (Countries is not null)
+                                {
+                                    @foreach (var country in Countries)
+                                    {
+                                        <option value="@country.Id">@country.Name</option>
+                                    }
+                                }
+                            </InputSelect>
+                            @* <ValidationMessage For="@(() => Category.CountryId)" /> *@
+                        </div>
+                    </div>
+
+
+                   
+
+                </div>
+                <div class="col-6">
+
+                    <div class="mb-3">
+                        <label>Limite de ganancia:</label>
+                        <div>
+                            <InputNumber class="form-control" @bind-Value="@Category.RevenueLimit" />
+                            <ValidationMessage For="@(() => Category.RevenueLimit)" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Sector:</label>
+                        <div>
+                            <InputSelect class="form-select" @bind-Value="@Category.SectorId">
+                                <option value="0">-- Seleccione un Sector --</option>
+                                @if (Sectors is not null)
+                                {
+                                    @foreach (var sector in Sectors)
+                                    {
+                                        <option value="@sector.Id">@sector.Name</option>
+                                    }
+                                }
+                            </InputSelect>
+                            @* <ValidationMessage For="@(() => Category.SectorId)" /> *@
+                        </div>
+                    </div>
+
+
+                </div>
+               
+                
+
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+

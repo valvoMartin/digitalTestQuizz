@@ -81,7 +81,7 @@ namespace digital.Frontend.Pages.Companies
             company.PorcProductoDestinadoAMercadoLocal = float.Parse(MercadoLocal);
             company.PorcProductoDestinadoAMercadoExterior = float.Parse(MercadoExterior);
 
-            var responseHttp = await Repository.PostAsync("api/companies/full", company);
+            var responseHttp = await Repository.PostAsync("/api/companies/full", company);
             
             if (responseHttp.Error)
             {
@@ -101,7 +101,7 @@ namespace digital.Frontend.Pages.Companies
         private void Return()
         {
             //productForm!.FormPostedSuccessfully = true;
-            NavigationManager.NavigateTo($"/home");
+            NavigationManager.NavigateTo($"/companies");
         }
 
 

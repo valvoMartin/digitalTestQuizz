@@ -24,7 +24,7 @@ namespace digital.Shared.Entities.Companies
 
         // FKs
 
-        public Country Country { get; set; } = null!;
+        public Country? Country { get; set; }
 
         [Display(Name = "Pais")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]
@@ -33,7 +33,7 @@ namespace digital.Shared.Entities.Companies
 
 
 
-        public Sector Sector { get; set; } = null!;
+        public Sector? Sector { get; set; }
 
         [Display(Name = "Sector")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]

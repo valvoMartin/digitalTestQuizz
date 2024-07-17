@@ -154,7 +154,7 @@ namespace digital.Shared.Entities.Companies
 
         // FKs
 
-        public Category Category { get; set; } = null!;
+        public Category? Category { get; set; }
 
         [Display(Name = "Categoria")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
@@ -163,7 +163,7 @@ namespace digital.Shared.Entities.Companies
 
 
 
-        public City City { get; set; } = null!;
+        public City? City { get; set; }
 
         [Display(Name = "Ciudad")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una {0}.")]
@@ -171,7 +171,7 @@ namespace digital.Shared.Entities.Companies
 
 
 
-        public Sector Sector { get; set; } = null!;
+        public Sector? Sector { get; set; }
 
         [Display(Name = "Sector")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un {0}.")]

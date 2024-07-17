@@ -86,8 +86,8 @@ namespace digital.Frontend.Pages.Questions
 
         private void Return()
         {
-            //questionForm!.FormPostedSuccessfully = true;
-            NavigationManager.NavigateTo("countries");
+            questionForm!.FormPostedSuccessfully = true;
+            NavigationManager.NavigateTo("/questions");
         }
       
     }

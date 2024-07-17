@@ -1,4 +1,12 @@
 ﻿@page "/category/create"
 
+<h1>Create Category</h1>
 
-<h1>Crear Nueva Categoria</h1>
+@if (loading)
+{
+    <Loading />
+}
+else
+{
+    <CategoryForm @ref="categoryForm" Category="category" OnValidSubmit="CreateAsync" ReturnAction="Return" Countries="countries" Sectors="sectors" IsEdit="false" />
+} 

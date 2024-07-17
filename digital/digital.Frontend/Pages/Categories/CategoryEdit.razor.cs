@@ -1,6 +1,6 @@
 namespace digital.Frontend.Pages.Categories
 {
-    public partial class CategoriesEdit
+    public partial class CategoryEdit
     {
 
     }
