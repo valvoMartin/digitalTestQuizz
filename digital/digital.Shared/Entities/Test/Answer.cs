@@ -28,11 +28,13 @@ namespace digital.Shared.Entities.Test
         [Required(ErrorMessage = "Debe seleccionar un valor para {1}.")]
         public int QuestionId { get; set; }
 
-        public Question Question { get; set; } = null!;
+        public Question? Question { get; set; }
 
 
 
 
         // Otros campos relevantes...
+
+        public ICollection<AnswerUser>? AnswerUsers { get; set; }
     }
 }

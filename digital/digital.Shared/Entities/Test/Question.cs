@@ -23,6 +23,8 @@ namespace digital.Shared.Entities.Test
 
         public ICollection<Answer>? Answers { get; set; }
 
-        // Otros campos relevantes...
+
+        public ICollection<AnswerUser>? AnswerUsers { get; set; }
+
     }
 }

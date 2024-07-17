@@ -1,6 +1,4 @@
 ﻿using digital.Shared.DTOs;
-using digital.Shared.Entities.Companies;
-using digital.Shared.Entities.Countries;
 using digital.Shared.Entities.Test;
 using digital.Shared.Responses;
 

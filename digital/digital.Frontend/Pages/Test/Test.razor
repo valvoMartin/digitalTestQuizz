@@ -1,0 +1,76 @@
+﻿@page "/test"
+
+@layout MainHomeLayout
+
+
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">
+            <i class="bi bi-box2" /> Bee Test
+            @* <a class="btn btn-sm btn-primary float-end" href="/companies/create"><i class="bi bi-plus-square" /> Nueva</a> *@
+        </span>
+        
+    </div>
+
+    <div class="card-body">
+        <div class="card-subtitle">
+            <span>
+                <i class="bi bi-building-exclamation" /> Datos Generales
+            </span>
+        </div>
+
+        @if (questions == null)
+        {
+            <p>Cargando...</p>
+        }
+        else if (questions.Count == 0)
+        {
+            <p>No hay preguntas disponibles.</p>
+        }
+        else
+        {
+            <div class="row mt-3">
+
+                <h3>@questions[currentQuestionIndex].Text</h3>
+                @foreach (var answer in questions[currentQuestionIndex].Answers!)
+                {
+                   
+                    <div class="answer-container @(selectedAnswerId == answer.Id ? "selected" : "")" @onclick="() => SelectAnswer(answer.Id)">
+                        @answer.Text
+                    </div>
+                }
+                <div class="my-xxl-4">
+                    <button class="btn btn-primary" @onclick="PreviousQuestion" disabled="@(currentQuestionIndex == 0)">Anterior</button>
+                    <button class="btn btn-secondary" @onclick="NextQuestion" disabled="@(currentQuestionIndex == questions.Count - 1)">Siguiente</button>
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+
+</div>
+
+
+<style>
+    .answer-container {
+        margin: 5px auto;
+        padding: 15px;
+        border: 3px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: border-color 0.3s;
+        background-color: #FCB5E0;
+    }
+
+        .answer-container.selected {
+            border-color: #FF009B; /* Cambia esto al color que prefieras */
+        }
+
+        .answer-container:hover {
+            background-color: #FF009B;
+        }
+
+</style>
+

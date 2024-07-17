@@ -4,8 +4,8 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
 using digital.Frontend.Services;
 using digital.Shared.DTOs;
-using digital.Shared.Entities;
 using digital.Shared.Entities.Countries;
+using digital.Shared.Entities.Test;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 
@@ -30,7 +30,7 @@ namespace digital.Frontend.Pages.Auth
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadUserAsyc();
+            await LoadUserAsync();
             // await LoadCountriesAsync();
             //await LoadStatesAsync(user!.City!.State!.Country!.Id);
             //await LoadCitiesAsync(user!.City!.State!.Id);
@@ -47,7 +47,7 @@ namespace digital.Frontend.Pages.Auth
         //    Modal.Show<ChangePassword>();
         //}
 
-        private async Task LoadUserAsyc()
+        private async Task LoadUserAsync()
         {
             var responseHttp = await Repository.GetAsync<User>($"/api/accounts");
             if (responseHttp.Error)

@@ -4,7 +4,7 @@ using digital.Backend.Repositories.Implementations;
 using digital.Backend.Repositories.Interfaces;
 using digital.Backend.UnitsOfWork.Implementations;
 using digital.Backend.UnitsOfWork.Interfaces;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Test;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -1,9 +1,8 @@
-﻿using digital.Shared.Entities.Test;
-using digital.Shared.Enums;
+﻿using digital.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace digital.Shared.Entities
+namespace digital.Shared.Entities.Test
 {
     public class User : IdentityUser
     {

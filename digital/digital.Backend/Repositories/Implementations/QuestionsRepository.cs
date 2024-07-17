@@ -2,9 +2,11 @@
 using digital.Backend.Helpers;
 using digital.Backend.Repositories.Interfaces;
 using digital.Shared.DTOs;
+using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Test;
 using digital.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace digital.Backend.Repositories.Implementations
 {
@@ -62,6 +64,31 @@ namespace digital.Backend.Repositories.Implementations
                 Result = totalPages
             };
         }
+
+
+        public override async Task<ActionResponse<IEnumerable<Question>>> GetAsync()
+        {
+            //TODO: Include(el area por Id y el TipoPregunta por id)
+          
+
+
+
+            var queryable = _context.Questions
+                .Include(x => x.Answers)
+                .Include(x => x.AnswerUsers)
+                .AsQueryable();
+
+
+            return new ActionResponse<IEnumerable<Question>>
+            {
+                WasSuccess = true,
+                Result = await queryable
+                    .OrderBy(x => x.Id)
+                    .ToListAsync()
+            };
+        }
+
+        
 
     }
 }

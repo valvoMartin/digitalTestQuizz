@@ -1,5 +1,4 @@
 ﻿using digital.Backend.UnitsOfWork.Interfaces;
-using digital.Shared.Entities;
 using digital.Shared.Entities.Companies;
 using digital.Shared.Entities.Countries;
 using digital.Shared.Entities.Test;

@@ -1,6 +1,6 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
-using digital.Shared.Entities;
+using digital.Shared.Entities.Test;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 

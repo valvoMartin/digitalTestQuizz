@@ -27,6 +27,7 @@ namespace digital.Shared.Entities.Test
 
 
 
-        public DateTime AnsweredAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime DateFinished { get; set; } = DateTime.UtcNow;
     }
 }

@@ -1,4 +1,4 @@
-﻿using digital.Shared.Entities;
+﻿using digital.Shared.Entities.Test;
 using System.ComponentModel.DataAnnotations;
 
 namespace digital.Shared.DTOs

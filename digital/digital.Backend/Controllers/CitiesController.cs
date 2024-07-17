@@ -51,7 +51,6 @@ namespace digital.Backend.Controllers
             return Ok(await _citiesUnitOfWork.GetComboAsync(stateId));
         }
 
-
     }
 
 }
