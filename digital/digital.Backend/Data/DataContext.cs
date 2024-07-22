@@ -41,7 +41,7 @@ namespace digital.Backend.Data
             modelBuilder.Entity<Question>().HasIndex(c => new { c.Text }).IsUnique();
             modelBuilder.Entity<Answer>().HasIndex(c => new { c.Text }).IsUnique();
 
-            modelBuilder.Entity<AnswerUser>().HasKey(au => new { au.UserId, au.QuestionId, au.AnswerId });
+            modelBuilder.Entity<AnswerUser>().HasKey(au => new { au.Email, au.QuestionId, au.AnswerId });
 
 
 

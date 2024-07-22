@@ -21,6 +21,8 @@ namespace digital.Backend.Controllers
         }
 
 
+
+
         [HttpGet]
         public override async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
         {
@@ -31,6 +33,7 @@ namespace digital.Backend.Controllers
             }
             return BadRequest();
         }
+
 
         [HttpGet("totalPages")]
         public override async Task<IActionResult> GetPagesAsync([FromQuery] PaginationDTO pagination)

@@ -23,6 +23,9 @@ namespace digital.Shared.Entities.Test
         public string LastName { get; set; } = null!;
 
 
+        public int? idLastQuestionActive { get; set; }
+
+
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
 
@@ -34,8 +37,8 @@ namespace digital.Shared.Entities.Test
 
         // FKs 
 
-        public int? LastQuestionId { get; set; } // ID de la última pregunta respondida
-        public Question? LastQuestion { get; set; } // Navegación opcional
+        //public int? LastQuestionId { get; set; } // ID de la última pregunta respondida
+        public Question? LastQuestionActive { get; set; } // Navegación opcional
 
 
 

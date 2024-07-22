@@ -120,6 +120,7 @@ namespace digital.Backend.Repositories.Implementations
             return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
+
         public async Task<ActionResponse<IEnumerable<User>>> GetAsync(PaginationDTO pagination)
         {
             var queryable = _context.Users
@@ -144,6 +145,8 @@ namespace digital.Backend.Repositories.Implementations
                     .ToListAsync()
             };
         }
+
+
 
         public async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
         {

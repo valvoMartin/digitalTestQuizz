@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using digital.Backend.Data;
 
@@ -11,9 +12,11 @@ using digital.Backend.Data;
 namespace digital.Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240722124013_NewAtributeLastQuestionUser")]
+    partial class NewAtributeLastQuestionUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -518,7 +521,7 @@ namespace digital.Backend.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<int?>("LastQuestionActiveId")
+                    b.Property<int?>("LastQuestionId")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -562,7 +565,7 @@ namespace digital.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LastQuestionActiveId");
+                    b.HasIndex("LastQuestionId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -744,12 +747,12 @@ namespace digital.Backend.Migrations
 
             modelBuilder.Entity("digital.Shared.Entities.Test.User", b =>
                 {
-                    b.HasOne("digital.Shared.Entities.Test.Question", "LastQuestionActive")
+                    b.HasOne("digital.Shared.Entities.Test.Question", "LastQuestion")
                         .WithMany()
-                        .HasForeignKey("LastQuestionActiveId")
+                        .HasForeignKey("LastQuestionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("LastQuestionActive");
+                    b.Navigation("LastQuestion");
                 });
 
             modelBuilder.Entity("digital.Shared.Entities.Companies.Category", b =>

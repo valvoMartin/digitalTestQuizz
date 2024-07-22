@@ -22,8 +22,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Digital Backend", Version = "v1" });
@@ -75,7 +73,7 @@ builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<IRubrosRepository, RubrosRepository>();
 builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
 builder.Services.AddScoped<IAnswersRepository, AnswersRepository>();
-
+builder.Services.AddScoped<IAnswersUsersRepository, AnswersUsersRepository>();
 
 
 
@@ -88,6 +86,7 @@ builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
 builder.Services.AddScoped<IRubrosUnitOfWork, RubrosUnitOfWork>();
 builder.Services.AddScoped<IQuestionsUnitOfWork, QuestionsUnitOfWork>();
 builder.Services.AddScoped<IAnswersUnitOfWork, AnswersUnitOfWork>();
+builder.Services.AddScoped<IAnswersUsersUnitOfWork, AnswersUsersUnitOfWork>();
 
 
 

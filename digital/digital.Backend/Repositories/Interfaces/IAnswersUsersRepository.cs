@@ -15,6 +15,15 @@ namespace digital.Backend.Repositories.Interfaces
 
 
 
-        Task<ActionResponse<Question>> GetLastQuestionByUserId(int userId);
+        Task<ActionResponse<AnswerUser>> SaveUserAnswerAsync(string email, int questionId, int answerId, bool isLast);
+        // Task<ActionResponse<Question>> GetLastQuestionByUserId(int userId);
+        Task<ActionResponse<LastQuestionDTO>> GetLastQuestionAndAllQuestionsAsync(string email);
+
+        Task<ActionResponse<int>> GetCurrentTestNumberAsync(string email);
+
+        Task<ActionResponse<bool>> IsUserTestActiveAsync(string email);
+
+
     }
+
 }

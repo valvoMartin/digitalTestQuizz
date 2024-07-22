@@ -1,26 +1,24 @@
 using CurrieTechnologies.Razor.SweetAlert2;
 using digital.Frontend.Repositories;
-using digital.Shared.Entities;
+using digital.Shared.DTOs;
 using digital.Shared.Entities.Test;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using System.Net;
 
 namespace digital.Frontend.Pages.Test
 {
     public partial class Test
     {
+
+        private Dictionary<int, int?> selectedAnswers = new Dictionary<int, int?>();
+
         private List<Question>? questions;
+
         private int currentQuestionIndex = 0;
-        //private string selectedAnswer;
         private int? selectedAnswerId;
-        //private string? userId;
 
         private User? user;
-
-        //[Parameter, SupplyParameterFromQuery] public string Page { get; set; } = string.Empty;
-        //[Parameter, SupplyParameterFromQuery] public string Filter { get; set; } = string.Empty;
-        //[Parameter, SupplyParameterFromQuery] public int RecordsNumber { get; set; } = 10;
+        //private Guid testSessionId;
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
@@ -34,16 +32,82 @@ namespace digital.Frontend.Pages.Test
             //userId = authState.User.Identity.Name;
             //questions = await QuestionService.GetQuestionsAsync();
             //await LoadSelectedAnswerAsync();
+
+            //await LoadUserAsync();
+            //await LoadQuestionsAsync();
+            await LoadLastAnswerAsync();
+        }
+
+
+
+
+
+
+        private async Task LoadQuestionsAsync()
+        {
+
+            var responseHttp = await Repository.GetAsync<List<Question>>("api/questions/full");
+            if (responseHttp.Error)
+            {
+
+                var message = await responseHttp.GetErrorMessageAsync();
+                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+
+            }
+            questions = responseHttp.Response;
+
+        }
+
+
+
+        private async Task LoadLastAnswerAsync()
+        {
             await LoadUserAsync();
 
-            await LoadQuestionsAsync();
+            if (user != null)
+            {
+                var responseHttp = await Repository.GetAsync<LastQuestionDTO>($"api/AnswersUsers/lastQuestion/{user.Email}");
+                if (responseHttp.Error)
+                {
+                    var message = await responseHttp.GetErrorMessageAsync();
+                    await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                }
+
+                questions = responseHttp.Response?.Questions;
+                selectedAnswers = responseHttp.Response!.SelectedAnswers!;
+                if(selectedAnswers == null)
+                {
+                     //testSessionId = Guid.NewGuid();
+                }
+
+                //currentQuestionIndex = responseHttp.Response!.LastQuestionId;
+                //await LoadSelectedAnswerAsync();
+            }
+        }
+
+        private async Task LoadSelectedAnswerAsync()
+        {
+            if (user == null || questions == null || !questions.Any()) return;
+
+            var questionId = questions[currentQuestionIndex].Id;
+            var answerResponse = await Repository.GetAsync<AnswerUser>($"api/answersusers/get?email={user.Email}&questionId={questionId}");
+
+            if (!answerResponse.Error)
+            {
+                var answerUser = answerResponse.Response;
+                selectedAnswerId = answerUser?.AnswerId;
+            }
+            else
+            {
+                selectedAnswerId = null;
+            }
         }
 
 
 
         private async Task LoadUserAsync()
         {
-            var responseHttp = await Repository.GetAsync<User>($"/api/accounts");
+            var responseHttp = await Repository.GetAsync<User>($"api/accounts");
             if (responseHttp.Error)
             {
                 if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
@@ -57,109 +121,103 @@ namespace digital.Frontend.Pages.Test
             }
             user = responseHttp.Response;
         }
-        // private async Task LoadAsync(int page = 1)
-        // {
-
-        //     if (!string.IsNullOrWhiteSpace(Page))
-        //     {
-        //         page = Convert.ToInt32(Page);
-        //     }
-
-        //     var ok = await LoadQuestionsAsync();
-        //     if (ok)
-        //     {
-        //         await LoadPagesAsync();
-        //     }
-        // }
 
 
-        // private async Task LoadPagesAsync()
-        // {
-        //     ValidateRecordsNumber(RecordsNumber);
-        //     var url = $"api/companies/totalPages?recordsnumber={RecordsNumber}";
-        //     if (!string.IsNullOrEmpty(Filter))
-        //     {
-        //         url += $"&filter={Filter}";
-        //     }
 
-        //     var response = await Repository.GetAsync<int>(url);
-        //     if (response.Error)
-        //     {
-        //         var message = await response.GetErrorMessageAsync();
-        //         await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
-        //         return;
-        //     }
-        //     totalPages = response.Response;
-        // }
-
-        // private void ValidateRecordsNumber(int recordsnumber)
-        // {
-        //     if (recordsnumber == 0)
-        //     {
-        //         RecordsNumber = 10;
-        //     }
-        // }
-
-
-        private async Task LoadQuestionsAsync()
+        private async Task SelectAnswerAsync(int answerId)
         {
-            // ValidateRecordsNumber(RecordsNumber);
-            // var url = $"api/cities?id={StateId}&page={page}&recordsnumber={RecordsNumber}";
-
-            // //var url = $"api/cities?id={StateId}&page={page}";
-            // if (!string.IsNullOrEmpty(Filter))
-            // {
-            //     url += $"&filter={Filter}";
-            // }
-
-
-            var responseHttp = await Repository.GetAsync<List<Question>>("api/questions/full");
-            if (responseHttp.Error)
+            if (currentQuestionIndex >= 0 && currentQuestionIndex < questions!.Count)
             {
-                var message = await responseHttp.GetErrorMessageAsync();
-                await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
-
+                var questionId = questions[currentQuestionIndex].Id;
+                selectedAnswers[questionId] = answerId;
+                selectedAnswerId = answerId;
             }
-            questions = responseHttp.Response;
+        }
 
+      
+
+        private async Task SaveUserAnswerAsync(int questionId, int answerId, bool isLastQuestion)
+        {
+            if (selectedAnswers.TryGetValue(questionId, out var currentAnswerId) && currentAnswerId != answerId)
+            {
+                var request = new
+                {
+                    Email = user!.Email,
+                    QuestionId = questions![currentQuestionIndex].Id,
+                    AnswerId = answerId,
+                    IsLast = isLastQuestion,
+                    //testSessionId = testSessionId
+
+                };
+
+                var response = await Repository.PostAsync("api/answersusers/save", request);
+
+                if (response.Error)
+                {
+                    var message = await response.GetErrorMessageAsync();
+                    await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                }
+            }
+            
         }
 
 
 
 
-        private void SelectAnswer(int answer)
+        private async Task NextQuestion()
         {
-            selectedAnswerId = answer;
-        }
 
-        private void NextQuestion()
-        {
+            if (selectedAnswers.TryGetValue(questions[currentQuestionIndex].Id, out var answerId))
+            {
+                var isLastQuestion = currentQuestionIndex == questions!.Count - 1;
+                await SaveUserAnswerAsync(questions[currentQuestionIndex].Id, (int)answerId!, isLastQuestion);
+            }
+
+            // Guarda la respuesta seleccionada
+            if (selectedAnswerId.HasValue)
+            {
+                var isLastQuestion = currentQuestionIndex == questions!.Count - 1;
+                await SaveUserAnswerAsync(questions[currentQuestionIndex].Id, (int)answerId!, isLastQuestion);
+            }
+
+            // Avanza a la siguiente pregunta
             if (currentQuestionIndex < questions!.Count - 1)
             {
                 currentQuestionIndex++;
-                selectedAnswerId = null;
-
-                //await LoadSelectedAnswerAsync();
+                //await LoadSelectedAnswerAsync(); // Carga la respuesta seleccionada si existe
+                selectedAnswerId = selectedAnswers.TryGetValue(questions[currentQuestionIndex].Id, out var selectedAnswer) ? selectedAnswer : null;
             }
         }
 
-        private void PreviousQuestion()
+
+
+
+
+
+        private async Task PreviousQuestion()
         {
+
+            if (selectedAnswers.TryGetValue(questions[currentQuestionIndex].Id, out var answerId))
+            {
+                var isLastQuestion = currentQuestionIndex == questions!.Count - 1;
+                await SaveUserAnswerAsync(questions[currentQuestionIndex].Id, (int)answerId!, isLastQuestion);
+            }
+
             if (currentQuestionIndex > 0)
             {
-                currentQuestionIndex--;
-                selectedAnswerId = null;
+                // Guarda la respuesta seleccionada en la base de datos
+                //if (selectedAnswerId.HasValue)
+                //{
+                //    await SaveUserAnswerAsync(selectedAnswerId.Value, false);
+                //}
 
-                //await LoadSelectedAnswerAsync();
+                currentQuestionIndex--;
+                selectedAnswerId = selectedAnswers.TryGetValue(questions[currentQuestionIndex].Id, out var selectedAnswer) ? selectedAnswer : null;
+
+                //await LoadSelectedAnswerAsync(); // Carga la respuesta seleccionada si existe
             }
         }
 
-        //private async Task LoadSelectedAnswerAsync()
-        //{
-        //    if (questions != null && questions.Count > 0)
-        //    {
-        //        selectedAnswerId = await Repository.GetUserAnswerAsync(userId, questions[currentQuestionIndex].Id);
-        //    }
-        //}
+
     }
 }

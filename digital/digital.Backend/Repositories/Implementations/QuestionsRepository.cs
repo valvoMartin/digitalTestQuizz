@@ -75,7 +75,7 @@ namespace digital.Backend.Repositories.Implementations
 
             var queryable = _context.Questions
                 .Include(x => x.Answers)
-                .Include(x => x.AnswerUsers)
+                //.Include(x => x.AnswerUsers)
                 .AsQueryable();
 
 

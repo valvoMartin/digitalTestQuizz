@@ -33,40 +33,21 @@ namespace digital.Backend.Data
             await CheckCompaniesAsync();
 
             await CheckQuestionsAndAnswersAsync();
-
-
         }
+
+
+
         private async Task CheckQuestionsAndAnswersAsync()
         {
             if (!_context.Questions.Any())
             {
+              
+
+
                 var test = new List<Question>
                 {
-                    new Question
-                    {
-                        Text = "¿Quién determina las estrategias de la empresa?",
-                        Answers = new List<Answer>
-                        {
-                            new Answer { Text = "CEO", Score= 9 },
-                            new Answer { Text = "Gerente General", Score= 7 },
-                            new Answer { Text = "Directores", Score= 5 },
-                            new Answer { Text = "Jefes de Departamento", Score= 3 },
-                            new Answer { Text = "Empleados", Score= 0 },
-                        }
-                    },
+                   
 
-                    new Question
-                    {
-                        Text = "¿Quién decide las inversiones en nuevos proyectos?",
-                        Answers = new List<Answer>
-                        {
-                            new Answer { Text = "CEO", Score= 9 },
-                            new Answer { Text = "Gerente Financiero", Score= 7 },
-                            new Answer { Text = "Directores", Score= 5 },
-                            new Answer { Text = "Jefes de Proyecto", Score= 3 },
-                            new Answer { Text = "Empleados", Score= 0 },
-                        }
-                    },
 
                     new Question
                     {
@@ -74,20 +55,6 @@ namespace digital.Backend.Data
                         Answers = new List<Answer>
                         {
                             new Answer { Text = "Gerente de Recursos Humanos", Score= 9 },
-                            new Answer { Text = "CEO", Score= 7 },
-                            new Answer { Text = "Directores", Score= 5 },
-                            new Answer { Text = "Jefes de Departamento", Score= 3 },
-                            new Answer { Text = "Empleados", Score= 0 },
-                        }
-                    },
-
-                    new Question
-                    {
-                        Text = "¿Quién se encarga de la contratación de personal?",
-                        Answers = new List<Answer>
-                        {
-                            new Answer { Text = "Gerente de Recursos Humanos", Score= 9 },
-                            new Answer { Text = "CEO", Score= 7 },
                             new Answer { Text = "Directores", Score= 5 },
                             new Answer { Text = "Jefes de Departamento", Score= 3 },
                             new Answer { Text = "Empleados", Score= 0 },
@@ -101,12 +68,14 @@ namespace digital.Backend.Data
                         {
                             new Answer { Text = "Gerente de Tecnología", Score= 9 },
                             new Answer { Text = "CEO", Score= 7 },
-                            new Answer { Text = "Directores", Score= 5 },
+                            new Answer { Text = "Jefes de Proyecto", Score= 3 },
                             new Answer { Text = "Jefes de TI", Score= 3 },
-                            new Answer { Text = "Empleados", Score= 0 },
                         }
                     },
                 };
+
+
+               
 
                 _context.Questions.AddRange(test);
                 await _context.SaveChangesAsync();
@@ -342,6 +311,7 @@ namespace digital.Backend.Data
                     Document = document,
                     //City = city,
                     UserType = userType,
+                    idLastQuestionActive = null
                 };
 
                 await _usersUnitOfWork.AddUserAsync(user, "123456");

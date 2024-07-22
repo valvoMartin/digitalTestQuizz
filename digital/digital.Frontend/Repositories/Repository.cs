@@ -29,6 +29,7 @@ namespace Orders.Frontend.Repositories
         public async Task<HttpResponseWrapper<T>> GetAsync<T>(string url)
         {
             var responseHttp = await _httpClient.GetAsync(url);
+
             if (responseHttp.IsSuccessStatusCode)
             {
                 var response = await UnserializeAnswerAsync<T>(responseHttp);
