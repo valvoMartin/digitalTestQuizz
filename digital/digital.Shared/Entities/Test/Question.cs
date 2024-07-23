@@ -1,9 +1,4 @@
-﻿    using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace digital.Shared.Entities.Test
 {
@@ -19,12 +14,23 @@ namespace digital.Shared.Entities.Test
         public string Text { get; set; } = null!;
 
 
-        //public List<Answer>? Answers { get; set; }
+
+
+        // Clave foránea para la relación con SubArea
+        public int SubAreaId { get; set; }
+        public SubArea? SubArea { get; set; }
+
+
+
+
+
+
 
         public ICollection<Answer>? Answers { get; set; }
 
-
         public ICollection<AnswerUser>? AnswerUsers { get; set; }
+
+
 
     }
 }

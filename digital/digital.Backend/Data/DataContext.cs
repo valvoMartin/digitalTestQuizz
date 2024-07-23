@@ -16,6 +16,7 @@ namespace digital.Backend.Data
         public DbSet<City> Cities { get; set; }
 
 
+
         public DbSet<Company> Companies { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Rubro> Rubros { get; set; }
@@ -26,6 +27,9 @@ namespace digital.Backend.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<AnswerUser> AnswersUsers { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<SubArea> SubAreas { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
