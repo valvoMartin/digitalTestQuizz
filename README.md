@@ -1,4 +1,4 @@
-# Roles de Usuarios
+# Roles de Usuarios -- 
   - Admin        => Le permito ver todo
   - User         => Tiene acceso a la pagina de Sistema
   - Intermedio    => Yo ADMIN le doy acceso a este rol a un USER, y le indico a que proyecto va formar parte, para que pueda ver las empresas que estan asociadas a este proyecto
